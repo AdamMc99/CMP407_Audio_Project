@@ -8,7 +8,7 @@ projectOptions ShowMenu()
 	window.setFramerateLimit(60);
 
 	sf::Font font;
-	if (!font.openFromFile("Assets/arial.ttf")) 
+	if (!font.openFromFile("Assets/Fonts/arial.ttf")) 
 		if (!font.openFromFile("arial.ttf"))
 			printf("ERROR: Could not load font (arial.ttf) - main.cpp - ShowMenu");
 
@@ -19,18 +19,21 @@ projectOptions ShowMenu()
 	dynamicText.setFillColor(sf::Color::Black);
 	sf::FloatRect textRect = dynamicText.getLocalBounds();
 	dynamicText.setOrigin(textRect.getCenter());
-	dynamicText.setPosition({ dynamicBtn.getPosition().x + 100.f, dynamicBtn.getPosition().y + 25.f });
+	dynamicText.setPosition({ dynamicBtn.getPosition().x + 100.f, dynamicBtn.getPosition().y + 25.f});
 
 	sf::RectangleShape proceduralBtn({ 200.f, 50.f });
 	proceduralBtn.setPosition({ 100.f, 160.f });
 	proceduralBtn.setFillColor(sf::Color(100,200,255)); // Blue
 	sf::Text proceduralText(font, "Procedural Audio", 20);
+	proceduralText.setFillColor(sf::Color::Black);
 	textRect = proceduralText.getLocalBounds();
 	proceduralText.setOrigin(textRect.getCenter());
-	dynamicText.setPosition({ proceduralBtn.getPosition().x + 100.f, proceduralBtn.getPosition().y + 25.f });
+	proceduralText.setPosition({ proceduralBtn.getPosition().x + 100.f, proceduralBtn.getPosition().y + 25.f});
 
 	while (window.isOpen()) 
 	{
+		sf::Vector2f mousePos = window.mapPixelToCoords(sf::Mouse::getPosition(window));
+		
 		while (const std::optional event = window.pollEvent()) 
 		{
 			if (event->is<sf::Event::Closed>()) 
@@ -43,7 +46,7 @@ projectOptions ShowMenu()
 			{
 				if (mousePress->button == sf::Mouse::Button::Left) 
 				{
-					sf::Vector2f mousePos = window.mapPixelToCoords(sf::Mouse::getPosition(window));
+					//sf::Vector2f mousePos = window.mapPixelToCoords(sf::Mouse::getPosition(window));
 
 					if (dynamicBtn.getGlobalBounds().contains(mousePos)) 
 					{
@@ -58,7 +61,21 @@ projectOptions ShowMenu()
 				}
 			}
 		}
+
+		if (dynamicBtn.getGlobalBounds().contains(mousePos)) dynamicBtn.setOutlineThickness(2);
+		else dynamicBtn.setOutlineThickness(0);
+
+		if (proceduralBtn.getGlobalBounds().contains(mousePos)) proceduralBtn.setOutlineThickness(2);
+		else proceduralBtn.setOutlineThickness(0);
+
+		window.clear(sf::Color::Cyan);
+		window.draw(dynamicBtn);
+		window.draw(dynamicText);
+		window.draw(proceduralBtn);
+		window.draw(proceduralText);
+		window.display();
 	}
+	return None;
 }
 
 int main() 
