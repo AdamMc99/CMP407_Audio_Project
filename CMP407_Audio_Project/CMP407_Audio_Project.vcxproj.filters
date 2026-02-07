@@ -24,5 +24,25 @@
     <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="DynamicMain.cpp">
+      <Filter>Dynamic Audio</Filter>
+    </ClCompile>
+    <ClCompile Include="Player.cpp">
+      <Filter>Dynamic Audio</Filter>
+    </ClCompile>
+    <ClCompile Include="Enemy.cpp">
+      <Filter>Dynamic Audio</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="DynamicMain.h">
+      <Filter>Dynamic Audio</Filter>
+    </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>Dynamic Audio</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy.h">
+      <Filter>Dynamic Audio</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

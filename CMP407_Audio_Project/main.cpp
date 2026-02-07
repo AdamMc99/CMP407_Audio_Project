@@ -1,4 +1,5 @@
 #include <SFML/Graphics.hpp>
+#include "DynamicMain.h"
 
 enum projectOptions{Dynamic, Procedural, Combo, None};
 
@@ -83,9 +84,11 @@ int main()
 
 	projectOptions projectChoice = ShowMenu();
 
-	sf::RenderWindow window(sf::VideoMode({ 640,480 }), "Audio Project Selection Screen");
+	sf::RenderWindow window(sf::VideoMode({ 700,700 }), "Audio Project");
 	window.setFramerateLimit(60);
 	sf::Color clear_colour(135, 205, 250);
+
+	DynamicMain dynamicMain(&window);
 
 	sf::Clock clock;
 	float gameSpeed = 1.0f;
@@ -93,7 +96,7 @@ int main()
 
 	while (window.isOpen()) 
 	{
-		float dt = clock.reset().asSeconds() * gameSpeed;
+		float deltaTime = clock.restart().asSeconds() * gameSpeed;
 
 		while (const std::optional event = window.pollEvent()) 
 		{
@@ -110,9 +113,21 @@ int main()
 			}
 		}
 
-		window.clear(clear_colour);
+		if (projectChoice == Dynamic) 
+		{
+			clear_colour = sf::Color::Black;
+			dynamicMain.Update(deltaTime);
 
-		window.display();
+			window.clear(clear_colour);
+			dynamicMain.Render();
+			window.display();
+		}
+		if (projectChoice == Procedural) 
+		{
+			clear_colour = sf::Color::Red;
+			window.clear(clear_colour);
+			window.display();
+		}
 
 	}
 
