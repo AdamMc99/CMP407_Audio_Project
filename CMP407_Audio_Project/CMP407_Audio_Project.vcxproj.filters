@@ -33,6 +33,9 @@
     <ClCompile Include="Enemy.cpp">
       <Filter>Dynamic Audio</Filter>
     </ClCompile>
+    <ClCompile Include="HealthBar.cpp">
+      <Filter>Dynamic Audio</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DynamicMain.h">
@@ -42,6 +45,9 @@
       <Filter>Dynamic Audio</Filter>
     </ClInclude>
     <ClInclude Include="Enemy.h">
+      <Filter>Dynamic Audio</Filter>
+    </ClInclude>
+    <ClInclude Include="HealthBar.h">
       <Filter>Dynamic Audio</Filter>
     </ClInclude>
   </ItemGroup>

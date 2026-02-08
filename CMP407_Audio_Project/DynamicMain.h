@@ -3,6 +3,7 @@
 #include <Vector>
 #include "Player.h"
 #include "Enemy.h"
+#include "HealthBar.h"
 
 class DynamicMain
 {
@@ -17,6 +18,7 @@ private:
 	sf::RenderWindow* _window;
 	Player _player;
 	std::vector<Enemy> _enemies;
+	HealthBar* _healthBar;
 
 	float _spawnTimer = 0.f;
 	float _spawnRate = 1.f;

@@ -1,5 +1,6 @@
 #pragma once
 #include <SFML/Graphics.hpp>
+#include "Player.h"
 class Enemy
 {
 public:
@@ -12,6 +13,8 @@ public:
 
 	sf::Vector2f GetPosition() const { return _enemyShape.getPosition(); }
 	void SetPosition(sf::Vector2f position) { _enemyShape.setPosition(position); }
+
+	void UpdateVisibility(const Player& player);
 	
 	bool IsActive() const { return _active; }
 	void Destroy() { _active = false; }

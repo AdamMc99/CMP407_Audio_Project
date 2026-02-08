@@ -133,12 +133,14 @@
   <ItemGroup>
     <ClCompile Include="DynamicMain.cpp" />
     <ClCompile Include="Enemy.cpp" />
+    <ClCompile Include="HealthBar.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Player.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DynamicMain.h" />
     <ClInclude Include="Enemy.h" />
+    <ClInclude Include="HealthBar.h" />
     <ClInclude Include="Player.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

@@ -84,7 +84,7 @@ int main()
 
 	projectOptions projectChoice = ShowMenu();
 
-	sf::RenderWindow window(sf::VideoMode({ 700,700 }), "Audio Project");
+	sf::RenderWindow window(sf::VideoMode({ 1000,1000 }), "Audio Project");
 	window.setFramerateLimit(60);
 	sf::Color clear_colour(135, 205, 250);
 

@@ -23,6 +23,53 @@ Enemy::Enemy(sf::Vector2f spawnPos, sf::Vector2f targetPos) : _active(true)
 	}
 }
 
+void Enemy::UpdateVisibility(const Player& player)
+{
+    sf::Vector2f playerPos = player.GetPosition();
+    sf::Vector2f enemyPos = _enemyShape.getPosition();
+
+    float dx = enemyPos.x - playerPos.x;
+    float dy = enemyPos.y - playerPos.y;
+
+    float distance = std::sqrt(dx * dx + dy * dy);
+    float lightRange = player.GetLightRange();
+
+    // If out of range hide immediately
+    if (distance > lightRange) {
+        sf::Color colour = _enemyShape.getFillColor();
+        colour.a = 0;
+        _enemyShape.setFillColor(colour);
+        return;
+    }
+
+    float enemyAngleRad = std::atan2(dy, dx);
+    float enemyAngleDeg = enemyAngleRad * (180 / 3.14159265);
+    float playerAngleDeg = player.GetRotation();
+
+    // Get the absolute difference between angles
+    float angleDiff = std::abs(playerAngleDeg - enemyAngleDeg);
+
+    if (angleDiff > 180.f) {
+        angleDiff = 360.f - angleDiff;
+    }
+
+    float viewAngle = player.GetFOV();
+
+    float angularFadeInfo = 15.f;
+    float angleFactor = (viewAngle - angleDiff) / angularFadeInfo;
+
+    float distFadeInfo = 50.f;
+    float distFactor = (lightRange - distance) / distFadeInfo;
+
+    float totalAlphaFactor = std::min(angleFactor, distFactor);
+
+    totalAlphaFactor = std::max(0.0f, std::min(totalAlphaFactor, 1.0f));
+
+    sf::Color colour = _enemyShape.getFillColor();
+    colour.a = (255 * totalAlphaFactor);
+    _enemyShape.setFillColor(colour);
+}
+
 void Enemy:: Update(float dt)
 {
 	_enemyShape.move(_velocity * dt);
@@ -32,3 +79,5 @@ void Enemy::Render(sf::RenderWindow* window)
 {
 	window->draw(_enemyShape);
 }
+
+

@@ -9,13 +9,13 @@ constexpr float DEG_TO_RAD = PI / 180.f;
 
 DynamicMain::DynamicMain(sf::RenderWindow* window) : _window(window), _player(window)
 {
+	_healthBar = new HealthBar(100.f);
 }
 
 void DynamicMain::Update(float dt)
 {
 	// Update the player
 	_player.Update(dt);
-	std::cout << "spawntimer time" << _spawnTimer << std::endl;
 
 	// Spawn enemies
 	_spawnTimer += dt;
@@ -32,8 +32,6 @@ void DynamicMain::Update(float dt)
 
 		// Create the enemy
 		_enemies.emplace_back(spawnPos, playerPos);
-		std::cout << "Enemy spawned at: " << spawnPos.x << ", " << spawnPos.y << " | Total: " << _enemies.size() << std::endl;
-
 	}
 
 
@@ -46,6 +44,7 @@ void DynamicMain::Update(float dt)
 		if (!enemy.IsActive()) continue;
 
 		enemy.Update(dt);
+		enemy.UpdateVisibility(_player);
 
 		sf::Vector2f enemyPos = enemy.GetPosition();
 
@@ -59,7 +58,7 @@ void DynamicMain::Update(float dt)
 		if (disSqr < 35.f * 35.f) 
 		{
 			enemy.Destroy();
-			_player.SetHealth(_player.GetHealth() - 10);
+			_player.TakeDamage(5);
 		}
 
 		// Check collision wih shield
@@ -71,9 +70,12 @@ void DynamicMain::Update(float dt)
 			if (IsAngleInView(enemyAngle, playerAngle, 25.f)) 
 			{
 				enemy.Destroy();
+				_player.AddHealth(1.f);
 			}
 		}
 	}
+
+	_healthBar->Update(_player.GetHealth());
 
 	// Remove inative enemies
 	_enemies.erase(std::remove_if(_enemies.begin(), _enemies.end(), [](const Enemy& e) {return !e.IsActive(); }), _enemies.end());
@@ -110,4 +112,6 @@ void DynamicMain::Render()
 			enemy.Render(_window);
 		}
 	}
+
+	_healthBar->Render(_window);
 }

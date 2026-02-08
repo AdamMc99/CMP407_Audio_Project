@@ -38,7 +38,7 @@ void Player::Update(float dt)
 	float shieldY = playerPos.y + std::sin(rotationRad) * SHIELD_DISTANCE;
 
 	_shieldShape.setPosition({ shieldX, shieldY });
-	_shieldShape.setRotation( sf::degrees(_rotation)); // <--- Using sf::degrees might not work
+	_shieldShape.setRotation( sf::degrees(_rotation)); // <--- Using sf::degrees might not work (It does)
 
 	UpdateFlashlightVisuals();
 }
@@ -49,21 +49,20 @@ void Player::UpdateFlashlightVisuals()
 	sf::Vector2f center = _playerShape.getPosition();
 
 	// Set the center point of the light to yellow
-	_lightCone.append({ center, sf::Color(255, 255, 200, 100), {} }); // <-- This also might not work? idk
+	_lightCone.append({ center, sf::Color(255, 255, 200, 100), {} }); // <-- This also might not work (It does)
 
 	// Create the arc
 	float startAngle = (_rotation - VIEW_ANGLE) * DEG_TO_RAD;
 	float endAngle = (_rotation + VIEW_ANGLE) * DEG_TO_RAD;
 	int segments = 20;
-	float lightDistance = 400.f; // Should be how far the torch shines
 
 	for(int i = 0; i <= segments; i++)
 	{
 		float t = static_cast<float>(i) / segments;
 		float currentAngle = startAngle + t * (endAngle - startAngle);
 
-		float x = center.x + std::cos(currentAngle) * lightDistance;
-		float y = center.y + std::sin(currentAngle) * lightDistance;
+		float x = center.x + std::cos(currentAngle) * _lightRange;
+		float y = center.y + std::sin(currentAngle) * _lightRange;
 
 		// Outer edges fade to transparent
 		_lightCone.append({ { x,y }, sf::Color(255, 255, 200, 0), {} });
