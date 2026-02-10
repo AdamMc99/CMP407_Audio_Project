@@ -1,17 +1,13 @@
 #include <SFML/Graphics.hpp>
 #include "DynamicMain.h"
+#include <iostream>
 
 enum projectOptions{Dynamic, Procedural, Combo, None};
 
-projectOptions ShowMenu()
+projectOptions ShowMenu(sf::Font font)
 {
 	sf::RenderWindow window(sf::VideoMode({400, 300}), "Select Project");
 	window.setFramerateLimit(60);
-
-	sf::Font font;
-	if (!font.openFromFile("Assets/Fonts/arial.ttf")) 
-		if (!font.openFromFile("arial.ttf"))
-			printf("ERROR: Could not load font (arial.ttf) - main.cpp - ShowMenu");
 
 	sf::RectangleShape dynamicBtn({ 200.f,50.f });
 	dynamicBtn.setPosition({ 100.f, 50.f });
@@ -81,14 +77,18 @@ projectOptions ShowMenu()
 
 int main() 
 {
+	sf::Font font;
+	if (!font.openFromFile("Assets/Fonts/arial.ttf"))
+		if (!font.openFromFile("arial.ttf"))
+			printf("ERROR: Could not load font (arial.ttf) - main.cpp - ShowMenu");
 
-	projectOptions projectChoice = ShowMenu();
+	projectOptions projectChoice = ShowMenu(font);
 
 	sf::RenderWindow window(sf::VideoMode({ 1000,1000 }), "Audio Project");
 	window.setFramerateLimit(60);
 	sf::Color clear_colour(135, 205, 250);
 
-	DynamicMain dynamicMain(&window);
+	DynamicMain dynamicMain(&window, &font);
 
 	sf::Clock clock;
 	float gameSpeed = 1.0f;
@@ -115,9 +115,9 @@ int main()
 
 		if (projectChoice == Dynamic) 
 		{
-			clear_colour = sf::Color::Black;
 			dynamicMain.Update(deltaTime);
-
+			clear_colour = dynamicMain.GetBackgroundColour();
+			
 			window.clear(clear_colour);
 			dynamicMain.Render();
 			window.display();

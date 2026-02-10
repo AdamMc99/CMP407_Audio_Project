@@ -27,7 +27,7 @@ public:
 	void TakeDamage(float damage) { _currentHealth -= damage; }
 	void AddHealth(float addedHealth) { _currentHealth += addedHealth; }
 
-	void Update(float dt);
+	void Update(float dt, float darknessFactor);
 	void Render();
 
 private:
@@ -41,7 +41,7 @@ private:
 	sf::VertexArray _lightCone;
 	sf::RenderWindow* _window;
 
-	void UpdateFlashlightVisuals();
+	void UpdateFlashlightVisuals(float darknessFactor);
 
 };
 

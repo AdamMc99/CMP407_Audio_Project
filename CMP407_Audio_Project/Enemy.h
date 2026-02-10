@@ -14,7 +14,7 @@ public:
 	sf::Vector2f GetPosition() const { return _enemyShape.getPosition(); }
 	void SetPosition(sf::Vector2f position) { _enemyShape.setPosition(position); }
 
-	void UpdateVisibility(const Player& player);
+	void UpdateVisibility(const Player& player, float darknessFactor);
 	
 	bool IsActive() const { return _active; }
 	void Destroy() { _active = false; }

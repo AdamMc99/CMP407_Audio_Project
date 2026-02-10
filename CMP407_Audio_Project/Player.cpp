@@ -15,13 +15,13 @@ Player::Player(sf::RenderWindow* window) : _window(window)
 	// Setup shield visuals
 	_shieldShape.setSize({ 10.f, SHIELD_SIZE });
 	_shieldShape.setOrigin({ 5.f, SHIELD_SIZE / 2 });
-	_shieldShape.setFillColor(sf::Color::White);
+	_shieldShape.setFillColor(sf::Color::Yellow);
 
 	// Setup light cone
 	_lightCone.setPrimitiveType(sf::PrimitiveType::TriangleFan);
 }
 
-void Player::Update(float dt) 
+void Player::Update(float dt, float darknessFactor) 
 {
 	// Calculate angle to mouse
 	sf::Vector2i mousePos = sf::Mouse::getPosition(*_window);
@@ -40,16 +40,23 @@ void Player::Update(float dt)
 	_shieldShape.setPosition({ shieldX, shieldY });
 	_shieldShape.setRotation( sf::degrees(_rotation)); // <--- Using sf::degrees might not work (It does)
 
-	UpdateFlashlightVisuals();
+	UpdateFlashlightVisuals(darknessFactor);
 }
 
-void Player::UpdateFlashlightVisuals() 
+void Player::UpdateFlashlightVisuals(float darknessFactor) 
 {
 	_lightCone.clear();
+
+	// If its bright (darkness is almost 0) dont generate cone
+	if (darknessFactor <= 0.01f) return;
+
 	sf::Vector2f center = _playerShape.getPosition();
 
+	// This should fade the light in. Max alpha is 100. Current alpha is 100 * darknessFactor
+	std::uint8_t lightAlpha = static_cast<std::uint8_t>(100 * darknessFactor);
+
 	// Set the center point of the light to yellow
-	_lightCone.append({ center, sf::Color(255, 255, 200, 100), {} }); // <-- This also might not work (It does)
+	_lightCone.append({ center, sf::Color(255, 255, 200, lightAlpha), {} }); // <-- This also might not work (It does)
 
 	// Create the arc
 	float startAngle = (_rotation - VIEW_ANGLE) * DEG_TO_RAD;
