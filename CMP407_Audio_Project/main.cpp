@@ -2,6 +2,54 @@
 #include "DynamicMain.h"
 #include <iostream>
 
+#include <AK/SoundEngine/Common/AkMemoryMgr.h> // Memory manager interface
+#include <AK/SoundEngine/Common/AkMemoryMgrModule.h> // Default memory manager
+#include <AK/SoundEngine/Common/IAkStreamMgr.h> // streaming manager
+#include <AK/SoundEngine/Common/AkStreamMgrModule.h>
+#include <AK/SoundEngine/Common/AkSoundEngine.h> // sound engine
+#include <AK/Tools/Common/AkPlatformFuncs.h> // Thread defines
+
+#ifndef AK_OPTIMIZED
+#include <Ak/Comm/AkCommunication.h>
+#endif
+
+CAkFilePackageLowLevelIODeferred g_lowLevelIO;
+
+bool InitSoundEngine()
+{
+	AkMemSettings memSettings;
+	AK::MemoryMgr::GetDefaultSettings(memSettings);
+
+	if (AK::MemoryMgr::Init(&memSettings) != AK_Success) 
+	{
+		std::cout << "AK memory manager failed to initalise! -- main.cpp" << std::endl;
+		return false;
+	}
+
+	AkStreamMgrSettings stmSettings;
+	AK::StreamMgr::GetDefaultSettings(stmSettings);
+
+	if(!AK::StreamMgr::Create(stmSettings))
+	{
+		std::cout << "AK stream manager failed to initalise! -- main.cpp" << std::endl;
+		return false;
+	}
+
+	AkDeviceSettings deviceSettings;
+	AK::StreamMgr::GetDefaultDeviceSettings(deviceSettings);
+
+	if (g_lowLevelIO.Init(deviceSettings) != AK_Success) 
+	{
+		std::cout << "AK streaming device failed to initalise! -- main.cpp" << std::endl;
+		return false;
+	}
+
+
+	
+	
+	return true;
+}
+
 enum projectOptions{Dynamic, Procedural, Combo, None};
 
 projectOptions ShowMenu(sf::Font font)
@@ -77,6 +125,15 @@ projectOptions ShowMenu(sf::Font font)
 
 int main() 
 {
+	if (InitSoundEngine() == true) 
+	{
+		std::cout << "Audio system initialisation complete!" << std::endl;
+	}
+	else 
+	{
+		std::cout << "Audio system initialisation failed! -- main.cpp" << std::endl;
+	}
+
 	sf::Font font;
 	if (!font.openFromFile("Assets/Fonts/arial.ttf"))
 		if (!font.openFromFile("arial.ttf"))
