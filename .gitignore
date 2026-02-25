@@ -416,3 +416,12 @@ FodyWeavers.xsd
 *.msix
 *.msm
 *.msp
+
+# GITIGNORE template for Wwise Project
+.backup*
+.cache*
+*.akd
+*.prof
+*.validationcache
+AkWwiseProjectData.asset
+IncrementalSoundBankData.xml

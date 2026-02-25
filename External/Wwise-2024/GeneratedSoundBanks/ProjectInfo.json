@@ -1,0 +1,29 @@
+{
+ "ProjectInfo": {
+  "Project": {
+   "Name": "SFML Wwise Project",
+   "GUID": "{738E5D67-A95D-4AD2-A934-7092654F0D87}",
+   "Generator": "2024.1.8.8898"
+  },
+  "CacheRoot": "../.cache",
+  "Platforms": [
+   {
+    "Name": "Windows",
+    "GUID": "{69206EFB-1E27-4DE5-AE39-49801C8BC5C5}",
+    "BasePlatform": "Windows",
+    "BasePlatformGUID": "{6E0CB257-C6C8-4C5C-8366-2740DFC441EB}",
+    "Path": "Windows"
+   }
+  ],
+  "Languages": [
+   {
+    "Name": "English(US)",
+    "Id": "684519430",
+    "GUID": "{50AF7087-DAD5-4049-9D1C-CF18EFE04A1E}",
+    "Default": "true",
+    "UseAsStandIn": "true"
+   }
+  ],
+  "FileHash": "{6ED71B4F-F41F-9E6A-6C9C-B9076CDCA37A}"
+ }
+}

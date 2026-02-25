@@ -1,0 +1,6 @@
+Event	ID	Name			Wwise Object Path	Notes
+	691006007	Loop			\Default Work Unit\Loop	
+
+In Memory Audio	ID	Name	Audio source file		Wwise Object Path	Notes	Data Size
+	675242037	Loop	C:\Users\n520118\Programming\Applications\SFML Wwise Project\SFML Wwise Project\.cache\48\{487311D0-8211-F559-7F61-0A8568E71EB5}.wem		\Actor-Mixer Hierarchy\Default Work Unit\Loop		384096
+

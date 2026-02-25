@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<WwiseDocument Type="WorkUnit" ID="{B8DABCA1-9F7E-47C7-AA3D-28A82C497886}" SchemaVersion="123">
+	<Events>
+		<WorkUnit Name="Default Work Unit" ID="{B8DABCA1-9F7E-47C7-AA3D-28A82C497886}" PersistMode="Standalone">
+			<ChildrenList>
+				<Event Name="Loop" ID="{F89A06C7-AF9B-40C8-8490-7CE034CEED56}">
+					<ChildrenList>
+						<Action Name="" ID="{E8EB8890-AAFB-4EF7-B8F3-BCEAD37A8343}" ShortID="830055538">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="Loop" ID="{804BF16A-6F33-4BDA-93B6-FDA7BAF0B83D}" WorkUnitID="{5E89A391-8B09-4F67-959D-0CD33D6B5A3B}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+			</ChildrenList>
+		</WorkUnit>
+	</Events>
+</WwiseDocument>
