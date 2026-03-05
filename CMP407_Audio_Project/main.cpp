@@ -1,11 +1,43 @@
 #include <SFML/Graphics.hpp>
 #include "DynamicMain.h"
+#include "WwiseWrapper.h"
 #include <iostream>
+
+
+/*
+* THINGS TO ADD ----------
+* Easter egg idea. Make the enemy sprite have a 1-100 chance of being williams head instead of a circle.
+* 
+* 
+* 
+*/
+WwiseWrapper wwise;
+
+
 
 enum projectOptions{Dynamic, Procedural, Combo, None};
 
 projectOptions ShowMenu(sf::Font font)
 {
+
+	if(!wwise.initSoundEngine(AKTEXT("Assets/Audio/CMP407_Dynamic_Audio_Project/GeneratedSoundBanks/Windows"))) 
+	{
+		std::cout << "Could not initialise Wwise. Exiting";
+		return None;
+	}
+	AkBankID mainBankID;
+	if (AK::SoundEngine::LoadBank(AKTEXT("TestSoundBank"), mainBankID) != AK_Success) 
+	{
+		assert(!"Could not load soundbank - main.cpp - ShowMenu().");
+		return None;
+	}
+	{
+		const uint64_t gameObjectID = 1;
+		AK::SoundEngine::RegisterGameObj(gameObjectID);
+		AK::SoundEngine::PostEvent(AKTEXT("Loop"), gameObjectID);
+	}
+
+
 	sf::RenderWindow window(sf::VideoMode({400, 300}), "Select Project");
 	window.setFramerateLimit(60);
 
@@ -57,6 +89,9 @@ projectOptions ShowMenu(sf::Font font)
 					}
 				}
 			}
+
+			// Handle Wwise's audio rendering
+			AK::SoundEngine::RenderAudio();
 		}
 
 		if (dynamicBtn.getGlobalBounds().contains(mousePos)) dynamicBtn.setOutlineThickness(2);
@@ -72,6 +107,7 @@ projectOptions ShowMenu(sf::Font font)
 		window.draw(proceduralText);
 		window.display();
 	}
+
 	return None;
 }
 
@@ -131,5 +167,6 @@ int main()
 
 	}
 
+	wwise.terminateSoundEngine();
 	return 0;
 }

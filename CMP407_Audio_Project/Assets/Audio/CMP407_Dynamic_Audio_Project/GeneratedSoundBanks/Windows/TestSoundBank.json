@@ -1,0 +1,45 @@
+{
+ "SoundBanksInfo": {
+  "Platform": "Windows",
+  "BasePlatform": "Windows",
+  "SchemaVersion": "16",
+  "SoundBankVersion": "154",
+  "SoundBanks": [
+   {
+    "Id": "1831431028",
+    "Type": "User",
+    "GUID": "{B15A0551-23EE-4A4E-A149-9FB85C6FBDC1}",
+    "Language": "SFX",
+    "Hash": "{6594913A-8B87-D257-E383-4A51B1416691}",
+    "ObjectPath": "\\SoundBanks\\Default Work Unit\\TestSoundBank",
+    "ShortName": "TestSoundBank",
+    "Path": "TestSoundBank.bnk",
+    "Media": [
+     {
+      "Id": "564500536",
+      "Language": "SFX",
+      "Streaming": "false",
+      "Location": "Memory",
+      "ShortName": "Loop.wav",
+      "CachePath": "69/{69FBD51D-9C24-895D-D604-ADDD872C2F9F}.wem"
+     }
+    ],
+    "Events": [
+     {
+      "Id": "691006007",
+      "Name": "Loop",
+      "ObjectPath": "\\Events\\Default Work Unit\\Loop",
+      "GUID": "{5305C136-602B-4268-99B8-F83434F5A28D}",
+      "DurationType": "Infinite",
+      "MediaRefs": [
+       {
+        "Id": "564500536"
+       }
+      ]
+     }
+    ]
+   }
+  ],
+  "FileHash": "{C7E8B582-1FEE-C693-F378-D0109F900794}"
+ }
+}

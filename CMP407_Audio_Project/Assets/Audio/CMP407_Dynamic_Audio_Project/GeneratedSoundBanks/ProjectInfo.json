@@ -1,0 +1,29 @@
+{
+ "ProjectInfo": {
+  "Project": {
+   "Name": "CMP407_Dynamic_Audio_Project",
+   "GUID": "{A3546C3C-4F9F-4CBA-9EF8-84AF4243F88B}",
+   "Generator": "2024.1.8.8898"
+  },
+  "CacheRoot": "../.cache",
+  "Platforms": [
+   {
+    "Name": "Windows",
+    "GUID": "{9EFE24A8-7DF0-4774-851B-2C4ABB7462D6}",
+    "BasePlatform": "Windows",
+    "BasePlatformGUID": "{6E0CB257-C6C8-4C5C-8366-2740DFC441EB}",
+    "Path": "Windows"
+   }
+  ],
+  "Languages": [
+   {
+    "Name": "English(US)",
+    "Id": "684519430",
+    "GUID": "{BC911B0D-AFF4-444D-B110-F5BDE9A98B91}",
+    "Default": "true",
+    "UseAsStandIn": "true"
+   }
+  ],
+  "FileHash": "{7C4AE375-887A-5E56-8130-BA0CCE558913}"
+ }
+}
