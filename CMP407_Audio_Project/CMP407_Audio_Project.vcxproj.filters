@@ -26,7 +26,7 @@
       <UniqueIdentifier>{b19c191e-54b5-49e4-94f1-3cf39f74d6c8}</UniqueIdentifier>
     </Filter>
     <Filter Include="SoundEngine\Win32">
-      <UniqueIdentifier>{0e88f87d-dab6-4d2b-bacf-61e388749429}</UniqueIdentifier>
+      <UniqueIdentifier>{625a8d94-1292-40ca-ad25-c734adf1bf0c}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -77,6 +77,9 @@
     </ClCompile>
     <ClCompile Include="..\SoundEngine\Win32\stdafx.cpp">
       <Filter>SoundEngine\Win32</Filter>
+    </ClCompile>
+    <ClCompile Include="MainMenu.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -136,6 +139,9 @@
     </ClInclude>
     <ClInclude Include="..\SoundEngine\Win32\stdafx.h">
       <Filter>SoundEngine\Win32</Filter>
+    </ClInclude>
+    <ClInclude Include="MainMenu.h">
+      <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
