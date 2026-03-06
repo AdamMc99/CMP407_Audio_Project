@@ -81,6 +81,9 @@
     <ClCompile Include="MainMenu.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="IntensityManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DynamicMain.h">
@@ -141,6 +144,9 @@
       <Filter>SoundEngine\Win32</Filter>
     </ClInclude>
     <ClInclude Include="MainMenu.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="IntensityManager.h">
       <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>

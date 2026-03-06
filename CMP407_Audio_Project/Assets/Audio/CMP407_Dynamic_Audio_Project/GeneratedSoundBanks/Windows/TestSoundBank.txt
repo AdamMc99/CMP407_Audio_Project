@@ -1,6 +1,8 @@
 Event	ID	Name			Wwise Object Path	Notes
 	691006007	Loop			\Default Work Unit\Loop	
+	1501626447	BGM1_Loop			\Default Work Unit\BGM1_Loop	
 
 In Memory Audio	ID	Name	Audio source file		Wwise Object Path	Notes	Data Size
-	564500536	Loop	C:\Users\2202613\OneDrive - Abertay University\Documents\GitHub\CMP407_Audio_Project\CMP407_Audio_Project\Assets\Audio\CMP407_Dynamic_Audio_Project\.cache\69\{69FBD51D-9C24-895D-D604-ADDD872C2F9F}.wem		\Actor-Mixer Hierarchy\Default Work Unit\Loop		384096
+	138068062	BGM1	D:\Visual Studio Programs\CMP407 Project\CMP407_Audio_Project\CMP407_Audio_Project\Assets\Audio\CMP407_Dynamic_Audio_Project\.cache\CA\{CAECF63B-C079-682A-805A-7D943BF8AE87}.wem		\Actor-Mixer Hierarchy\Default Work Unit\BGM1		15631896
+	564500536	Loop	D:\Visual Studio Programs\CMP407 Project\CMP407_Audio_Project\CMP407_Audio_Project\Assets\Audio\CMP407_Dynamic_Audio_Project\.cache\69\{69FBD51D-9C24-895D-D604-ADDD872C2F9F}.wem		\Actor-Mixer Hierarchy\Default Work Unit\Loop		384096
 

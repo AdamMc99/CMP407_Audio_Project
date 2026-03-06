@@ -12,36 +12,36 @@ public:
 	Player(sf::RenderWindow* window);
 	~Player() {}
 
-	float GetHealth() const { return _currentHealth; }
-	void SetHealth(int health) { _currentHealth = health; }
+	float getHealth() const { return m_currentHealth; }
+	void setHealth(int health) { m_currentHealth = health; }
 
-	float GetRotation() const { return _rotation; }
-	void SetRotation(float rotation) { _rotation = rotation; }
+	float getRotation() const { return m_rotation; }
+	void setRotation(float rotation) { m_rotation = rotation; }
 
-	sf::Vector2f GetPosition() const { return _playerShape.getPosition(); }
-	void SetPosition(sf::Vector2f position) { _playerShape.setPosition(position); }
+	sf::Vector2f getPosition() const { return m_playerShape.getPosition(); }
+	void setPosition(sf::Vector2f position) { m_playerShape.setPosition(position); }
 
-	float GetLightRange() const { return _lightRange; }
-	float GetFOV() const { return VIEW_ANGLE; }
+	float getLightRange() const { return m_lightRange; }
+	float getFOV() const { return VIEW_ANGLE; }
 
-	void TakeDamage(float damage) { _currentHealth -= damage; }
-	void AddHealth(float addedHealth) { _currentHealth += addedHealth; }
+	void takeDamage(float damage) { m_currentHealth -= damage; }
+	void addHealth(float addedHealth) { m_currentHealth += addedHealth; if (m_currentHealth > m_maxHealth) m_currentHealth = m_maxHealth; }
 
-	void Update(float dt, float darknessFactor);
-	void Render();
+	void update(float dt, float darknessFactor);
+	void render();
 
 private:
-	float _maxHealth = 100.f;
-	float _currentHealth = 100.f;
-	float _rotation = 0.f;
-	float _lightRange = 400.f;
+	float m_maxHealth = 100.f;
+	float m_currentHealth = 100.f;
+	float m_rotation = 0.f;
+	float m_lightRange = 400.f;
 
-	sf::CircleShape _playerShape;
-	sf::RectangleShape _shieldShape;
-	sf::VertexArray _lightCone;
-	sf::RenderWindow* _window;
+	sf::CircleShape m_playerShape;
+	sf::RectangleShape m_shieldShape;
+	sf::VertexArray m_lightCone;
+	sf::RenderWindow* m_window;
 
-	void UpdateFlashlightVisuals(float darknessFactor);
+	void updateFlashlightVisuals(float darknessFactor);
 
 };
 

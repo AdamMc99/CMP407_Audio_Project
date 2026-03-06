@@ -10,11 +10,19 @@
     "Type": "User",
     "GUID": "{B15A0551-23EE-4A4E-A149-9FB85C6FBDC1}",
     "Language": "SFX",
-    "Hash": "{6594913A-8B87-D257-E383-4A51B1416691}",
+    "Hash": "{B8F0C372-A8D2-E7C5-B80C-EC343F2F5A99}",
     "ObjectPath": "\\SoundBanks\\Default Work Unit\\TestSoundBank",
     "ShortName": "TestSoundBank",
     "Path": "TestSoundBank.bnk",
     "Media": [
+     {
+      "Id": "138068062",
+      "Language": "SFX",
+      "Streaming": "false",
+      "Location": "Memory",
+      "ShortName": "7. Strange.wav",
+      "CachePath": "CA/{CAECF63B-C079-682A-805A-7D943BF8AE87}.wem"
+     },
      {
       "Id": "564500536",
       "Language": "SFX",
@@ -25,6 +33,18 @@
      }
     ],
     "Events": [
+     {
+      "Id": "1501626447",
+      "Name": "BGM1_Loop",
+      "ObjectPath": "\\Events\\Default Work Unit\\BGM1_Loop",
+      "GUID": "{C689FC60-A86F-45DB-9D9D-7EA833831C16}",
+      "DurationType": "Infinite",
+      "MediaRefs": [
+       {
+        "Id": "138068062"
+       }
+      ]
+     },
      {
       "Id": "691006007",
       "Name": "Loop",
@@ -40,6 +60,6 @@
     ]
    }
   ],
-  "FileHash": "{C7E8B582-1FEE-C693-F378-D0109F900794}"
+  "FileHash": "{E2E08BB9-8477-3E1B-FDBC-23FFD27B8D35}"
  }
 }

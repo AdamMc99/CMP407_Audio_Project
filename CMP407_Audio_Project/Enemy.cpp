@@ -1,12 +1,12 @@
 #include "Enemy.h"
 #include <cmath>
 
-Enemy::Enemy(sf::Vector2f spawnPos, sf::Vector2f targetPos) : _active(true)
+Enemy::Enemy(sf::Vector2f spawnPos, sf::Vector2f targetPos) : m_active(true)
 {
-	_enemyShape.setRadius(15.f);
-	_enemyShape.setOrigin({ 15.f, 15.f });
-	_enemyShape.setFillColor(sf::Color::Red);
-	_enemyShape.setPosition(spawnPos);
+	m_enemyShape.setRadius(15.f);
+	m_enemyShape.setOrigin({ 15.f, 15.f });
+	m_enemyShape.setFillColor(sf::Color::Red);
+	m_enemyShape.setPosition(spawnPos);
 
 	// Calculate direction towards player
 	sf::Vector2f direction = targetPos - spawnPos;
@@ -15,24 +15,24 @@ Enemy::Enemy(sf::Vector2f spawnPos, sf::Vector2f targetPos) : _active(true)
 	// Normalise and multiply by speed
 	if (length != 0) 
 	{
-		_velocity = (direction / length) * _speed;
+		m_velocity = (direction / length) * m_speed;
 	}
 	else 
 	{
-		_velocity = { 0.f, 0.f };
+		m_velocity = { 0.f, 0.f };
 	}
 }
 
-void Enemy::UpdateVisibility(const Player& player, float darknessFactor)
+void Enemy::updateVisibility(const Player& player, float darknessFactor)
 {
-    sf::Vector2f playerPos = player.GetPosition();
-    sf::Vector2f enemyPos = _enemyShape.getPosition();
+    sf::Vector2f playerPos = player.getPosition();
+    sf::Vector2f enemyPos = m_enemyShape.getPosition();
 
     float dx = enemyPos.x - playerPos.x;
     float dy = enemyPos.y - playerPos.y;
 
     float distance = std::sqrt(dx * dx + dy * dy);
-    float lightRange = player.GetLightRange();
+    float lightRange = player.getLightRange();
     float flashlightAlpha = 0.f;
 
 
@@ -40,7 +40,7 @@ void Enemy::UpdateVisibility(const Player& player, float darknessFactor)
     {
         float enemyAngleRad = std::atan2(dy, dx);
         float enemyAngleDeg = enemyAngleRad * (180 / 3.14159265);
-        float playerAngleDeg = player.GetRotation();
+        float playerAngleDeg = player.getRotation();
 
         // Get the absolute difference between angles
         float angleDiff = std::abs(playerAngleDeg - enemyAngleDeg);
@@ -49,7 +49,7 @@ void Enemy::UpdateVisibility(const Player& player, float darknessFactor)
             angleDiff = 360.f - angleDiff;
         }
 
-        float viewAngle = player.GetFOV();
+        float viewAngle = player.getFOV();
 
         float angularFadeInfo = 15.f;
         float angleFactor = (viewAngle - angleDiff) / angularFadeInfo;
@@ -66,19 +66,19 @@ void Enemy::UpdateVisibility(const Player& player, float darknessFactor)
     float dayLightAlpha = 255.f;
     float finalAlpha = (flashlightAlpha * darknessFactor) + (dayLightAlpha * (1.f - darknessFactor));
 
-    sf::Color colour = _enemyShape.getFillColor();
+    sf::Color colour = m_enemyShape.getFillColor();
     colour.a = finalAlpha;
-    _enemyShape.setFillColor(colour);
+    m_enemyShape.setFillColor(colour);
 }
 
-void Enemy:: Update(float dt)
+void Enemy:: update(float dt)
 {
-	_enemyShape.move(_velocity * dt);
+	m_enemyShape.move(m_velocity * dt);
 }
 
-void Enemy::Render(sf::RenderWindow* window) 
+void Enemy::render(sf::RenderWindow* window) 
 {
-	window->draw(_enemyShape);
+	window->draw(m_enemyShape);
 }
 
 

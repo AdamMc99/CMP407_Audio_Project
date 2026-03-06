@@ -6,15 +6,15 @@ public:
 	HealthBar(float maxHealth);
 	~HealthBar(){}
 
-	void Update(float currentHealth);
-	void Render(sf::RenderWindow* window);
+	void update(float currentHealth);
+	void render(sf::RenderWindow* window);
 
 private:
-	float _maxHealth;
-	float _currentHealth;
-	sf::Vector2f _barSize;
-	sf::RectangleShape _backBar;
-	sf::RectangleShape _frontBar;
+	float m_maxHealth;
+	float m_currentHealth;
+	sf::Vector2f m_barSize;
+	sf::RectangleShape m_backBar;
+	sf::RectangleShape m_frontBar;
 
 };
 

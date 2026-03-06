@@ -1,17 +1,14 @@
+/*
+* CREDITS
+* Start menu music pack - https://void1gaming.itch.io/free-game-menu-music-pack
+*/
+
 #include <SFML/Graphics.hpp>
 #include "DynamicMain.h"
 #include "MainMenu.h"
 #include "WwiseWrapper.h"
 #include <iostream>
 
-
-/*
-* THINGS TO ADD ----------
-* Easter egg idea. Make the enemy sprite have a 1-100 chance of being williams head instead of a circle.
-* 
-* 
-* 
-*/
 
 int main() 
 {
@@ -59,10 +56,10 @@ int main()
 			}
 		}
 
-		dynamicMain.Update(deltaTime);
+		dynamicMain.update(deltaTime);
 
-		window.clear(dynamicMain.GetBackgroundColour());
-		dynamicMain.Render();
+		window.clear(dynamicMain.getBackgroundColour());
+		dynamicMain.render();
 		window.display();
 
 	}

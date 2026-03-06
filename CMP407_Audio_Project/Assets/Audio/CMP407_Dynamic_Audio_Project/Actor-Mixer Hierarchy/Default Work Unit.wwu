@@ -31,6 +31,31 @@
 						<ActiveSource Name="Loop" ID="{1AA8B5B6-3E9B-47B0-A705-0ED2C607BF1D}" Platform="Linked"/>
 					</ActiveSourceList>
 				</Sound>
+				<Sound Name="BGM1" ID="{DAE76CA1-7C93-4FB5-8201-F3575F21366B}" ShortID="1050044460">
+					<PropertyList>
+						<Property Name="IsLoopingEnabled" Type="bool" Value="True"/>
+					</PropertyList>
+					<ReferenceList>
+						<Reference Name="Conversion">
+							<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{669ADB48-313C-4DCA-8CA0-E32EE96D2EDF}"/>
+						</Reference>
+						<Reference Name="OutputBus">
+							<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{7C8C8091-D1EF-4476-B98D-28E1AE9B068C}"/>
+						</Reference>
+					</ReferenceList>
+					<ChildrenList>
+						<AudioFileSource Name="7_ Strange" ID="{2DBB9BE0-B87A-4189-8567-A9A391442CD0}">
+							<Language>SFX</Language>
+							<AudioFile>7. Strange.wav</AudioFile>
+							<MediaIDList>
+								<MediaID ID="138068062"/>
+							</MediaIDList>
+						</AudioFileSource>
+					</ChildrenList>
+					<ActiveSourceList>
+						<ActiveSource Name="7_ Strange" ID="{2DBB9BE0-B87A-4189-8567-A9A391442CD0}" Platform="Linked"/>
+					</ActiveSourceList>
+				</Sound>
 			</ChildrenList>
 		</WorkUnit>
 	</AudioObjects>

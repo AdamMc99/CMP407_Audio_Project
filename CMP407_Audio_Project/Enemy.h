@@ -7,22 +7,22 @@ public:
 	Enemy(sf::Vector2f spawnPos, sf::Vector2f targetPos);
 	~Enemy() {}
 
-	void Update(float dt);
+	void update(float dt);
 	// Passing window in here, but main will decide if its rendered based on the lighting
-	void Render(sf::RenderWindow* window);
+	void render(sf::RenderWindow* window);
 
-	sf::Vector2f GetPosition() const { return _enemyShape.getPosition(); }
-	void SetPosition(sf::Vector2f position) { _enemyShape.setPosition(position); }
+	sf::Vector2f getPosition() const { return m_enemyShape.getPosition(); }
+	void setPosition(sf::Vector2f position) { m_enemyShape.setPosition(position); }
 
-	void UpdateVisibility(const Player& player, float darknessFactor);
+	void updateVisibility(const Player& player, float darknessFactor);
 	
-	bool IsActive() const { return _active; }
-	void Destroy() { _active = false; }
+	bool isActive() const { return m_active; }
+	void destroy() { m_active = false; }
 
 private:
-	sf::CircleShape _enemyShape;
-	sf::Vector2f _velocity;
-	bool _active;
-	float _speed = 100.f;
+	sf::CircleShape m_enemyShape;
+	sf::Vector2f m_velocity;
+	bool m_active;
+	float m_speed = 100.f;
 };
 
