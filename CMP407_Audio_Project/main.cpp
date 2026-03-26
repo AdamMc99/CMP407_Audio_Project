@@ -28,7 +28,7 @@ int main()
     window.setFramerateLimit(60);
 
     MainMenu menu(font, wwise);
-    DynamicMain dynamicMain(&window, &font);
+    DynamicMain dynamicMain(&window, &font, wwise);
 
     menu.initAudio();
 
@@ -54,7 +54,13 @@ int main()
                 if (keyPressed->scancode == sf::Keyboard::Scancode::Escape)
                 {
                     // If in game or settings, go back to menu. If in menu, exit.
-                    if (currentState == AppState::Game || currentState == AppState::Settings) {
+                    if (currentState == AppState::Game) {
+                        dynamicMain.stopAudio();
+                        menu.playAudio();
+                        currentState = AppState::MainMenu;
+                    }
+                    else if (currentState == AppState::Settings) 
+                    {
                         currentState = AppState::MainMenu;
                     }
                     else {
@@ -74,6 +80,7 @@ int main()
                         if (selection == MenuSelection::StartGame) 
                         {
                             menu.stopAudio();
+                            dynamicMain.playAudio();
                             currentState = AppState::Game;
                         }
                         else if (selection == MenuSelection::Settings) 
@@ -120,10 +127,11 @@ int main()
 
         // --- AUDIO ENGINE ---
         // Render audio once per frame regardless of state
-        AK::SoundEngine::RenderAudio();
+        wwise.update();
 
         window.display();
     }
 
+    wwise.terminateSoundEngine();
     return 0;
 }

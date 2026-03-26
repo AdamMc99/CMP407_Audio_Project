@@ -56,6 +56,76 @@
 						<ActiveSource Name="7_ Strange" ID="{2DBB9BE0-B87A-4189-8567-A9A391442CD0}" Platform="Linked"/>
 					</ActiveSourceList>
 				</Sound>
+				<Folder Name="Buttons" ID="{B1B3BCD5-F79A-4F61-9CF3-B29349BDE2D9}" ShortID="991217481">
+					<ChildrenList>
+						<Sound Name="ButtonForward" ID="{2FEEB966-DF1E-46D0-BBD8-10D5E7376A78}" ShortID="750841755">
+							<ReferenceList>
+								<Reference Name="Conversion">
+									<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{669ADB48-313C-4DCA-8CA0-E32EE96D2EDF}"/>
+								</Reference>
+								<Reference Name="OutputBus">
+									<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{7C8C8091-D1EF-4476-B98D-28E1AE9B068C}"/>
+								</Reference>
+							</ReferenceList>
+							<ChildrenList>
+								<AudioFileSource Name="ButtonBeep_Forward" ID="{E1F4CE1D-B7A7-42CA-BFDA-36EADF0E51F6}">
+									<Language>SFX</Language>
+									<AudioFile>ButtonBeep_Forward.wav</AudioFile>
+									<MediaIDList>
+										<MediaID ID="532315483"/>
+									</MediaIDList>
+								</AudioFileSource>
+							</ChildrenList>
+							<ActiveSourceList>
+								<ActiveSource Name="ButtonBeep_Forward" ID="{E1F4CE1D-B7A7-42CA-BFDA-36EADF0E51F6}" Platform="Linked"/>
+							</ActiveSourceList>
+						</Sound>
+						<Sound Name="ButtonBack" ID="{62E0246E-87C6-4A40-B574-7059A4A23159}" ShortID="66656993">
+							<ReferenceList>
+								<Reference Name="Conversion">
+									<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{669ADB48-313C-4DCA-8CA0-E32EE96D2EDF}"/>
+								</Reference>
+								<Reference Name="OutputBus">
+									<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{7C8C8091-D1EF-4476-B98D-28E1AE9B068C}"/>
+								</Reference>
+							</ReferenceList>
+							<ChildrenList>
+								<AudioFileSource Name="ButtonBeep_Back" ID="{1FE498D1-96FA-45D7-99F2-256C7AC2863E}">
+									<Language>SFX</Language>
+									<AudioFile>ButtonBeep_Back.wav</AudioFile>
+									<MediaIDList>
+										<MediaID ID="699457010"/>
+									</MediaIDList>
+								</AudioFileSource>
+							</ChildrenList>
+							<ActiveSourceList>
+								<ActiveSource Name="ButtonBeep_Back" ID="{1FE498D1-96FA-45D7-99F2-256C7AC2863E}" Platform="Linked"/>
+							</ActiveSourceList>
+						</Sound>
+						<Sound Name="ButtonHover" ID="{F03ADA12-C7DF-471D-98B4-6D54B4DB129F}" ShortID="86675998">
+							<ReferenceList>
+								<Reference Name="Conversion">
+									<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{669ADB48-313C-4DCA-8CA0-E32EE96D2EDF}"/>
+								</Reference>
+								<Reference Name="OutputBus">
+									<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{7C8C8091-D1EF-4476-B98D-28E1AE9B068C}"/>
+								</Reference>
+							</ReferenceList>
+							<ChildrenList>
+								<AudioFileSource Name="ButtonHover" ID="{0EE28FCE-E048-4B28-B0C5-E2EBD6CE2397}">
+									<Language>SFX</Language>
+									<AudioFile>ButtonHover.wav</AudioFile>
+									<MediaIDList>
+										<MediaID ID="885981853"/>
+									</MediaIDList>
+								</AudioFileSource>
+							</ChildrenList>
+							<ActiveSourceList>
+								<ActiveSource Name="ButtonHover" ID="{0EE28FCE-E048-4B28-B0C5-E2EBD6CE2397}" Platform="Linked"/>
+							</ActiveSourceList>
+						</Sound>
+					</ChildrenList>
+				</Folder>
 			</ChildrenList>
 		</WorkUnit>
 	</AudioObjects>

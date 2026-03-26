@@ -27,6 +27,15 @@ public:
 
 	///	Cleans up Wwise before we quit the program.
 	void terminateSoundEngine();
+
+	// --------- MY STUFF -------------------
+	void update();
+	bool loadBank(const std::wstring& bankName);
+	void postEvent(const std::string& eventName, uint64_t gameObjectID);
+	void registerGameObject(uint64_t gameObjectID, const std::string& objectName);
+	void unregisterGameObject(uint64_t gameObjectID);
+	void stopAll(uint64_t gameObjectID = 0);
+
 private:
 	///	Low level I/O implementation for file loading.
 	/*!

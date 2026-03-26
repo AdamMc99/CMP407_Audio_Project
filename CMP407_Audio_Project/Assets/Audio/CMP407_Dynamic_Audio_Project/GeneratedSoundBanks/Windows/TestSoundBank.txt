@@ -1,8 +1,14 @@
 Event	ID	Name			Wwise Object Path	Notes
 	691006007	Loop			\Default Work Unit\Loop	
+	865310804	ButtonForward			\Default Work Unit\Buttons\ButtonForward	
 	1501626447	BGM1_Loop			\Default Work Unit\BGM1_Loop	
+	3035572085	ButtonHover			\Default Work Unit\Buttons\ButtonHover	
+	3110531800	ButtonBack			\Default Work Unit\Buttons\ButtonBack	
 
 In Memory Audio	ID	Name	Audio source file		Wwise Object Path	Notes	Data Size
-	138068062	BGM1	D:\Visual Studio Programs\CMP407 Project\CMP407_Audio_Project\CMP407_Audio_Project\Assets\Audio\CMP407_Dynamic_Audio_Project\.cache\CA\{CAECF63B-C079-682A-805A-7D943BF8AE87}.wem		\Actor-Mixer Hierarchy\Default Work Unit\BGM1		15631896
-	564500536	Loop	D:\Visual Studio Programs\CMP407 Project\CMP407_Audio_Project\CMP407_Audio_Project\Assets\Audio\CMP407_Dynamic_Audio_Project\.cache\69\{69FBD51D-9C24-895D-D604-ADDD872C2F9F}.wem		\Actor-Mixer Hierarchy\Default Work Unit\Loop		384096
+	138068062	BGM1	C:\Users\2202613\Documents\GitHub\CMP407_Audio_Project\CMP407_Audio_Project\Assets\Audio\CMP407_Dynamic_Audio_Project\.cache\CA\{CAECF63B-C079-682A-805A-7D943BF8AE87}.wem		\Actor-Mixer Hierarchy\Default Work Unit\BGM1		15631896
+	532315483	ButtonForward	C:\Users\2202613\Documents\GitHub\CMP407_Audio_Project\CMP407_Audio_Project\Assets\Audio\CMP407_Dynamic_Audio_Project\.cache\33\{33D86999-F33D-E0AA-A28B-EECA85A16145}.wem		\Actor-Mixer Hierarchy\Default Work Unit\Buttons\ButtonForward		50596
+	564500536	Loop	C:\Users\2202613\Documents\GitHub\CMP407_Audio_Project\CMP407_Audio_Project\Assets\Audio\CMP407_Dynamic_Audio_Project\.cache\69\{69FBD51D-9C24-895D-D604-ADDD872C2F9F}.wem		\Actor-Mixer Hierarchy\Default Work Unit\Loop		384096
+	699457010	ButtonBack	C:\Users\2202613\Documents\GitHub\CMP407_Audio_Project\CMP407_Audio_Project\Assets\Audio\CMP407_Dynamic_Audio_Project\.cache\67\{671F23C1-0328-C38A-EEFC-FF379224B394}.wem		\Actor-Mixer Hierarchy\Default Work Unit\Buttons\ButtonBack		51884
+	885981853	ButtonHover	C:\Users\2202613\Documents\GitHub\CMP407_Audio_Project\CMP407_Audio_Project\Assets\Audio\CMP407_Dynamic_Audio_Project\.cache\E3\{E36E4C7D-A355-00ED-F42F-45A14397A01D}.wem		\Actor-Mixer Hierarchy\Default Work Unit\Buttons\ButtonHover		54272
 

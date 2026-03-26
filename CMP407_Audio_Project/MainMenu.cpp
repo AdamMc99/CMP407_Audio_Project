@@ -18,9 +18,22 @@ Button::Button(const sf::Font& font, const std::string& text, sf::Vector2f pos, 
 	btnText.setPosition({ pos.x + size.x / 2.f, pos.y + size.y / 2.f });
 }
 
-void Button::updateHover(sf::Vector2f mousePos)
+bool Button::updateHover(sf::Vector2f mousePos)
 {
-	btnShape.setOutlineThickness(contains(mousePos) ? 2.f : 0.f);
+	bool isCurrentlyHovering = contains(mousePos);
+
+	if (isCurrentlyHovering && !isHovered) 
+	{
+		isHovered = true;
+		btnShape.setOutlineThickness(2.0f);
+		return true;
+	}
+	else if (!isCurrentlyHovering && isHovered) 
+	{
+		isHovered = false;
+		btnShape.setOutlineThickness(0.0f);
+	}
+	return false;
 }
 
 bool Button::contains(sf::Vector2f mousePos) const
@@ -45,18 +58,31 @@ MainMenu::MainMenu(sf::Font& font, WwiseWrapper& wwise) : m_font(font), m_wwise(
 MenuSelection MainMenu::checkClick(sf::Vector2f mousePos)
 {
 	if (m_startBtn.contains(mousePos))
+	{
+		m_wwise.postEvent("ButtonForward", m_menuUIAudioID);
 		return MenuSelection::StartGame;
+	}
 	if (m_settingsBtn.contains(mousePos))
+	{
+		m_wwise.postEvent("ButtonForward", m_menuUIAudioID);
 		return MenuSelection::Settings;
+	}
 	if (m_quitBtn.contains(mousePos))
+	{
 		return MenuSelection::Quit;
+	}
+
+	return MenuSelection::None;
 }
 
 void MainMenu::updateHover(sf::Vector2f mousePos)
 {
-	m_startBtn.updateHover(mousePos);
-	m_settingsBtn.updateHover(mousePos);
-	m_quitBtn.updateHover(mousePos);
+	if (m_startBtn.updateHover(mousePos) ||
+		m_settingsBtn.updateHover(mousePos) ||
+		m_quitBtn.updateHover(mousePos)) 
+	{
+		m_wwise.postEvent("ButtonHover", m_menuUIAudioID);
+	}
 }
 
 void MainMenu::render(sf::RenderWindow& window)
@@ -75,26 +101,30 @@ bool MainMenu::initAudio()
 	}
 
 	AkBankID bankID;
-	if (AK::SoundEngine::LoadBank(AKTEXT("TestSoundBank"), bankID) != AK_Success) 
+	if (!m_wwise.loadBank(L"TestSoundBank.bnk"))
 	{
 		std::cerr << "Could not load soundbank - MainMenu.cpp - initAudio()" << std::endl;
 		m_wwise.terminateSoundEngine();
 		return false;
 	}
 
-	AK::SoundEngine::RegisterGameObj(m_menuAudioID);
-	AK::SoundEngine::PostEvent(AKTEXT("BGM1_Loop"), m_menuAudioID);
+	m_wwise.registerGameObject(m_menuUIAudioID, "Menu UI Audio");
+
+	playAudio();
 
 	return true;
 }
 
+void MainMenu::playAudio() 
+{
+	m_wwise.registerGameObject(m_menuAudioID, "Menu BGM Audio");
+	m_wwise.postEvent("BGM1_Loop", m_menuAudioID);
+}
+
 void MainMenu::stopAudio()
 {
-	// Until i make an event to stop the loop, use the stop all function.
-	//AK::SoundEngine::PostEvent(AKTEXT("Stop_Loop"), m_menuAudioID);
-	AK::SoundEngine::StopAll();
-	AK::SoundEngine::UnregisterGameObj(m_menuAudioID);
-	m_wwise.terminateSoundEngine();
+	m_wwise.stopAll(m_menuAudioID);
+	m_wwise.unregisterGameObject(m_menuAudioID);
 }
 
 void MainMenu::handleEvents(sf::RenderWindow& window, MenuSelection& selection)

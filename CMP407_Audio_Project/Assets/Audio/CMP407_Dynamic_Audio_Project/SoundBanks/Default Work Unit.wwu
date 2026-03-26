@@ -5,7 +5,11 @@
 			<ChildrenList>
 				<SoundBank Name="TestSoundBank" ID="{B15A0551-23EE-4A4E-A149-9FB85C6FBDC1}">
 					<ObjectInclusionList>
+						<ObjectRef Name="ButtonForward" ID="{ADA7F063-F604-41B2-869E-077B3191D97D}" WorkUnitID="{FF88542B-3F69-4B23-877F-B77A5F70818E}" Origin="Manual" Filter="7"/>
 						<ObjectRef Name="Loop" ID="{5305C136-602B-4268-99B8-F83434F5A28D}" WorkUnitID="{FF88542B-3F69-4B23-877F-B77A5F70818E}" Origin="Manual" Filter="7"/>
+						<ObjectRef Name="BGM1_Loop" ID="{C689FC60-A86F-45DB-9D9D-7EA833831C16}" WorkUnitID="{FF88542B-3F69-4B23-877F-B77A5F70818E}" Origin="Manual" Filter="7"/>
+						<ObjectRef Name="ButtonHover" ID="{9E22F1FD-15C3-45F1-8C02-442F5F964DA5}" WorkUnitID="{FF88542B-3F69-4B23-877F-B77A5F70818E}" Origin="Manual" Filter="7"/>
+						<ObjectRef Name="ButtonBack" ID="{D0827EFE-573C-4F19-856E-827872CC78F4}" WorkUnitID="{FF88542B-3F69-4B23-877F-B77A5F70818E}" Origin="Manual" Filter="7"/>
 					</ObjectInclusionList>
 					<ObjectExclusionList/>
 					<GameSyncExclusionList/>

@@ -25,6 +25,43 @@
 						</Action>
 					</ChildrenList>
 				</Event>
+				<Folder Name="Buttons" ID="{079399EC-910E-4553-AC26-9C4E9F00A794}" ShortID="883672437">
+					<ChildrenList>
+						<Event Name="ButtonForward" ID="{ADA7F063-F604-41B2-869E-077B3191D97D}">
+							<ChildrenList>
+								<Action Name="" ID="{201F2AAB-6370-4ABE-BAC1-DFAEE6063E16}" ShortID="388675389">
+									<ReferenceList>
+										<Reference Name="Target">
+											<ObjectRef Name="ButtonForward" ID="{2FEEB966-DF1E-46D0-BBD8-10D5E7376A78}" WorkUnitID="{D0D49B17-3773-4CD1-9978-4E79DA4F24BA}"/>
+										</Reference>
+									</ReferenceList>
+								</Action>
+							</ChildrenList>
+						</Event>
+						<Event Name="ButtonBack" ID="{D0827EFE-573C-4F19-856E-827872CC78F4}">
+							<ChildrenList>
+								<Action Name="" ID="{63E5A3E7-3168-4FE2-B4A0-D06E00259A85}" ShortID="819289106">
+									<ReferenceList>
+										<Reference Name="Target">
+											<ObjectRef Name="ButtonBack" ID="{62E0246E-87C6-4A40-B574-7059A4A23159}" WorkUnitID="{D0D49B17-3773-4CD1-9978-4E79DA4F24BA}"/>
+										</Reference>
+									</ReferenceList>
+								</Action>
+							</ChildrenList>
+						</Event>
+						<Event Name="ButtonHover" ID="{9E22F1FD-15C3-45F1-8C02-442F5F964DA5}">
+							<ChildrenList>
+								<Action Name="" ID="{229D5719-5EA9-4FC7-94BC-26B2FDBEC425}" ShortID="635300997">
+									<ReferenceList>
+										<Reference Name="Target">
+											<ObjectRef Name="ButtonHover" ID="{F03ADA12-C7DF-471D-98B4-6D54B4DB129F}" WorkUnitID="{D0D49B17-3773-4CD1-9978-4E79DA4F24BA}"/>
+										</Reference>
+									</ReferenceList>
+								</Action>
+							</ChildrenList>
+						</Event>
+					</ChildrenList>
+				</Folder>
 			</ChildrenList>
 		</WorkUnit>
 	</Events>

@@ -10,7 +10,7 @@
     "Type": "User",
     "GUID": "{B15A0551-23EE-4A4E-A149-9FB85C6FBDC1}",
     "Language": "SFX",
-    "Hash": "{B8F0C372-A8D2-E7C5-B80C-EC343F2F5A99}",
+    "Hash": "{F759C76A-1BB1-8096-A310-8819DE24307B}",
     "ObjectPath": "\\SoundBanks\\Default Work Unit\\TestSoundBank",
     "ShortName": "TestSoundBank",
     "Path": "TestSoundBank.bnk",
@@ -24,12 +24,36 @@
       "CachePath": "CA/{CAECF63B-C079-682A-805A-7D943BF8AE87}.wem"
      },
      {
+      "Id": "532315483",
+      "Language": "SFX",
+      "Streaming": "false",
+      "Location": "Memory",
+      "ShortName": "ButtonBeep_Forward.wav",
+      "CachePath": "33/{33D86999-F33D-E0AA-A28B-EECA85A16145}.wem"
+     },
+     {
       "Id": "564500536",
       "Language": "SFX",
       "Streaming": "false",
       "Location": "Memory",
       "ShortName": "Loop.wav",
       "CachePath": "69/{69FBD51D-9C24-895D-D604-ADDD872C2F9F}.wem"
+     },
+     {
+      "Id": "699457010",
+      "Language": "SFX",
+      "Streaming": "false",
+      "Location": "Memory",
+      "ShortName": "ButtonBeep_Back.wav",
+      "CachePath": "67/{671F23C1-0328-C38A-EEFC-FF379224B394}.wem"
+     },
+     {
+      "Id": "885981853",
+      "Language": "SFX",
+      "Streaming": "false",
+      "Location": "Memory",
+      "ShortName": "ButtonHover.wav",
+      "CachePath": "E3/{E36E4C7D-A355-00ED-F42F-45A14397A01D}.wem"
      }
     ],
     "Events": [
@@ -42,6 +66,48 @@
       "MediaRefs": [
        {
         "Id": "138068062"
+       }
+      ]
+     },
+     {
+      "Id": "3110531800",
+      "Name": "ButtonBack",
+      "ObjectPath": "\\Events\\Default Work Unit\\Buttons\\ButtonBack",
+      "GUID": "{D0827EFE-573C-4F19-856E-827872CC78F4}",
+      "DurationType": "OneShot",
+      "DurationMin": "0.2697396",
+      "DurationMax": "0.2697396",
+      "MediaRefs": [
+       {
+        "Id": "699457010"
+       }
+      ]
+     },
+     {
+      "Id": "865310804",
+      "Name": "ButtonForward",
+      "ObjectPath": "\\Events\\Default Work Unit\\Buttons\\ButtonForward",
+      "GUID": "{ADA7F063-F604-41B2-869E-077B3191D97D}",
+      "DurationType": "OneShot",
+      "DurationMin": "0.26303124",
+      "DurationMax": "0.26303124",
+      "MediaRefs": [
+       {
+        "Id": "532315483"
+       }
+      ]
+     },
+     {
+      "Id": "3035572085",
+      "Name": "ButtonHover",
+      "ObjectPath": "\\Events\\Default Work Unit\\Buttons\\ButtonHover",
+      "GUID": "{9E22F1FD-15C3-45F1-8C02-442F5F964DA5}",
+      "DurationType": "OneShot",
+      "DurationMin": "0.28216666",
+      "DurationMax": "0.28216666",
+      "MediaRefs": [
+       {
+        "Id": "885981853"
        }
       ]
      },
@@ -60,6 +126,6 @@
     ]
    }
   ],
-  "FileHash": "{E2E08BB9-8477-3E1B-FDBC-23FFD27B8D35}"
+  "FileHash": "{A0969278-EEFF-D160-24B2-8018587F3B89}"
  }
 }

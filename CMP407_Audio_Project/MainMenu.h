@@ -9,9 +9,10 @@ struct Button
 {
 	sf::RectangleShape btnShape;
 	sf::Text btnText;
+	bool isHovered = false;
 
 	Button(const sf::Font& font, const std::string& text, sf::Vector2f pos, sf::Vector2f size, sf::Color colour);
-	void updateHover(sf::Vector2f mousePos);
+	bool updateHover(sf::Vector2f mousePos);
 	bool contains(sf::Vector2f mousePos) const;
 	void draw(sf::RenderWindow& window) const;
 };
@@ -20,17 +21,17 @@ class MainMenu
 {
 public:
 	MainMenu(sf::Font& font, WwiseWrapper& wwise);
-
-	MenuSelection checkClick(sf::Vector2f mousePos);
-	void updateHover(sf::Vector2f mousePos);
-	
+		
 	// wwise helpers
 	bool initAudio();
+	void playAudio();
 	void stopAudio();
 
 	// UI helpers
 	void handleEvents(sf::RenderWindow& window, MenuSelection& selection);
 	void render(sf::RenderWindow& window);
+	MenuSelection checkClick(sf::Vector2f mousePos);
+	void updateHover(sf::Vector2f mousePos);
 
 private:
 	// data
@@ -43,6 +44,7 @@ private:
 	Button m_quitBtn;
 
 	// Wwise ID for menu music
-	static constexpr uint64_t m_menuAudioID = 1;
+	static constexpr uint64_t m_menuAudioID = 100;
+	static constexpr uint64_t m_menuUIAudioID = 101;
 };
 

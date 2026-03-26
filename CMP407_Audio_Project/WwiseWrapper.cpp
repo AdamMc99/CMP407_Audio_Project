@@ -161,3 +161,46 @@ void WwiseWrapper::terminateSoundEngine()
 	// Terminate the Memory Manager
 	AK::MemoryMgr::Term();
 }
+
+void WwiseWrapper::update() 
+{
+	AK::SoundEngine::RenderAudio();
+}
+
+bool WwiseWrapper::loadBank(const std::wstring& bankName)
+{
+	AkBankID bankID;
+	if (AK::SoundEngine::LoadBank(bankName.c_str(), bankID) != AK_Success) 
+	{
+		assert(!"Could not load sound bank!");
+		return false;
+	}
+	return true;
+}
+
+void WwiseWrapper::postEvent(const std::string& eventName, uint64_t gameObjectID) 
+{
+	AK::SoundEngine::PostEvent(eventName.c_str(), gameObjectID);
+}
+
+void WwiseWrapper::registerGameObject(uint64_t gameObjectID, const std::string& objectName)
+{
+	AK::SoundEngine::RegisterGameObj(gameObjectID, objectName.c_str());
+}
+
+void WwiseWrapper::unregisterGameObject(uint64_t gameObjectID)
+{
+	AK::SoundEngine::UnregisterGameObj(gameObjectID);
+}
+
+void WwiseWrapper::stopAll(uint64_t gameObjectID)
+{
+	if (gameObjectID == 0) 
+	{
+		AK::SoundEngine::StopAll();
+	}
+	else 
+	{
+		AK::SoundEngine::StopAll(gameObjectID);
+	}
+}

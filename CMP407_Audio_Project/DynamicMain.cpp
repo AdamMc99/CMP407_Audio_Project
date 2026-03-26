@@ -7,7 +7,8 @@ constexpr float PI = 3.14159265f;
 constexpr float RAD_TO_DEG = 180.f / PI;
 constexpr float DEG_TO_RAD = PI / 180.f;
 
-DynamicMain::DynamicMain(sf::RenderWindow* window, sf::Font* font) : m_window(window), m_player(window), m_font(font), m_debugText(*font)
+DynamicMain::DynamicMain(sf::RenderWindow* window, sf::Font* font, WwiseWrapper& wwise) 
+	: m_window(window), m_player(window), m_font(font), m_debugText(*font), m_wwise(wwise)
 {
 	m_window->setMouseCursorVisible(true);
 
@@ -192,4 +193,16 @@ void DynamicMain::render()
 	m_healthBar->render(m_window);
 
 	if (m_showDebug) m_window->draw(m_debugText);
+}
+
+void DynamicMain::playAudio() 
+{
+	m_wwise.registerGameObject(m_gameAudioID, "Game Audio");
+	m_wwise.postEvent("Loop", m_gameAudioID);
+}
+
+void DynamicMain::stopAudio() 
+{
+	m_wwise.stopAll(m_gameAudioID);
+	m_wwise.unregisterGameObject(m_gameAudioID);
 }

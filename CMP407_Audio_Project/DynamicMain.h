@@ -5,12 +5,16 @@
 #include "Enemy.h"
 #include "HealthBar.h"
 #include "IntensityManager.h"
+#include "WwiseWrapper.h"
 
 class DynamicMain
 {
 public:
-	DynamicMain(sf::RenderWindow* window, sf::Font* font);
+	DynamicMain(sf::RenderWindow* window, sf::Font* font, WwiseWrapper& wwise);
 	~DynamicMain() {}
+
+	void playAudio();
+	void stopAudio();
 
 	sf::Color getBackgroundColour() const;
 
@@ -24,6 +28,8 @@ private:
 	HealthBar* m_healthBar;
 	sf::Font* m_font;
 	sf::Text m_debugText;
+	WwiseWrapper& m_wwise;
+	uint64_t m_gameAudioID = 200;
 
 	const float START_SPAWN_RATE = 3.f; // Longest spawn speed (3.0s)
 	const float MIN_SPAWN_RATE = 0.25f; // Fastest spawn speed (0.25s) 
