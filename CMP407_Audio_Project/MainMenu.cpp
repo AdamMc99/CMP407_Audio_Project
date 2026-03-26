@@ -36,149 +36,27 @@ void Button::draw(sf::RenderWindow& window) const
 
 // -------------- MENU -----------------
 MainMenu::MainMenu(sf::Font& font, WwiseWrapper& wwise) : m_font(font), m_wwise(wwise),
-	m_startBtn(m_font, "Start Game", { 100.f, 30.f }, { 200.f, 50.f }, sf::Color(100, 255, 100)),
-	m_settingsBtn(m_font, "Settings", { 100.f, 120.f }, { 200.f, 50.f }, sf::Color(100, 200, 255)),
-	m_quitBtn(m_font, "Quit Game", { 100.f, 210.f }, { 200.f, 50.f }, sf::Color(255, 100, 100))
+	m_startBtn(m_font, "Start Game", { 400, 30.f }, { 200.f, 50.f }, sf::Color(100, 255, 100)),
+	m_settingsBtn(m_font, "Settings", { 400.f, 120.f }, { 200.f, 50.f }, sf::Color(100, 200, 255)),
+	m_quitBtn(m_font, "Quit Game", { 400.f, 210.f }, { 200.f, 50.f }, sf::Color(255, 100, 100))
 {
 }
 
-MenuSelection MainMenu::run()
+MenuSelection MainMenu::checkClick(sf::Vector2f mousePos)
 {
-	if (!initAudio()) return MenuSelection::None;
-
-	sf::RenderWindow window(sf::VideoMode({ 400,300 }), "Main Menu");
-	window.setFramerateLimit(60);
-
-	MenuSelection selection = MenuSelection::None;
-
-	while (window.isOpen())
-	{
-		sf::Vector2f mousePos = window.mapPixelToCoords(sf::Mouse::getPosition(window));
-
-		// Events -----
-		while (const std::optional event = window.pollEvent()) 
-		{
-			if (event->is<sf::Event::Closed>()) 
-			{
-				window.close(); // Selection stays None
-			}
-
-			if (const auto* mousePressed = event->getIf<sf::Event::MouseButtonPressed>()) 
-			{
-				if (mousePressed->button == sf::Mouse::Button::Left) 
-				{
-					if (m_startBtn.contains(mousePos)) 
-					{
-						selection = MenuSelection::StartGame;
-						window.close();
-					}
-					else if(m_settingsBtn.contains(mousePos))
-					{
-						if (!m_settingsOpen) 
-						{
-							m_settingsOpen = true;
-							// Settings is a seperate window.
-							// Menu lloop resumes when it closes
-							showSettings();
-							m_settingsOpen = false;
-
-							// Flush any events that were queued up while settings were open
-							while (window.pollEvent().has_value()) {}
-						}
-
-					}
-					else if (m_quitBtn.contains(mousePos)) 
-					{
-						selection = MenuSelection::Quit;
-						window.close();
-					}
-				}
-			}
-			AK::SoundEngine::RenderAudio();
-		}
-		// Hover highlights
-		m_startBtn.updateHover(mousePos);
-		m_settingsBtn.updateHover(mousePos);
-		m_quitBtn.updateHover(mousePos);
-
-		// Render
-		window.clear(sf::Color::Cyan);
-		render(window);
-		window.display();
-	}
-
-	// Menu music should stop here
-	stopAudio();
-	return selection;
+	if (m_startBtn.contains(mousePos))
+		return MenuSelection::StartGame;
+	if (m_settingsBtn.contains(mousePos))
+		return MenuSelection::Settings;
+	if (m_quitBtn.contains(mousePos))
+		return MenuSelection::Quit;
 }
 
-void MainMenu::showSettings()
+void MainMenu::updateHover(sf::Vector2f mousePos)
 {
-	sf::RenderWindow window(sf::VideoMode({ 400,300 }), "Settings");
-	window.setFramerateLimit(60);
-
-	// Title
-	sf::Text title(m_font, "Settings", 28);
-	title.setFillColor(sf::Color::White);
-	{
-		sf::FloatRect rect = title.getLocalBounds();
-		title.setOrigin(rect.getCenter());
-		title.setPosition({ 200.f,40.f });
-	}
-
-	// Placeholder stuff. Replace with actual settings later
-	sf::Text placeholder(m_font, "{SETTINGS WILL GO HERE}", 16);
-	placeholder.setFillColor(sf::Color(200, 200, 200));
-	{
-		sf::FloatRect rect = placeholder.getLocalBounds();
-		placeholder.setOrigin(rect.getCenter());
-		placeholder.setPosition({ 200.f,140.f });
-	}
-
-	// Back button
-	Button backBtn(m_font, "Back", { 125.f,225.f }, { 150.f,45.f }, sf::Color(200, 100, 100));
-
-	while (window.isOpen()) 
-	{
-		sf::Vector2f mousePos = window.mapPixelToCoords(sf::Mouse::getPosition(window));
-
-		while (const std::optional event = window.pollEvent()) 
-		{
-			if (event->getIf<sf::Event::Closed>()) 
-			{
-				window.close();
-			}
-
-			if (const auto* mousePressed = event->getIf<sf::Event::MouseButtonPressed>()) 
-			{
-				if (mousePressed->button == sf::Mouse::Button::Left) 
-				{
-					if (backBtn.contains(mousePos)) 
-					{
-						window.close();
-					}
-				}
-			}
-
-			if (const auto* keyPressed = event->getIf<sf::Event::KeyPressed>()) 
-			{
-				if (keyPressed->scancode == sf::Keyboard::Scancode::Escape) 
-				{
-					window.close();
-				}
-			}
-
-			AK::SoundEngine::RenderAudio();
-		}
-
-		backBtn.updateHover(mousePos);
-
-		window.clear(sf::Color(40, 40, 40));
-		window.draw(title);
-		window.draw(placeholder);
-		backBtn.draw(window);
-		window.display();
-	}
+	m_startBtn.updateHover(mousePos);
+	m_settingsBtn.updateHover(mousePos);
+	m_quitBtn.updateHover(mousePos);
 }
 
 void MainMenu::render(sf::RenderWindow& window)

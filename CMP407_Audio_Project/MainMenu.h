@@ -21,11 +21,9 @@ class MainMenu
 public:
 	MainMenu(sf::Font& font, WwiseWrapper& wwise);
 
-	MenuSelection run();
-private:
-	// Sub-screens
-	void showSettings();
-
+	MenuSelection checkClick(sf::Vector2f mousePos);
+	void updateHover(sf::Vector2f mousePos);
+	
 	// wwise helpers
 	bool initAudio();
 	void stopAudio();
@@ -34,6 +32,7 @@ private:
 	void handleEvents(sf::RenderWindow& window, MenuSelection& selection);
 	void render(sf::RenderWindow& window);
 
+private:
 	// data
 	sf::Font& m_font;
 	WwiseWrapper& m_wwise;

@@ -1,67 +1,129 @@
-/*
-* CREDITS
-* Start menu music pack - https://void1gaming.itch.io/free-game-menu-music-pack
-*/
-
 #include <SFML/Graphics.hpp>
 #include "DynamicMain.h"
 #include "MainMenu.h"
 #include "WwiseWrapper.h"
 #include <iostream>
 
+enum class AppState {
+    MainMenu,
+    Settings,
+    Game,
+    Exit,
+    None
+};
 
-int main() 
+int main()
 {
-	sf::Font font;
-	if (!font.openFromFile("Assets/Fonts/arial.ttf"))
-		if (!font.openFromFile("arial.ttf"))
-			printf("ERROR: Could not load font (arial.ttf) - main.cpp - main()");
+    sf::Font font;
+    if (!font.openFromFile("Assets/Fonts/arial.ttf")) {
+        if (!font.openFromFile("arial.ttf")) {
+            std::cerr << "ERROR: Could not load font (arial.ttf) - main.cpp\n";
+            return -1;
+        }
+    }
 
-	WwiseWrapper wwise;
+    WwiseWrapper wwise;
 
-	MainMenu menu(font, wwise);
-	// Blocks program until player chooses
-	MenuSelection selection = menu.run();
+    sf::RenderWindow window(sf::VideoMode({ 1000, 1000 }), "Audio Project");
+    window.setFramerateLimit(60);
 
-	// Player quit or closes window before selection
-	if (selection == MenuSelection::Quit || selection == MenuSelection::None) return 0;
+    MainMenu menu(font, wwise);
+    DynamicMain dynamicMain(&window, &font);
 
-	// Game window only reached when selection == StartGame
-	sf::RenderWindow window(sf::VideoMode({ 1000,1000 }), "Audio Project");
-	window.setFramerateLimit(60);
-	sf::Color clear_colour(135, 205, 250);
+    menu.initAudio();
 
-	DynamicMain dynamicMain(&window, &font);
+    AppState currentState = AppState::MainMenu;
+    sf::Clock clock;
+    float gameSpeed = 1.0f;
 
-	sf::Clock clock;
-	float gameSpeed = 1.0f;
+    while (window.isOpen() && currentState != AppState::Exit)
+    {
+        float deltaTime = clock.restart().asSeconds() * gameSpeed;
+        sf::Vector2f mousePos = window.mapPixelToCoords(sf::Mouse::getPosition(window));
 
+        // --- EVENT HANDLING ---
+        while (const std::optional event = window.pollEvent())
+        {
+            if (event->is<sf::Event::Closed>())
+            {
+                currentState = AppState::Exit;
+            }
 
-	while (window.isOpen()) 
-	{
-		float deltaTime = clock.restart().asSeconds() * gameSpeed;
+            if (const auto* keyPressed = event->getIf<sf::Event::KeyPressed>())
+            {
+                if (keyPressed->scancode == sf::Keyboard::Scancode::Escape)
+                {
+                    // If in game or settings, go back to menu. If in menu, exit.
+                    if (currentState == AppState::Game || currentState == AppState::Settings) {
+                        currentState = AppState::MainMenu;
+                    }
+                    else {
+                        currentState = AppState::Exit;
+                    }
+                }
+            }
 
-		while (const std::optional event = window.pollEvent()) 
-		{
-			if (event->is<sf::Event::Closed>()) 
-			{
-				window.close();
-			}
-			if(const auto* keyPressed = event->getIf<sf::Event::KeyPressed>())
-			{
-				if (keyPressed->scancode == sf::Keyboard::Scancode::Escape) 
-				{
-					window.close();
-				}
-			}
-		}
+            if (const auto* mousePressed = event->getIf<sf::Event::MouseButtonPressed>())
+            {
+                if (mousePressed->button == sf::Mouse::Button::Left)
+                {
+                    if (currentState == AppState::MainMenu)
+                    {
+                        MenuSelection selection = menu.checkClick(mousePos);
 
-		dynamicMain.update(deltaTime);
+                        if (selection == MenuSelection::StartGame) 
+                        {
+                            menu.stopAudio();
+                            currentState = AppState::Game;
+                        }
+                        else if (selection == MenuSelection::Settings) 
+                        { 
+                            currentState = AppState::Settings;
+                        }
+                        else if (selection == MenuSelection::Quit) 
+                        {
+                            currentState = AppState::Exit;
+                        }
+                    }
+                    else if (currentState == AppState::Settings)
+                    {
+                        // if (settingsBackBtnClicked) currentState = AppState::MainMenu;
+                    }
+                }
+            }
+        }
 
-		window.clear(dynamicMain.getBackgroundColour());
-		dynamicMain.render();
-		window.display();
+        // --- UPDATE & RENDER ---
+        window.clear(sf::Color(135, 205, 250)); // Default clear color
 
-	}
-	return 0;
+        switch (currentState)
+        {
+        case AppState::MainMenu:
+            menu.updateHover(mousePos); 
+            menu.render(window);
+            break;
+
+        case AppState::Settings:
+            // Render settings UI here
+            break;
+
+        case AppState::Game:
+            dynamicMain.update(deltaTime);
+            window.clear(dynamicMain.getBackgroundColour()); // Override clear color for game
+            dynamicMain.render();
+            break;
+
+        case AppState::Exit:
+            window.close();
+            break;
+        }
+
+        // --- AUDIO ENGINE ---
+        // Render audio once per frame regardless of state
+        AK::SoundEngine::RenderAudio();
+
+        window.display();
+    }
+
+    return 0;
 }
