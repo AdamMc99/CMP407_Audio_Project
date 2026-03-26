@@ -205,7 +205,7 @@ bool MainMenu::initAudio()
 	}
 
 	AK::SoundEngine::RegisterGameObj(m_menuAudioID);
-	AK::SoundEngine::PostEvent(AKTEXT("BGM1"), m_menuAudioID);
+	AK::SoundEngine::PostEvent(AKTEXT("BGM1_Loop"), m_menuAudioID);
 
 	return true;
 }

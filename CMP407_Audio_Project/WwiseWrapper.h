@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Common/AkFilePackageLowLevelIODeferred.h"	//Sample low-level I/O implementation provided by Audiokinetic
+#include "../SoundEngine/Common/AkFilePackageLowLevelIODeferred.h"	//Sample low-level I/O implementation provided by Audiokinetic
 
 #include <cstdint>
 #include <string>
