@@ -21,6 +21,13 @@ Player::Player(sf::RenderWindow* window) : m_window(window)
 	m_lightCone.setPrimitiveType(sf::PrimitiveType::TriangleFan);
 }
 
+void Player::reset()
+{
+	m_currentHealth = m_maxHealth;
+	m_playerShape.setPosition({500.f, 500.f});
+	m_playerShape.setRotation(sf::degrees(0));
+}
+
 void Player::update(float dt, float darknessFactor) 
 {
 	// Calculate angle to mouse

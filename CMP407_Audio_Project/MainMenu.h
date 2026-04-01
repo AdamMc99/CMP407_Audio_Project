@@ -3,7 +3,7 @@
 #include "WwiseWrapper.h"
 
 
-enum class MenuSelection {StartGame, Settings, Quit, None};
+enum class MenuSelection {StartGame, Settings, Quit, Resume, ReturnToMenu, None};
 
 struct Button 
 {

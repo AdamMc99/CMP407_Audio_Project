@@ -12,11 +12,13 @@ class DynamicMain
 public:
 	DynamicMain(sf::RenderWindow* window, sf::Font* font, WwiseWrapper& wwise);
 	~DynamicMain() {}
+	void reset();
 
 	void playAudio();
 	void stopAudio();
 
 	sf::Color getBackgroundColour() const;
+	bool isCursorHidden() const { return m_darknessFactor >= 1.f; }
 
 	void update(float dt);
 	void render();

@@ -5,6 +5,7 @@ class IntensityManager
 {
 public:
 	IntensityManager();
+	void reset() { m_intensity = 0.f; }
 
 	void update(float dt, float darknessFactor, int enemyCount, float currentSpawnRate, float playerHealth);
 	float getIntensity() const { return m_intensity; }

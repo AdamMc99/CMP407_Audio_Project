@@ -1,6 +1,7 @@
 #include <SFML/Graphics.hpp>
 #include "DynamicMain.h"
 #include "MainMenu.h"
+#include "PauseMenu.h"
 #include "WwiseWrapper.h"
 #include <iostream>
 
@@ -8,6 +9,7 @@ enum class AppState {
     MainMenu,
     Settings,
     Game,
+    Pause,
     Exit,
     None
 };
@@ -29,6 +31,8 @@ int main()
 
     MainMenu menu(font, wwise);
     DynamicMain dynamicMain(&window, &font, wwise);
+    PauseMenu pauseMenu(font);
+
 
     menu.initAudio();
 
@@ -54,10 +58,15 @@ int main()
                 if (keyPressed->scancode == sf::Keyboard::Scancode::Escape)
                 {
                     // If in game or settings, go back to menu. If in menu, exit.
-                    if (currentState == AppState::Game) {
-                        dynamicMain.stopAudio();
-                        menu.playAudio();
-                        currentState = AppState::MainMenu;
+                    if (currentState == AppState::Game) 
+                    {
+                        currentState = AppState::Pause;
+                        window.setMouseCursorVisible(true);
+                    }
+                    else if (currentState == AppState::Pause) 
+                    {
+                        currentState = AppState::Game;
+                        window.setMouseCursorVisible(!dynamicMain.isCursorHidden());
                     }
                     else if (currentState == AppState::Settings) 
                     {
@@ -73,14 +82,18 @@ int main()
             {
                 if (mousePressed->button == sf::Mouse::Button::Left)
                 {
-                    if (currentState == AppState::MainMenu)
+                    if (currentState == AppState::MainMenu) // ---- MAIN MENU
                     {
                         MenuSelection selection = menu.checkClick(mousePos);
 
                         if (selection == MenuSelection::StartGame) 
                         {
+                            // Reset game
+                            dynamicMain.reset();
+                            // Audio transition
                             menu.stopAudio();
                             dynamicMain.playAudio();
+                            //Change state
                             currentState = AppState::Game;
                         }
                         else if (selection == MenuSelection::Settings) 
@@ -92,9 +105,28 @@ int main()
                             currentState = AppState::Exit;
                         }
                     }
-                    else if (currentState == AppState::Settings)
+                    else if (currentState == AppState::Settings) // ---- SETTINGS
                     {
                         // if (settingsBackBtnClicked) currentState = AppState::MainMenu;
+                    }
+                    else if (currentState == AppState::Pause) // ---- PAUSE MENU
+                    {
+                        MenuSelection selection = pauseMenu.checkClick(mousePos);
+                        if (selection == MenuSelection::Resume) 
+                        {
+                            currentState = AppState::Game;
+                            window.setMouseCursorVisible(!dynamicMain.isCursorHidden());
+                        }
+                        else if (selection == MenuSelection::ReturnToMenu) 
+                        {
+                            dynamicMain.stopAudio();
+                            menu.playAudio();
+                            currentState = AppState::MainMenu;
+                        }
+                        else if (selection == MenuSelection::Quit) 
+                        {
+                            currentState = AppState::Exit;
+                        }
                     }
                 }
             }
@@ -118,6 +150,14 @@ int main()
             dynamicMain.update(deltaTime);
             window.clear(dynamicMain.getBackgroundColour()); // Override clear color for game
             dynamicMain.render();
+            break;
+        
+        case AppState::Pause:
+            pauseMenu.updateHover(mousePos);
+
+            window.clear(dynamicMain.getBackgroundColour());
+            dynamicMain.render();       // Draw frozen game
+            pauseMenu.render(window);   // Draw pause menu
             break;
 
         case AppState::Exit:

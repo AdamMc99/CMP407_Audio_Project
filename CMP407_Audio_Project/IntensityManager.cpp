@@ -4,6 +4,7 @@
 
 IntensityManager::IntensityManager() = default;
 
+
 void IntensityManager::update(float dt, float darknessFactor, int enemyCount, float currentSpawnRate, float playerHealth)
 {
 	// Don't begin until room is dark

@@ -154,6 +154,7 @@
     <ClCompile Include="IntensityManager.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MainMenu.cpp" />
+    <ClCompile Include="PauseMenu.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="WwiseWrapper.cpp" />
   </ItemGroup>
@@ -177,6 +178,7 @@
     <ClInclude Include="HealthBar.h" />
     <ClInclude Include="IntensityManager.h" />
     <ClInclude Include="MainMenu.h" />
+    <ClInclude Include="PauseMenu.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="WwiseWrapper.h" />
   </ItemGroup>

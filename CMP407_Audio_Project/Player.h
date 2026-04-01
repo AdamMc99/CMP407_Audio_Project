@@ -11,6 +11,7 @@ class Player
 public:
 	Player(sf::RenderWindow* window);
 	~Player() {}
+	void reset();
 
 	float getHealth() const { return m_currentHealth; }
 	void setHealth(int health) { m_currentHealth = health; }

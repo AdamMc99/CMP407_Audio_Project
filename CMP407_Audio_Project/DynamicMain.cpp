@@ -21,6 +21,31 @@ DynamicMain::DynamicMain(sf::RenderWindow* window, sf::Font* font, WwiseWrapper&
 	m_debugText.setOutlineThickness(1.f);
 }
 
+void DynamicMain::reset() 
+{
+	// Reset variables
+	m_totalPlayTime = 0.f;
+	m_spawnTimer = 0.f;
+	m_currentSpawnRate = START_SPAWN_RATE;
+	m_darknessFactor = 0.f;
+	m_enemiesDefended = 0;
+	m_isPPressed = false;
+	m_showDebug = false;
+
+	// Clear entities
+	m_enemies.clear();
+
+	// Reset sub-components
+	m_player.reset();
+	m_intensityManager.reset();
+
+	// Reset UI
+	m_healthBar->update(m_player.getHealth());
+
+	// Reset window changes
+	m_window->setMouseCursorVisible(true);
+}
+
 sf::Color DynamicMain::getBackgroundColour() const
 {
 	//sf::Color dayColour = sf::Color(100,100,100); // Gray for "daytime"
@@ -118,7 +143,7 @@ void DynamicMain::update(float dt)
 			if (isAngleInView(enemyAngle, playerAngle, 25.f)) 
 			{
 				enemy.destroy();
-				m_player.addHealth(1.f);
+				//m_player.addHealth(1.f); // Adds health to the player if they block an enemy
 				m_enemiesDefended++;
 			}
 		}
