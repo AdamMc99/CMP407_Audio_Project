@@ -173,6 +173,7 @@ bool WwiseWrapper::loadBank(const std::wstring& bankName)
 	if (AK::SoundEngine::LoadBank(bankName.c_str(), bankID) != AK_Success) 
 	{
 		assert(!"Could not load sound bank!");
+		terminateSoundEngine();
 		return false;
 	}
 	return true;
@@ -181,6 +182,11 @@ bool WwiseWrapper::loadBank(const std::wstring& bankName)
 void WwiseWrapper::postEvent(const std::string& eventName, uint64_t gameObjectID) 
 {
 	AK::SoundEngine::PostEvent(eventName.c_str(), gameObjectID);
+}
+
+void WwiseWrapper::setRTCPValue(const std::string& rtcpName, float value, uint64_t gameObjectID) 
+{
+	AK::SoundEngine::SetRTPCValue(rtcpName.c_str(), value, gameObjectID);
 }
 
 void WwiseWrapper::registerGameObject(uint64_t gameObjectID, const std::string& objectName)

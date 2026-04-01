@@ -32,6 +32,7 @@ public:
 	void update();
 	bool loadBank(const std::wstring& bankName);
 	void postEvent(const std::string& eventName, uint64_t gameObjectID);
+	void setRTCPValue(const std::string& rtcpName, float value, uint64_t gameObjectID);
 	void registerGameObject(uint64_t gameObjectID, const std::string& objectName);
 	void unregisterGameObject(uint64_t gameObjectID);
 	void stopAll(uint64_t gameObjectID = 0);

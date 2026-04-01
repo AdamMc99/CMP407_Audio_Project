@@ -95,19 +95,10 @@ void MainMenu::render(sf::RenderWindow& window)
 
 bool MainMenu::initAudio()
 {
-	if (!m_wwise.initSoundEngine(AKTEXT("Assets/Audio/CMP407_Dynamic_Audio_Project/GeneratedSoundBanks/Windows"))) 
-	{
-		std::cerr << "Could not initialise wwise - MainMenu.cpp - initAudio()" << std::endl;
-		return false;
-	}
+	if (!m_wwise.initSoundEngine(AKTEXT("Assets/Audio/CMP407_Dynamic_Audio_Project/GeneratedSoundBanks/Windows"))) return false;
 
 	AkBankID bankID;
-	if (!m_wwise.loadBank(L"TestSoundBank.bnk"))
-	{
-		std::cerr << "Could not load soundbank - MainMenu.cpp - initAudio()" << std::endl;
-		m_wwise.terminateSoundEngine();
-		return false;
-	}
+	if (!m_wwise.loadBank(L"TestSoundBank.bnk")) return false;
 
 	m_wwise.registerGameObject(m_menuUIAudioID, "Menu UI Audio");
 

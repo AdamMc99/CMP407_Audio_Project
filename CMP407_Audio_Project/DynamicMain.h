@@ -4,7 +4,6 @@
 #include "Player.h"
 #include "Enemy.h"
 #include "HealthBar.h"
-#include "IntensityManager.h"
 #include "WwiseWrapper.h"
 
 class DynamicMain
@@ -42,7 +41,7 @@ private:
 	float m_currentSpawnRate = 3.f;
 	int m_enemiesDefended = 0;
 	float m_darknessFactor = 0.f;
-	IntensityManager m_intensityManager;
+	float m_intensity = 0.f;
 
 	bool m_showDebug = false; // Is the text visible
 	bool m_isPPressed = false; // Prevents constant flickering when the key is pressed

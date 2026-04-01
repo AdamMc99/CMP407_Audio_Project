@@ -62,6 +62,17 @@
 						</Event>
 					</ChildrenList>
 				</Folder>
+				<Event Name="Play_Game_BGM" ID="{4E29EA2A-12BF-4928-A3EF-6CAB18905766}">
+					<ChildrenList>
+						<Action Name="" ID="{10320426-358D-4814-8084-4BD66F4D8826}" ShortID="767922839">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="Game_BGM" ID="{7961F0D8-D934-4799-A891-36FAC3288875}" WorkUnitID="{9B5A1275-EBA4-4267-AFE9-FA30E1F23975}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
 			</ChildrenList>
 		</WorkUnit>
 	</Events>

@@ -37,7 +37,6 @@ void DynamicMain::reset()
 
 	// Reset sub-components
 	m_player.reset();
-	m_intensityManager.reset();
 
 	// Reset UI
 	m_healthBar->update(m_player.getHealth());
@@ -150,7 +149,18 @@ void DynamicMain::update(float dt)
 	}
 
 	// Update intensity value
-	m_intensityManager.update(dt, m_darknessFactor, static_cast<int>(m_enemies.size()), m_currentSpawnRate, m_player.getHealth());
+	float enemyIntensity = (static_cast<float>(m_enemies.size()) / 15) * 100.f;
+	if (enemyIntensity > 100.f) enemyIntensity = 100.f;
+
+	float healthPanic = 0.f;
+	if (m_player.getHealth() < 50.f) 
+	{
+		// 50 health = 0 panic, 0 health = 100 panic
+		healthPanic = ((50.f - m_player.getHealth()) / 50.f) * 100.f;
+	}
+
+	m_intensity = std::max(enemyIntensity, healthPanic);
+	m_wwise.setRTCPValue("Game_Intensity", m_intensity, m_gameAudioID);
 
 	// Update UI
 	m_healthBar->update(m_player.getHealth());
@@ -170,7 +180,7 @@ void DynamicMain::updateDebugText(float dt)
 	info += "Enemies Defeated: " + std::to_string(m_enemiesDefended) + "\n";
 	info += "Darkness: " + std::to_string(m_darknessFactor) + "\n";
 	info += "Spawn Rate: " + std::to_string(m_currentSpawnRate) + "\n";
-	info += "Intensity: " + std::to_string(m_intensityManager.getIntensity()) + "\n";
+	info += "Intensity: " + std::to_string(m_intensity) + "\n";
 
 	m_debugText.setString(info);
 
@@ -223,7 +233,7 @@ void DynamicMain::render()
 void DynamicMain::playAudio() 
 {
 	m_wwise.registerGameObject(m_gameAudioID, "Game Audio");
-	m_wwise.postEvent("Loop", m_gameAudioID);
+	m_wwise.postEvent("Play_Game_BGM", m_gameAudioID);
 }
 
 void DynamicMain::stopAudio() 
