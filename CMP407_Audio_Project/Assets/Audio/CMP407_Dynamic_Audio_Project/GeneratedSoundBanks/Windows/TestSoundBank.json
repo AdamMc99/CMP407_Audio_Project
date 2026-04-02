@@ -1,0 +1,194 @@
+{
+ "SoundBanksInfo": {
+  "Platform": "Windows",
+  "BasePlatform": "Windows",
+  "SchemaVersion": "16",
+  "SoundBankVersion": "154",
+  "SoundBanks": [
+   {
+    "Id": "1831431028",
+    "Type": "User",
+    "GUID": "{B15A0551-23EE-4A4E-A149-9FB85C6FBDC1}",
+    "Language": "SFX",
+    "Hash": "{0CC6051A-537B-7F30-1C81-D6DE4DF5AD92}",
+    "ObjectPath": "\\SoundBanks\\Default Work Unit\\TestSoundBank",
+    "ShortName": "TestSoundBank",
+    "Path": "TestSoundBank.bnk",
+    "Media": [
+     {
+      "Id": "138068062",
+      "Language": "SFX",
+      "Streaming": "false",
+      "Location": "Memory",
+      "ShortName": "7. Strange.wav",
+      "CachePath": "CA/{CAECF63B-C079-682A-805A-7D943BF8AE87}.wem"
+     },
+     {
+      "Id": "362063894",
+      "Language": "SFX",
+      "Streaming": "false",
+      "Location": "Memory",
+      "ShortName": "Layered\\BabeGrand_AiguilleRouge_Full\\BGM_Stem4.wav",
+      "CachePath": "1F/{1F000815-4B95-E266-5A62-5704A3A2FA56}.wem"
+     },
+     {
+      "Id": "395328552",
+      "Language": "SFX",
+      "Streaming": "false",
+      "Location": "Memory",
+      "ShortName": "Layered\\BabeGrand_AiguilleRouge_Full\\BGM_Stem1.wav",
+      "CachePath": "92/{925A9B68-622F-7895-C4A7-6D5FDA6CE6FB}.wem"
+     },
+     {
+      "Id": "424703015",
+      "Language": "SFX",
+      "Streaming": "false",
+      "Location": "Memory",
+      "ShortName": "Layered\\BabeGrand_AiguilleRouge_Full\\BGM_Stem2.wav",
+      "CachePath": "A7/{A7024EB9-26EB-156B-CDC6-AB115EABCBB7}.wem"
+     },
+     {
+      "Id": "532315483",
+      "Language": "SFX",
+      "Streaming": "false",
+      "Location": "Memory",
+      "ShortName": "ButtonBeep_Forward.wav",
+      "CachePath": "33/{33D86999-F33D-E0AA-A28B-EECA85A16145}.wem"
+     },
+     {
+      "Id": "564500536",
+      "Language": "SFX",
+      "Streaming": "false",
+      "Location": "Memory",
+      "ShortName": "Loop.wav",
+      "CachePath": "69/{69FBD51D-9C24-895D-D604-ADDD872C2F9F}.wem"
+     },
+     {
+      "Id": "699457010",
+      "Language": "SFX",
+      "Streaming": "false",
+      "Location": "Memory",
+      "ShortName": "ButtonBeep_Back.wav",
+      "CachePath": "67/{671F23C1-0328-C38A-EEFC-FF379224B394}.wem"
+     },
+     {
+      "Id": "761844584",
+      "Language": "SFX",
+      "Streaming": "false",
+      "Location": "Memory",
+      "ShortName": "Layered\\BabeGrand_AiguilleRouge_Full\\BGM_Stem3.wav",
+      "CachePath": "A9/{A9ACB4C5-05DA-5FEB-DEAD-1AC75D83F1C2}.wem"
+     },
+     {
+      "Id": "885981853",
+      "Language": "SFX",
+      "Streaming": "false",
+      "Location": "Memory",
+      "ShortName": "ButtonHover.wav",
+      "CachePath": "E3/{E36E4C7D-A355-00ED-F42F-45A14397A01D}.wem"
+     }
+    ],
+    "Events": [
+     {
+      "Id": "1501626447",
+      "Name": "BGM1_Loop",
+      "ObjectPath": "\\Events\\Default Work Unit\\BGM1_Loop",
+      "GUID": "{C689FC60-A86F-45DB-9D9D-7EA833831C16}",
+      "DurationType": "Infinite",
+      "MediaRefs": [
+       {
+        "Id": "138068062"
+       }
+      ]
+     },
+     {
+      "Id": "3110531800",
+      "Name": "ButtonBack",
+      "ObjectPath": "\\Events\\Default Work Unit\\Buttons\\ButtonBack",
+      "GUID": "{D0827EFE-573C-4F19-856E-827872CC78F4}",
+      "DurationType": "OneShot",
+      "DurationMin": "0.2697396",
+      "DurationMax": "0.2697396",
+      "MediaRefs": [
+       {
+        "Id": "699457010"
+       }
+      ]
+     },
+     {
+      "Id": "865310804",
+      "Name": "ButtonForward",
+      "ObjectPath": "\\Events\\Default Work Unit\\Buttons\\ButtonForward",
+      "GUID": "{ADA7F063-F604-41B2-869E-077B3191D97D}",
+      "DurationType": "OneShot",
+      "DurationMin": "0.26303124",
+      "DurationMax": "0.26303124",
+      "MediaRefs": [
+       {
+        "Id": "532315483"
+       }
+      ]
+     },
+     {
+      "Id": "3035572085",
+      "Name": "ButtonHover",
+      "ObjectPath": "\\Events\\Default Work Unit\\Buttons\\ButtonHover",
+      "GUID": "{9E22F1FD-15C3-45F1-8C02-442F5F964DA5}",
+      "DurationType": "OneShot",
+      "DurationMin": "0.28216666",
+      "DurationMax": "0.28216666",
+      "MediaRefs": [
+       {
+        "Id": "885981853"
+       }
+      ]
+     },
+     {
+      "Id": "691006007",
+      "Name": "Loop",
+      "ObjectPath": "\\Events\\Default Work Unit\\Loop",
+      "GUID": "{5305C136-602B-4268-99B8-F83434F5A28D}",
+      "DurationType": "Infinite",
+      "MediaRefs": [
+       {
+        "Id": "564500536"
+       }
+      ]
+     },
+     {
+      "Id": "2135877599",
+      "Name": "Play_Game_BGM",
+      "ObjectPath": "\\Events\\Default Work Unit\\Play_Game_BGM",
+      "GUID": "{4E29EA2A-12BF-4928-A3EF-6CAB18905766}",
+      "DurationType": "OneShot",
+      "DurationMin": "0",
+      "DurationMax": "0",
+      "MediaRefs": [
+       {
+        "Id": "362063894"
+       },
+       {
+        "Id": "395328552"
+       },
+       {
+        "Id": "424703015"
+       },
+       {
+        "Id": "761844584"
+       }
+      ]
+     }
+    ],
+    "GameParameters": [
+     {
+      "Id": "3469768597",
+      "Name": "Game_Intensity",
+      "ObjectPath": "\\Game Parameters\\Default Work Unit\\Game_Intensity",
+      "GUID": "{F2018C34-82C4-42F3-B631-EEC2F6BA67BB}"
+     }
+    ]
+   }
+  ],
+  "FileHash": "{BF7A2115-C377-97DA-FB61-C2493AF9227E}"
+ }
+}

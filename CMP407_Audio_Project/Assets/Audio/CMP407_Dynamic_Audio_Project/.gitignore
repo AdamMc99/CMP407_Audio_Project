@@ -6,5 +6,6 @@
 *.prof
 *.validationcache
 *.wsettings
+*.bnk
 AkWwiseProjectData.asset
 IncrementalSoundBankData.xml
