@@ -17,6 +17,22 @@ struct Button
 	void draw(sf::RenderWindow& window) const;
 };
 
+class Slider
+{
+public:
+	Slider(sf::Vector2f pos, sf::Vector2f size);
+
+	float update(sf::Vector2f mousePos, bool isMouseDown);
+	void draw(sf::RenderWindow& window) const;
+	float getValue() const { return m_value; };
+
+private:
+	sf::RectangleShape m_track;
+	sf::RectangleShape m_handle;
+	float m_value = 100.f;
+	bool m_isDragging = false;
+};
+
 class MainMenu
 {
 public:

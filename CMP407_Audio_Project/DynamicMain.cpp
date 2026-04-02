@@ -234,6 +234,7 @@ void DynamicMain::playAudio()
 {
 	m_wwise.registerGameObject(m_gameAudioID, "Game Audio");
 	m_wwise.postEvent("Play_Game_BGM", m_gameAudioID);
+	//m_wwise.postEvent("Loop", m_gameAudioID);
 }
 
 void DynamicMain::stopAudio() 

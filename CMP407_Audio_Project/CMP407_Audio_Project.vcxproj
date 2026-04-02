@@ -155,6 +155,7 @@
     <ClCompile Include="MainMenu.cpp" />
     <ClCompile Include="PauseMenu.cpp" />
     <ClCompile Include="Player.cpp" />
+    <ClCompile Include="SettingsMenu.cpp" />
     <ClCompile Include="WwiseWrapper.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -178,6 +179,7 @@
     <ClInclude Include="MainMenu.h" />
     <ClInclude Include="PauseMenu.h" />
     <ClInclude Include="Player.h" />
+    <ClInclude Include="SettingsMenu.h" />
     <ClInclude Include="WwiseWrapper.h" />
   </ItemGroup>
   <ItemGroup>

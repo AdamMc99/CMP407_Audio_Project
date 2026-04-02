@@ -48,6 +48,46 @@ void Button::draw(sf::RenderWindow& window) const
 	window.draw(btnText);
 }
 
+// ------------- Slider ----------------
+Slider::Slider(sf::Vector2f pos, sf::Vector2f size) 
+{
+	m_track.setSize(size);
+	m_track.setPosition(pos);
+	m_track.setFillColor(sf::Color(100, 100, 100));
+
+	m_handle.setSize({ 15.f, size.y + 10.f });
+	m_handle.setOrigin({ 7.5,5.f });
+	m_handle.setPosition({pos.x + size.x, pos.y});
+	m_handle.setFillColor(sf::Color::White);
+}
+
+float Slider::update(sf::Vector2f mousePos, bool isMouseDown) 
+{
+	if (isMouseDown && m_handle.getGlobalBounds().contains(mousePos)) 
+	{
+		m_isDragging = true;
+	}
+	else if (!isMouseDown) 
+	{
+		m_isDragging = false;
+	}
+
+	if (m_isDragging) 
+	{
+		float newX = std::max(m_track.getPosition().x, std::min(mousePos.x, m_track.getPosition().x + m_track.getSize().x));
+		m_handle.setPosition({ newX, m_handle.getPosition().y });
+
+		m_value = ((newX - m_track.getPosition().x) / m_track.getSize().x) * 100.f;
+	}
+	return m_value;
+}
+
+void Slider::draw(sf::RenderWindow& window) const
+{
+	window.draw(m_track);
+	window.draw(m_handle);
+}
+
 // -------------- MENU -----------------
 MainMenu::MainMenu(sf::Font& font, WwiseWrapper& wwise) : m_font(font), m_wwise(wwise),
 	m_startBtn(m_font, "Start Game", { 400, 30.f }, { 200.f, 50.f }, sf::Color(100, 255, 100)),

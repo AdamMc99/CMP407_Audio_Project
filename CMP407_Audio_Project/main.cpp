@@ -2,6 +2,7 @@
 #include "DynamicMain.h"
 #include "MainMenu.h"
 #include "PauseMenu.h"
+#include "SettingsMenu.h"
 #include "WwiseWrapper.h"
 #include <iostream>
 
@@ -32,6 +33,7 @@ int main()
     MainMenu menu(font, wwise);
     DynamicMain dynamicMain(&window, &font, wwise);
     PauseMenu pauseMenu(font);
+    SettingsMenu settingsMenu(font);
 
 
     menu.initAudio();
@@ -57,18 +59,17 @@ int main()
             {
                 if (keyPressed->scancode == sf::Keyboard::Scancode::Escape)
                 {
-                    // If in game or settings, go back to menu. If in menu, exit.
-                    if (currentState == AppState::Game) 
+                    if (currentState == AppState::Game) // If in game show pause screen
                     {
                         currentState = AppState::Pause;
                         window.setMouseCursorVisible(true);
                     }
-                    else if (currentState == AppState::Pause) 
+                    else if (currentState == AppState::Pause) // If on pause screen return to game
                     {
                         currentState = AppState::Game;
                         window.setMouseCursorVisible(!dynamicMain.isCursorHidden());
                     }
-                    else if (currentState == AppState::Settings) 
+                    else if (currentState == AppState::Settings) // If in settings return to menu
                     {
                         currentState = AppState::MainMenu;
                     }
@@ -86,7 +87,7 @@ int main()
                     {
                         MenuSelection selection = menu.checkClick(mousePos);
 
-                        if (selection == MenuSelection::StartGame) 
+                        if (selection == MenuSelection::StartGame) // Start game
                         {
                             // Reset game
                             dynamicMain.reset();
@@ -96,34 +97,38 @@ int main()
                             //Change state
                             currentState = AppState::Game;
                         }
-                        else if (selection == MenuSelection::Settings) 
+                        else if (selection == MenuSelection::Settings) // Open settings
                         { 
                             currentState = AppState::Settings;
                         }
-                        else if (selection == MenuSelection::Quit) 
+                        else if (selection == MenuSelection::Quit) // Quit game
                         {
                             currentState = AppState::Exit;
                         }
                     }
                     else if (currentState == AppState::Settings) // ---- SETTINGS
                     {
-                        // if (settingsBackBtnClicked) currentState = AppState::MainMenu;
+                        MenuSelection selection = settingsMenu.checkClick(mousePos);
+                        if (selection == MenuSelection::ReturnToMenu)
+                        {
+                            currentState = AppState::MainMenu;
+                        }
                     }
                     else if (currentState == AppState::Pause) // ---- PAUSE MENU
                     {
                         MenuSelection selection = pauseMenu.checkClick(mousePos);
-                        if (selection == MenuSelection::Resume) 
+                        if (selection == MenuSelection::Resume) // Return to game
                         {
                             currentState = AppState::Game;
                             window.setMouseCursorVisible(!dynamicMain.isCursorHidden());
                         }
-                        else if (selection == MenuSelection::ReturnToMenu) 
+                        else if (selection == MenuSelection::ReturnToMenu) // Return to main menu
                         {
                             dynamicMain.stopAudio();
                             menu.playAudio();
                             currentState = AppState::MainMenu;
                         }
-                        else if (selection == MenuSelection::Quit) 
+                        else if (selection == MenuSelection::Quit) // Quit game
                         {
                             currentState = AppState::Exit;
                         }
@@ -135,6 +140,12 @@ int main()
         // --- UPDATE & RENDER ---
         window.clear(sf::Color(135, 205, 250)); // Default clear color
 
+        if (currentState == AppState::Settings) 
+        {
+            bool isMouseDown = sf::Mouse::isButtonPressed(sf::Mouse::Button::Left);
+            settingsMenu.updateSliders(mousePos, isMouseDown, wwise);
+        }
+
         switch (currentState)
         {
         case AppState::MainMenu:
@@ -143,7 +154,8 @@ int main()
             break;
 
         case AppState::Settings:
-            // Render settings UI here
+            window.clear(sf::Color(40, 40, 40));
+            settingsMenu.render(window);
             break;
 
         case AppState::Game:
