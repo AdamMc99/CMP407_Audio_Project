@@ -67,7 +67,7 @@
 						<Action Name="" ID="{10320426-358D-4814-8084-4BD66F4D8826}" ShortID="767922839">
 							<ReferenceList>
 								<Reference Name="Target">
-									<ObjectRef Name="Game_BGM" ID="{7961F0D8-D934-4799-A891-36FAC3288875}" WorkUnitID="{9B5A1275-EBA4-4267-AFE9-FA30E1F23975}"/>
+									<ObjectRef Name="Game_Music" ID="{069FF15C-02A2-4E89-AE1B-537D46B847FB}" WorkUnitID="{9B5A1275-EBA4-4267-AFE9-FA30E1F23975}"/>
 								</Reference>
 							</ReferenceList>
 						</Action>

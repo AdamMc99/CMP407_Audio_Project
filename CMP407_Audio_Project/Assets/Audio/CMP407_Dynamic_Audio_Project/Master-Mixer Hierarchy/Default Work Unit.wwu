@@ -9,6 +9,90 @@
 							<ObjectRef Name="System" ID="{0EDDBC46-6198-4D04-ACC7-EE9E32438535}" WorkUnitID="{BC73106A-F9E0-4806-8280-0BA7702B8B8E}"/>
 						</Reference>
 					</ReferenceList>
+					<ChildrenList>
+						<Bus Name="Music_Bus" ID="{31F616E1-8305-4A7E-A9D0-FB14181E1289}">
+							<ObjectLists>
+								<ObjectList Name="RTPC">
+									<Reference>
+										<Local>
+											<RTPC Name="" ID="{DC41C537-BFAD-4097-A735-9DAAA5AF96A7}" ShortID="19973819">
+												<PropertyList>
+													<Property Name="PropertyName" Type="string" Value="BusVolume"/>
+												</PropertyList>
+												<ReferenceList>
+													<Reference Name="ControlInput">
+														<ObjectRef Name="Music_Volume" ID="{3349C2B0-9E9A-4862-8756-0994AA106CF9}" WorkUnitID="{17F8D7E9-6CC7-4310-B8CD-F760823A953F}"/>
+													</Reference>
+													<Reference Name="Curve">
+														<Custom>
+															<Curve Name="" ID="{9076D291-D3D1-4FEB-8094-34D46AF5C597}">
+																<PropertyList>
+																	<Property Name="Flags" Type="int32" Value="3"/>
+																</PropertyList>
+																<PointList>
+																	<Point>
+																		<XPos>0</XPos>
+																		<YPos>-200</YPos>
+																		<Flags>5</Flags>
+																	</Point>
+																	<Point>
+																		<XPos>100</XPos>
+																		<YPos>0</YPos>
+																		<Flags>37</Flags>
+																	</Point>
+																</PointList>
+															</Curve>
+														</Custom>
+													</Reference>
+												</ReferenceList>
+											</RTPC>
+										</Local>
+									</Reference>
+								</ObjectList>
+							</ObjectLists>
+						</Bus>
+						<Bus Name="SFX_Bus" ID="{A18EC3F6-585F-49A2-88E2-B8A754CD5591}">
+							<ObjectLists>
+								<ObjectList Name="RTPC">
+									<Reference>
+										<Local>
+											<RTPC Name="" ID="{0B556A0C-BAF0-4D80-B7CB-6F705BA6E269}" ShortID="91778521">
+												<PropertyList>
+													<Property Name="PropertyName" Type="string" Value="BusVolume"/>
+												</PropertyList>
+												<ReferenceList>
+													<Reference Name="ControlInput">
+														<ObjectRef Name="SFX_Volume" ID="{F88DFA95-3CE2-4240-9FFA-75DA558FB227}" WorkUnitID="{17F8D7E9-6CC7-4310-B8CD-F760823A953F}"/>
+													</Reference>
+													<Reference Name="Curve">
+														<Custom>
+															<Curve Name="" ID="{D8B22C65-E44E-44DE-872C-3BAE9E7941D2}">
+																<PropertyList>
+																	<Property Name="Flags" Type="int32" Value="3"/>
+																</PropertyList>
+																<PointList>
+																	<Point>
+																		<XPos>0</XPos>
+																		<YPos>-200</YPos>
+																		<Flags>5</Flags>
+																	</Point>
+																	<Point>
+																		<XPos>100</XPos>
+																		<YPos>0</YPos>
+																		<Flags>37</Flags>
+																	</Point>
+																</PointList>
+															</Curve>
+														</Custom>
+													</Reference>
+												</ReferenceList>
+											</RTPC>
+										</Local>
+									</Reference>
+								</ObjectList>
+							</ObjectLists>
+						</Bus>
+					</ChildrenList>
 					<ObjectLists>
 						<ObjectList Name="RTPC">
 							<Reference>
