@@ -9,7 +9,7 @@
 class DynamicMain
 {
 public:
-	DynamicMain(sf::RenderWindow* window, sf::Font* font, WwiseWrapper& wwise);
+	DynamicMain(sf::RenderWindow* window, sf::Font& font, WwiseWrapper& wwise);
 	~DynamicMain() {}
 	void reset();
 
@@ -27,7 +27,7 @@ private:
 	Player m_player;
 	std::vector<Enemy> m_enemies;
 	HealthBar* m_healthBar;
-	sf::Font* m_font;
+	sf::Font m_font;
 	sf::Text m_debugText;
 	WwiseWrapper& m_wwise;
 	uint64_t m_gameAudioID = 200;

@@ -27,6 +27,7 @@ bool Button::updateHover(sf::Vector2f mousePos)
 	{
 		isHovered = true;
 		btnShape.setOutlineThickness(2.0f);
+		
 		return true;
 	}
 	else if (!isCurrentlyHovering && isHovered) 

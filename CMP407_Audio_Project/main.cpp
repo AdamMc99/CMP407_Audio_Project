@@ -31,12 +31,11 @@ int main()
     window.setFramerateLimit(60);
 
     MainMenu menu(font, wwise);
-    DynamicMain dynamicMain(&window, &font, wwise);
-    PauseMenu pauseMenu(font);
-    SettingsMenu settingsMenu(font);
-
-
     menu.initAudio();
+    DynamicMain dynamicMain(&window, font, wwise);
+    PauseMenu pauseMenu(font, wwise);
+    SettingsMenu settingsMenu(font, wwise);
+
 
     AppState currentState = AppState::MainMenu;
     sf::Clock clock;
@@ -154,7 +153,8 @@ int main()
             break;
 
         case AppState::Settings:
-            window.clear(sf::Color(40, 40, 40));
+            //window.clear(sf::Color(40, 40, 40));
+            settingsMenu.updateHover(mousePos);
             settingsMenu.render(window);
             break;
 

@@ -6,7 +6,7 @@
 class SettingsMenu
 {
 public:
-	SettingsMenu(sf::Font& font);
+	SettingsMenu(sf::Font& font, WwiseWrapper& wwise);
 
 	MenuSelection checkClick(sf::Vector2f mousePos);
 	void updateHover(sf::Vector2f mousePos);
@@ -26,5 +26,9 @@ private:
 	Slider m_effectSlider;
 
 	Button m_backBtn;
+
+	WwiseWrapper& m_wwise;
+	static constexpr uint64_t m_settingsUIAudioID = 200;
+
 };
 

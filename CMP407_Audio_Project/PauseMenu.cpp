@@ -1,7 +1,7 @@
 #include "PauseMenu.h"
 
-PauseMenu::PauseMenu(sf::Font& font) :
-	m_title(font, "PAUSED", 60),
+PauseMenu::PauseMenu(sf::Font& font, WwiseWrapper& wwise) :
+	m_title(font, "PAUSED", 60), m_wwise(wwise),
 	m_resumeBtn(font, "Resume", { 400.f,400.f }, { 200.f,50.f }, sf::Color(100,255,100)),
 	m_returnBtn(font, "Main Menu", { 400.f,490.f }, { 200.f,50.f }, sf::Color(100,100,255)),
 	m_quitBtn(font, "Quit Game", { 400.f, 580.f }, {200.f, 50.f}, sf::Color(255,100,100))
@@ -13,21 +13,45 @@ PauseMenu::PauseMenu(sf::Font& font) :
 	sf::FloatRect rect = m_title.getLocalBounds();
 	m_title.setOrigin(rect.getCenter());
 	m_title.setPosition({ 500.f, 250.f });
+
+	m_wwise.registerGameObject(m_pauseUIAudioID, "Pause Menu Audio");
 }
 
 MenuSelection PauseMenu::checkClick(sf::Vector2f mousePos) 
 {
-	if (m_resumeBtn.contains(mousePos)) return MenuSelection::Resume;
-	if (m_returnBtn.contains(mousePos)) return MenuSelection::ReturnToMenu;
-	if (m_quitBtn.contains(mousePos)) return MenuSelection::Quit;
+	if (m_resumeBtn.contains(mousePos)) 
+	{
+		m_wwise.postEvent("ButtonForward", m_pauseUIAudioID);
+		return MenuSelection::Resume;
+	} 
+	if (m_returnBtn.contains(mousePos)) 
+	{ 
+		m_wwise.postEvent("ButtonForward", m_pauseUIAudioID);
+		return MenuSelection::ReturnToMenu;
+	}
+	if (m_quitBtn.contains(mousePos))
+	{
+		m_wwise.postEvent("ButtonForward", m_pauseUIAudioID);
+		return MenuSelection::Quit; 
+	}
 	return MenuSelection::None;
 }
 
 void PauseMenu::updateHover(sf::Vector2f mousePos) 
 {
-	m_resumeBtn.updateHover(mousePos);
-	m_returnBtn.updateHover(mousePos);
-	m_quitBtn.updateHover(mousePos);
+	if (m_resumeBtn.updateHover(mousePos)) 
+	{
+		m_wwise.postEvent("ButtonHover", m_pauseUIAudioID);
+	}
+	if(m_returnBtn.updateHover(mousePos))
+	{
+		m_wwise.postEvent("ButtonHover", m_pauseUIAudioID);
+	}
+	if(m_quitBtn.updateHover(mousePos)) 
+	{
+		m_wwise.postEvent("ButtonHover", m_pauseUIAudioID);
+
+	}
 }
 
 void PauseMenu::render(sf::RenderWindow& window) 

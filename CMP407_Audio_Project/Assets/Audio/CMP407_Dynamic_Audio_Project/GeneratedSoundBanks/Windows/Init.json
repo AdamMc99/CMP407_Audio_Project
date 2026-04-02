@@ -10,7 +10,7 @@
     "Type": "User",
     "GUID": "{701ECBBD-9C7B-4030-8CDB-749EE5D1C7B9}",
     "Language": "SFX",
-    "Hash": "{56BA7401-4F55-8CB1-4622-EB37A45CE9E7}",
+    "Hash": "{E7D96029-F9A8-134E-E6C7-E84503473590}",
     "ObjectPath": "Init",
     "ShortName": "Init",
     "Path": "Init.bnk",
@@ -36,6 +36,18 @@
     },
     "Busses": [
      {
+      "Id": "213475909",
+      "Name": "SFX_Bus",
+      "ObjectPath": "\\Master-Mixer Hierarchy\\Default Work Unit\\Master Audio Bus\\SFX_Bus",
+      "GUID": "{A18EC3F6-585F-49A2-88E2-B8A754CD5591}"
+     },
+     {
+      "Id": "2680856269",
+      "Name": "Music_Bus",
+      "ObjectPath": "\\Master-Mixer Hierarchy\\Default Work Unit\\Master Audio Bus\\Music_Bus",
+      "GUID": "{31F616E1-8305-4A7E-A9D0-FB14181E1289}"
+     },
+     {
       "Id": "3803692087",
       "Name": "Master Audio Bus",
       "ObjectPath": "\\Master-Mixer Hierarchy\\Default Work Unit\\Master Audio Bus",
@@ -50,6 +62,12 @@
       "GUID": "{A34890AB-B9D5-4526-A64D-5290C43EF2DC}"
      },
      {
+      "Id": "1006694123",
+      "Name": "Music_Volume",
+      "ObjectPath": "\\Game Parameters\\Default Work Unit\\Music_Volume",
+      "GUID": "{3349C2B0-9E9A-4862-8756-0994AA106CF9}"
+     },
+     {
       "Id": "1029930033",
       "Name": "SS_Air_Fury",
       "ObjectPath": "\\Game Parameters\\Factory Soundseed Air Game Syncs\\SS_Air_Fury",
@@ -60,6 +78,12 @@
       "Name": "SS_Air_Fear",
       "ObjectPath": "\\Game Parameters\\Factory Soundseed Air Game Syncs\\SS_Air_Fear",
       "GUID": "{F72E0659-4346-4E1C-A1B1-DAB46A05101E}"
+     },
+     {
+      "Id": "1564184899",
+      "Name": "SFX_Volume",
+      "ObjectPath": "\\Game Parameters\\Default Work Unit\\SFX_Volume",
+      "GUID": "{F88DFA95-3CE2-4240-9FFA-75DA558FB227}"
      },
      {
       "Id": "2648548617",
@@ -595,6 +619,6 @@
     ]
    }
   ],
-  "FileHash": "{650113FB-3B68-CE9A-7334-4DDCB9BF1B90}"
+  "FileHash": "{95FBFEF7-8C36-8F2E-71EA-D652F337F1F5}"
  }
 }
