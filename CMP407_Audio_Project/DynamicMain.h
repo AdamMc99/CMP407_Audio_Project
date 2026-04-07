@@ -23,13 +23,19 @@ public:
 	void update(float dt);
 	void render();
 
+	// Access for DevTools
+	size_t getEnemyCount() const { return m_enemies.size(); }
+	int getEnemiesDefended() const { return m_enemiesDefended; }
+	float getDarknessFactor() const { return m_darknessFactor; }
+	float getCurrentSpawnRate() const { return m_currentSpawnRate; }
+	float getIntensity() const { return m_intensity; }
+
 private:
 	sf::RenderWindow* m_window;
 	Player m_player;
 	std::vector<Enemy> m_enemies;
 	HealthBar* m_healthBar;
 	sf::Font m_font;
-	sf::Text m_debugText;
 	WwiseWrapper& m_wwise;
 	uint64_t m_gameAudioID = 200;
 
@@ -44,10 +50,6 @@ private:
 	float m_darknessFactor = 0.f;
 	float m_intensity = 0.f;
 
-	bool m_showDebug = false; // Is the text visible
-	bool m_isPPressed = false; // Prevents constant flickering when the key is pressed
-
-	void updateDebugText(float dt);
 	bool isAngleInView(float enemyAngle, float playerAngle, float fieldOfView);
 
 };

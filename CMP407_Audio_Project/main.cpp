@@ -59,6 +59,13 @@ int main()
                 currentState = AppState::Exit;
             }
 
+            if (const auto* resizedEvent = event->getIf<sf::Event::Resized>())
+            {
+                // Create a new view matching the new window size
+                sf::FloatRect visibleArea({ 0.f, 0.f }, { static_cast<float>(resizedEvent->size.x), static_cast<float>(resizedEvent->size.y) });
+                window.setView(sf::View(visibleArea));
+            }
+
             if (const auto* keyPressed = event->getIf<sf::Event::KeyPressed>())
             {
                 if (keyPressed->scancode == sf::Keyboard::Scancode::Escape)
@@ -180,16 +187,6 @@ int main()
             settingsMenu.updateSliders(mousePos, isMouseDown, wwise);
         }
 
-        if (currentState == AppState::Game)
-        {
-            if (dynamicMain.isPlayerDead() && !devTools.isGodModeActive())
-            {
-                currentState = AppState::GameOver;
-                window.setMouseCursorVisible(true);
-                dynamicMain.stopAudio();
-            }
-        }
-
         switch (currentState)
         {
         case AppState::MainMenu:
@@ -205,9 +202,17 @@ int main()
 
         case AppState::Game:
             dynamicMain.update(deltaTime);
+            devTools.update(deltaTime);
             window.clear(dynamicMain.getBackgroundColour()); // Override clear color for game
             dynamicMain.render();
             devTools.render(window);
+
+            if (dynamicMain.isPlayerDead() && !devTools.isGodModeActive())
+            {
+                currentState = AppState::GameOver;
+                window.setMouseCursorVisible(true);
+                dynamicMain.stopAudio();
+            }
             break;
         
         case AppState::Pause:

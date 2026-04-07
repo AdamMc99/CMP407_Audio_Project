@@ -44,8 +44,20 @@ bool Button::contains(sf::Vector2f mousePos) const
 
 void Button::draw(sf::RenderWindow& window) const
 {
-	window.draw(m_btnShape);
-	window.draw(m_btnText);
+	// You can dynamically center the button's X position based on the window
+	float winWidth = static_cast<float>(window.getSize().x);
+
+	sf::RectangleShape& shape = const_cast<sf::RectangleShape&>(m_btnShape);
+	sf::Text& text = const_cast<sf::Text&>(m_btnText);
+
+	// Keep the original Y position, but center the X
+	shape.setPosition({ (winWidth / 2.f) - (shape.getSize().x / 2.f), shape.getPosition().y });
+
+	// Recalculate text position to match the new shape position
+	text.setPosition({ shape.getPosition().x + (shape.getSize().x / 2.f), shape.getPosition().y + (shape.getSize().y / 2.f) });
+
+	window.draw(shape);
+	window.draw(text);
 }
 
 // ------------- Slider ----------------

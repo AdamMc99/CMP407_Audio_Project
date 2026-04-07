@@ -8,17 +8,12 @@ constexpr float RAD_TO_DEG = 180.f / PI;
 constexpr float DEG_TO_RAD = PI / 180.f;
 
 DynamicMain::DynamicMain(sf::RenderWindow* window, sf::Font& font, WwiseWrapper& wwise) 
-	: m_window(window), m_player(window), m_font(font), m_debugText(font), m_wwise(wwise)
+	: m_window(window), m_player(window), m_font(font), m_wwise(wwise)
 {
 	m_window->setMouseCursorVisible(true);
 
 	m_healthBar = new HealthBar(100.f);
 	m_darknessFactor = 0.f;
-
-	m_debugText.setCharacterSize(14); 
-	m_debugText.setFillColor(sf::Color::White);
-	m_debugText.setOutlineColor(sf::Color::Black);
-	m_debugText.setOutlineThickness(1.f);
 }
 
 void DynamicMain::reset() 
@@ -29,8 +24,6 @@ void DynamicMain::reset()
 	m_currentSpawnRate = START_SPAWN_RATE;
 	m_darknessFactor = 0.f;
 	m_enemiesDefended = 0;
-	m_isPPressed = false;
-	m_showDebug = false;
 
 	// Clear entities
 	m_enemies.clear();
@@ -61,18 +54,6 @@ sf::Color DynamicMain::getBackgroundColour() const
 
 void DynamicMain::update(float dt)
 {
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::P))
-	{
-		if (!m_isPPressed)
-		{
-			m_showDebug = !m_showDebug; 
-			m_isPPressed = true;       
-		}
-	}
-	else m_isPPressed = false;
-
-	if (m_showDebug) updateDebugText(dt);
-
 	m_totalPlayTime += dt;
 
 	float newSpawnRate = START_SPAWN_RATE - (m_totalPlayTime * DIFFICULTY_RAMP);
@@ -169,28 +150,7 @@ void DynamicMain::update(float dt)
 	m_enemies.erase(std::remove_if(m_enemies.begin(), m_enemies.end(), [](const Enemy& e) {return !e.isActive(); }), m_enemies.end());
 }
 
-void DynamicMain::updateDebugText(float dt)
-{
-	std::string info = "";
 
-	int fps = static_cast<int>(1.f / dt);
-
-	info += "FPS: " + std::to_string(fps) + "\n";
-	info += "Enemies: " + std::to_string(m_enemies.size()) + "\n";
-	info += "Enemies Defeated: " + std::to_string(m_enemiesDefended) + "\n";
-	info += "Darkness: " + std::to_string(m_darknessFactor) + "\n";
-	info += "Spawn Rate: " + std::to_string(m_currentSpawnRate) + "\n";
-	info += "Intensity: " + std::to_string(m_intensity) + "\n";
-
-	m_debugText.setString(info);
-
-	// Update origin every frame as text can change
-	sf::FloatRect bounds = m_debugText.getLocalBounds();
-	m_debugText.setOrigin({ bounds.size.x, 0 }); // Anchor top right corner of text
-
-	// Position at top right of the window with 10px padding
-	m_debugText.setPosition({ m_window->getSize().x - 10.f, 10.f });
-}
 
 bool DynamicMain::isAngleInView(float enemyAngle, float playerAngle, float fov)
 {
@@ -226,8 +186,6 @@ void DynamicMain::render()
 	}
 
 	m_healthBar->render(m_window);
-
-	if (m_showDebug) m_window->draw(m_debugText);
 }
 
 void DynamicMain::playAudio() 

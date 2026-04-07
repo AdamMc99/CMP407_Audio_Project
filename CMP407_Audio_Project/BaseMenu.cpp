@@ -43,8 +43,18 @@ void BaseMenu::updateHover(sf::Vector2f mousePos)
 
 void BaseMenu::render(sf::RenderWindow& window)
 {
+    float winWidth = static_cast<float>(window.getSize().x);
+    float winHeight = static_cast<float>(window.getSize().y);
+
+    // Force the overlay to match the current window size
+    m_overlay.setSize({ winWidth, winHeight });
+
+    // Keep the title perfectly centered horizontally, 25% down from the top
+    m_title.setPosition({ winWidth / 2.f, winHeight * 0.25f });
+
     window.draw(m_overlay);
     window.draw(m_title);
+
     for (const auto& btn : m_buttons)
     {
         btn.draw(window);
