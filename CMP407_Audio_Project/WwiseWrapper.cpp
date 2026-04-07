@@ -162,6 +162,7 @@ void WwiseWrapper::terminateSoundEngine()
 	AK::MemoryMgr::Term();
 }
 
+// ----------------------- MY STUFF ---------------------
 void WwiseWrapper::update() 
 {
 	AK::SoundEngine::RenderAudio();
@@ -184,7 +185,7 @@ void WwiseWrapper::postEvent(const std::string& eventName, uint64_t gameObjectID
 	AK::SoundEngine::PostEvent(eventName.c_str(), gameObjectID);
 }
 
-void WwiseWrapper::setRTCPValue(const std::string& rtcpName, float value, uint64_t gameObjectID) 
+void WwiseWrapper::setRTPCValue(const std::string& rtcpName, float value, uint64_t gameObjectID) 
 {
 	AK::SoundEngine::SetRTPCValue(rtcpName.c_str(), value, gameObjectID);
 }

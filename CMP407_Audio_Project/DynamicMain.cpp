@@ -160,7 +160,7 @@ void DynamicMain::update(float dt)
 	}
 
 	m_intensity = std::max(enemyIntensity, healthPanic);
-	m_wwise.setRTCPValue("Game_Intensity", m_intensity, m_gameAudioID);
+	m_wwise.setRTPCValue("Game_Intensity", m_intensity, m_gameAudioID);
 
 	// Update UI
 	m_healthBar->update(m_player.getHealth());

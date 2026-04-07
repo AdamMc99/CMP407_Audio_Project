@@ -1,34 +1,22 @@
 #pragma once
-#include <SFML/Graphics.hpp>
-#include "MainMenu.h"
-#include "WwiseWrapper.h"
+#include "BaseMenu.h"
 
-class SettingsMenu
-{
+class SettingsMenu : public BaseMenu {
 public:
-	SettingsMenu(sf::Font& font, WwiseWrapper& wwise);
+    SettingsMenu(sf::Font& font, WwiseWrapper& wwise);
 
-	MenuSelection checkClick(sf::Vector2f mousePos);
-	void updateHover(sf::Vector2f mousePos);
-	void updateSliders(sf::Vector2f mousePos, bool isMouseDown, WwiseWrapper& wwise);
-	void render(sf::RenderWindow& window);
+    void updateSliders(sf::Vector2f mousePos, bool isMouseDown, WwiseWrapper& wwise);
+
+    // Override the BaseMenu render function to add the sliders
+    void render(sf::RenderWindow& window) override;
 
 private:
-	sf::Text m_title;
+    sf::Text m_masterText;
+    Slider m_masterSlider;
 
-	sf::Text m_masterText;
-	Slider m_masterSlider;
+    sf::Text m_musicText;
+    Slider m_musicSlider;
 
-	sf::Text m_musicText;
-	Slider m_musicSlider;
-
-	sf::Text m_effectText;
-	Slider m_effectSlider;
-
-	Button m_backBtn;
-
-	WwiseWrapper& m_wwise;
-	static constexpr uint64_t m_settingsUIAudioID = 200;
-
+    sf::Text m_sfxText;
+    Slider m_sfxSlider;
 };
-

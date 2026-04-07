@@ -18,6 +18,7 @@ public:
 
 	sf::Color getBackgroundColour() const;
 	bool isCursorHidden() const { return m_darknessFactor >= 1.f; }
+	bool isPlayerDead() const { return m_player.getHealth() <= 0.f; }
 
 	void update(float dt);
 	void render();

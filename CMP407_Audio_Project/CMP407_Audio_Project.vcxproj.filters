@@ -16,9 +16,6 @@
     <Filter Include="Dynamic Audio">
       <UniqueIdentifier>{76247097-4156-496a-8dce-727596f0eac7}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Procedural Audio">
-      <UniqueIdentifier>{79cbcfce-dd80-458f-a716-5bd1abe1bfd1}</UniqueIdentifier>
-    </Filter>
     <Filter Include="SoundEngine">
       <UniqueIdentifier>{77d88cf5-5390-4bd8-94b0-6aa3e1296f3b}</UniqueIdentifier>
     </Filter>
@@ -28,24 +25,27 @@
     <Filter Include="SoundEngine\Win32">
       <UniqueIdentifier>{625a8d94-1292-40ca-ad25-c734adf1bf0c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Entities">
+      <UniqueIdentifier>{79dbac70-f56c-46fc-b2a9-54fce73f9686}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\GameStates">
+      <UniqueIdentifier>{9d6a724f-3c1c-44a9-b64a-2496e7474b5f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\UI/Tools">
+      <UniqueIdentifier>{57ab609d-6953-4061-8854-d8739ae14c83}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Entities">
+      <UniqueIdentifier>{e9a3d105-cedf-40a5-a54c-b6350f6c0690}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\GameStates">
+      <UniqueIdentifier>{52499de4-0522-49de-9b2d-ce3e65157fa9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\UI/Tools">
+      <UniqueIdentifier>{5754e6fc-6705-4c73-b460-919766d5b6d1}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="DynamicMain.cpp">
-      <Filter>Dynamic Audio</Filter>
-    </ClCompile>
-    <ClCompile Include="Player.cpp">
-      <Filter>Dynamic Audio</Filter>
-    </ClCompile>
-    <ClCompile Include="Enemy.cpp">
-      <Filter>Dynamic Audio</Filter>
-    </ClCompile>
-    <ClCompile Include="HealthBar.cpp">
-      <Filter>Dynamic Audio</Filter>
-    </ClCompile>
-    <ClCompile Include="WwiseWrapper.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\SoundEngine\Common\AkDefaultLowLevelIODispatcher.cpp">
@@ -78,32 +78,44 @@
     <ClCompile Include="..\SoundEngine\Win32\stdafx.cpp">
       <Filter>SoundEngine\Win32</Filter>
     </ClCompile>
-    <ClCompile Include="MainMenu.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="Enemy.cpp">
+      <Filter>Source Files\Entities</Filter>
     </ClCompile>
-    <ClCompile Include="PauseMenu.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="Player.cpp">
+      <Filter>Source Files\Entities</Filter>
     </ClCompile>
     <ClCompile Include="SettingsMenu.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\GameStates</Filter>
+    </ClCompile>
+    <ClCompile Include="PauseMenu.cpp">
+      <Filter>Source Files\GameStates</Filter>
+    </ClCompile>
+    <ClCompile Include="MainMenu.cpp">
+      <Filter>Source Files\GameStates</Filter>
+    </ClCompile>
+    <ClCompile Include="GameOverMenu.cpp">
+      <Filter>Source Files\GameStates</Filter>
+    </ClCompile>
+    <ClCompile Include="DynamicMain.cpp">
+      <Filter>Source Files\GameStates</Filter>
+    </ClCompile>
+    <ClCompile Include="DevTools.cpp">
+      <Filter>Source Files\UI/Tools</Filter>
+    </ClCompile>
+    <ClCompile Include="UIElements.cpp">
+      <Filter>Source Files\UI/Tools</Filter>
+    </ClCompile>
+    <ClCompile Include="WwiseWrapper.cpp">
+      <Filter>Source Files\UI/Tools</Filter>
+    </ClCompile>
+    <ClCompile Include="HealthBar.cpp">
+      <Filter>Source Files\UI/Tools</Filter>
+    </ClCompile>
+    <ClCompile Include="BaseMenu.cpp">
+      <Filter>Source Files\GameStates</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="DynamicMain.h">
-      <Filter>Dynamic Audio</Filter>
-    </ClInclude>
-    <ClInclude Include="Player.h">
-      <Filter>Dynamic Audio</Filter>
-    </ClInclude>
-    <ClInclude Include="Enemy.h">
-      <Filter>Dynamic Audio</Filter>
-    </ClInclude>
-    <ClInclude Include="HealthBar.h">
-      <Filter>Dynamic Audio</Filter>
-    </ClInclude>
-    <ClInclude Include="WwiseWrapper.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\SoundEngine\Common\AkDefaultLowLevelIODispatcher.h">
       <Filter>SoundEngine\Common</Filter>
     </ClInclude>
@@ -146,14 +158,41 @@
     <ClInclude Include="..\SoundEngine\Win32\stdafx.h">
       <Filter>SoundEngine\Win32</Filter>
     </ClInclude>
+    <ClInclude Include="Enemy.h">
+      <Filter>Header Files\Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>Header Files\Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="DynamicMain.h">
+      <Filter>Header Files\GameStates</Filter>
+    </ClInclude>
+    <ClInclude Include="GameOverMenu.h">
+      <Filter>Header Files\GameStates</Filter>
+    </ClInclude>
     <ClInclude Include="MainMenu.h">
-      <Filter>Source Files</Filter>
+      <Filter>Header Files\GameStates</Filter>
     </ClInclude>
     <ClInclude Include="PauseMenu.h">
-      <Filter>Source Files</Filter>
+      <Filter>Header Files\GameStates</Filter>
     </ClInclude>
     <ClInclude Include="SettingsMenu.h">
-      <Filter>Source Files</Filter>
+      <Filter>Header Files\GameStates</Filter>
+    </ClInclude>
+    <ClInclude Include="DevTools.h">
+      <Filter>Header Files\UI/Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="UIElements.h">
+      <Filter>Header Files\UI/Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="WwiseWrapper.h">
+      <Filter>Header Files\UI/Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="HealthBar.h">
+      <Filter>Header Files\UI/Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="BaseMenu.h">
+      <Filter>Header Files\GameStates</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

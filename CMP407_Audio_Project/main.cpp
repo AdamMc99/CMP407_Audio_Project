@@ -3,7 +3,9 @@
 #include "MainMenu.h"
 #include "PauseMenu.h"
 #include "SettingsMenu.h"
+#include "GameOverMenu.h"
 #include "WwiseWrapper.h"
+#include "DevTools.h"
 #include <iostream>
 
 enum class AppState {
@@ -11,6 +13,7 @@ enum class AppState {
     Settings,
     Game,
     Pause,
+    GameOver,
     Exit,
     None
 };
@@ -35,6 +38,8 @@ int main()
     DynamicMain dynamicMain(&window, font, wwise);
     PauseMenu pauseMenu(font, wwise);
     SettingsMenu settingsMenu(font, wwise);
+    GameOverMenu gameoverMenu(font, wwise);
+    DevTools devTools(font, dynamicMain);
 
 
     AppState currentState = AppState::MainMenu;
@@ -72,10 +77,19 @@ int main()
                     {
                         currentState = AppState::MainMenu;
                     }
+                    else if (currentState == AppState::GameOver) // If in gameover return to menu
+                    {
+                        currentState = AppState::MainMenu;
+                    }
                     else {
                         currentState = AppState::Exit;
                     }
                 }
+            }
+
+            if (currentState == AppState::Game) 
+            {
+                devTools.handleInput(*event);
             }
 
             if (const auto* mousePressed = event->getIf<sf::Event::MouseButtonPressed>())
@@ -132,6 +146,27 @@ int main()
                             currentState = AppState::Exit;
                         }
                     }
+                    else if (currentState == AppState::GameOver) // ---- GAME OVER
+                    {
+                        MenuSelection selection = gameoverMenu.checkClick(mousePos);
+                        if (selection == MenuSelection::Restart) 
+                        {
+                            dynamicMain.reset(); 
+                            dynamicMain.playAudio(); 
+                            currentState = AppState::Game;
+                            window.setMouseCursorVisible(true);
+                        }
+                        else if (selection == MenuSelection::ReturnToMenu) 
+                        {
+                            dynamicMain.stopAudio();
+                            menu.playAudio();
+                            currentState = AppState::MainMenu;
+                        }
+                        else if (selection == MenuSelection::Quit) 
+                        {
+                            currentState = AppState::Exit;
+                        }
+                    }
                 }
             }
         }
@@ -143,6 +178,16 @@ int main()
         {
             bool isMouseDown = sf::Mouse::isButtonPressed(sf::Mouse::Button::Left);
             settingsMenu.updateSliders(mousePos, isMouseDown, wwise);
+        }
+
+        if (currentState == AppState::Game)
+        {
+            if (dynamicMain.isPlayerDead() && !devTools.isGodModeActive())
+            {
+                currentState = AppState::GameOver;
+                window.setMouseCursorVisible(true);
+                dynamicMain.stopAudio();
+            }
         }
 
         switch (currentState)
@@ -162,14 +207,19 @@ int main()
             dynamicMain.update(deltaTime);
             window.clear(dynamicMain.getBackgroundColour()); // Override clear color for game
             dynamicMain.render();
+            devTools.render(window);
             break;
         
         case AppState::Pause:
             pauseMenu.updateHover(mousePos);
-
             window.clear(dynamicMain.getBackgroundColour());
             dynamicMain.render();       // Draw frozen game
             pauseMenu.render(window);   // Draw pause menu
+            break;
+
+        case AppState::GameOver:
+            gameoverMenu.updateHover(mousePos);
+            gameoverMenu.render(window);
             break;
 
         case AppState::Exit:
