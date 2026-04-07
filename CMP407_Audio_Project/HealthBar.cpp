@@ -36,8 +36,14 @@ void HealthBar::update(float currentHealth)
 	else m_frontBar.setFillColor(sf::Color::Green);
 }
 
-void HealthBar::render(sf::RenderWindow* window) 
+void HealthBar::render(sf::RenderWindow* window)
 {
+	float padding = 20.f;
+
+	// Update the positions dynamically right before drawing
+	m_backBar.setPosition({ padding, padding});
+	m_frontBar.setPosition({ padding, padding });
+
 	window->draw(m_backBar);
 	window->draw(m_frontBar);
 }

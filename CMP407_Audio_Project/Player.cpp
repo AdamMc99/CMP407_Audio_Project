@@ -28,16 +28,15 @@ void Player::reset()
 	m_playerShape.setRotation(sf::degrees(0));
 }
 
-void Player::update(float dt, float darknessFactor) 
+void Player::update(float dt, float darknessFactor, sf::Vector2f mouseWorldPos)
 {
-	// Calculate angle to mouse
-	sf::Vector2i mousePos = sf::Mouse::getPosition(*m_window);
 	sf::Vector2f playerPos = m_playerShape.getPosition();
 
-	float dx = static_cast<float>(mousePos.x) - playerPos.x;
-	float dy = static_cast<float>(mousePos.y) - playerPos.y;
+	// Calculate angle using the true world coordinates of the mouse
+	float dx = mouseWorldPos.x - playerPos.x;
+	float dy = mouseWorldPos.y - playerPos.y;
 
-	float rotationRad = std::atan2(dy, dx); // Atan return radians so convert to degrees
+	float rotationRad = std::atan2(dy, dx);
 	m_rotation = rotationRad * RAD_TO_DEG;
 
 	// Position the shield around the player
@@ -45,7 +44,7 @@ void Player::update(float dt, float darknessFactor)
 	float shieldY = playerPos.y + std::sin(rotationRad) * SHIELD_DISTANCE;
 
 	m_shieldShape.setPosition({ shieldX, shieldY });
-	m_shieldShape.setRotation( sf::degrees(m_rotation)); // <--- Using sf::degrees might not work (It does)
+	m_shieldShape.setRotation(sf::degrees(m_rotation));
 
 	updateFlashlightVisuals(darknessFactor);
 }

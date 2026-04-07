@@ -49,6 +49,9 @@ int main()
     while (window.isOpen() && currentState != AppState::Exit)
     {
         float deltaTime = clock.restart().asSeconds() * gameSpeed;
+        sf::View uiView(sf::FloatRect({ 0.f,0.f }, { static_cast<float>(window.getSize().x), static_cast<float>(window.getSize().y) }));
+        window.setView(uiView);
+
         sf::Vector2f mousePos = window.mapPixelToCoords(sf::Mouse::getPosition(window));
 
         // --- EVENT HANDLING ---
@@ -57,13 +60,6 @@ int main()
             if (event->is<sf::Event::Closed>())
             {
                 currentState = AppState::Exit;
-            }
-
-            if (const auto* resizedEvent = event->getIf<sf::Event::Resized>())
-            {
-                // Create a new view matching the new window size
-                sf::FloatRect visibleArea({ 0.f, 0.f }, { static_cast<float>(resizedEvent->size.x), static_cast<float>(resizedEvent->size.y) });
-                window.setView(sf::View(visibleArea));
             }
 
             if (const auto* keyPressed = event->getIf<sf::Event::KeyPressed>())

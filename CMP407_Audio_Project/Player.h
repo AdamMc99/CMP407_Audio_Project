@@ -28,7 +28,7 @@ public:
 	void takeDamage(float damage) { m_currentHealth -= damage; }
 	void addHealth(float addedHealth) { m_currentHealth += addedHealth; if (m_currentHealth > m_maxHealth) m_currentHealth = m_maxHealth; }
 
-	void update(float dt, float darknessFactor);
+	void update(float dt, float darknessFactor, sf::Vector2f mouseWorldPos);
 	void render();
 
 private:

@@ -29,6 +29,11 @@ public:
 	float getDarknessFactor() const { return m_darknessFactor; }
 	float getCurrentSpawnRate() const { return m_currentSpawnRate; }
 	float getIntensity() const { return m_intensity; }
+	void killAll() { m_enemies.clear(); }
+	void addHealth() { m_player.addHealth(10); }
+	void removeHealth() { m_player.addHealth(-10); }
+	void addIntensity() { m_intensity += 10; }
+	void removeIntensity() { m_intensity -= 10; }
 
 private:
 	sf::RenderWindow* m_window;

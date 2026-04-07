@@ -3,13 +3,12 @@
 DevTools::DevTools(sf::Font& font, DynamicMain& game) :
     m_game(game), m_devMenuText(font, "", 16), m_debugStatsText(font, "", 14)
 {
-    // Setup Top-Left Dev Menu Text
+    // Setup bottom left dev menu text
     sf::FloatRect rect = m_devMenuText.getLocalBounds();
     m_devMenuText.setOrigin({rect.size.x, 0});
     m_devMenuText.setFillColor(sf::Color::Yellow);
-    m_devMenuText.setPosition({ 10.f, 990.f });
 
-    // Setup Top-Right Debug Stats Text
+    // Setup top right debug stats text
     m_debugStatsText.setFillColor(sf::Color::White);
     m_debugStatsText.setOutlineColor(sf::Color::Black);
     m_debugStatsText.setOutlineThickness(1.f);
@@ -32,8 +31,20 @@ void DevTools::handleInput(const sf::Event& event)
                 m_godMode = !m_godMode;
                 break;
 
-            case sf::Keyboard::Scancode::Num3: // Ctrl + K: Kill all enemies
-                // call something like m_game.clearEnemies() here
+            case sf::Keyboard::Scancode::Num3: // Ctrl + 3: Kill all enemies
+                m_game.killAll();
+                break;
+            case sf::Keyboard::Scancode::Num4: // Ctrl + 4: Add 10 player health
+                m_game.addHealth();
+                break;
+            case sf::Keyboard::Scancode::Num5: // Ctrl + 5: Remove 10 player health
+                m_game.removeHealth();
+                break;
+            case sf::Keyboard::Scancode::Num6: // Ctrl + 6: Add 10 intesnity
+                m_game.addIntensity();
+                break;
+            case sf::Keyboard::Scancode::Num7: // Ctrl + 7 Remove 10 intensity
+                m_game.removeIntensity();
                 break;
             }
         }
@@ -72,7 +83,6 @@ void DevTools::render(sf::RenderWindow& window)
         // 10 pixels from the right edge
         sf::FloatRect bounds = m_debugStatsText.getLocalBounds();
         m_debugStatsText.setOrigin({ bounds.size.x, 0.f });
-
         m_debugStatsText.setPosition({ windowWidth - 10.f, 10.f });
 
         window.draw(m_debugStatsText);
@@ -84,9 +94,16 @@ void DevTools::render(sf::RenderWindow& window)
         std::string info = "--- DEV TOOLS ---\n";
         info += "Debug Stats (Ctrl+1): " + std::string(m_showDebugStats ? "ON" : "OFF") + "\n";
         info += "God Mode (Ctrl+2): " + std::string(m_godMode ? "ON" : "OFF") + "\n";
-
+        info += "Kill All (Ctrl+3) \n";
+        info += "Adjust health (Ctrl+4/5) \n";
+        info += "Adjust intensity (Ctrl+6/7) \n";
 
         m_devMenuText.setString(info);
+
+        sf::FloatRect bounds = m_devMenuText.getLocalBounds();
+        float windowHeight = static_cast<float>(window.getSize().y);
+        m_devMenuText.setOrigin({ 0.f, bounds.size.y });
+        m_devMenuText.setPosition({ 10.f, windowHeight - 10.f });
         window.draw(m_devMenuText);
     }
 }

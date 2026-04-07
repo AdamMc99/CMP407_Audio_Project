@@ -68,22 +68,32 @@ void DynamicMain::update(float dt)
 	}
 
 	// Update the player
-	m_player.update(dt, m_darknessFactor);
+	sf::View worldView(m_player.getPosition(), { static_cast<float>(m_window->getSize().x), static_cast<float>(m_window->getSize().y) });
+	sf::Vector2i pixelPos = sf::Mouse::getPosition(*m_window);
+	sf::Vector2f worldMousePos = m_window->mapPixelToCoords(pixelPos, worldView);
+	m_player.update(dt, m_darknessFactor, worldMousePos);
 
 	// Spawn enemies
 	m_spawnTimer += dt;
-	if (m_spawnTimer >= m_currentSpawnRate) 
+	if (m_spawnTimer >= m_currentSpawnRate)
 	{
 		m_spawnTimer = 0.f;
 
-		// Calculate random spawn position
 		float angle = (rand() % 360) * DEG_TO_RAD;
-		float dist = 500.f;
-		sf::Vector2f playerPos = m_player.getPosition();
 
+		// Dynamic spawn distance
+		float winWidth = static_cast<float>(m_window->getSize().x);
+		float winHeight = static_cast<float>(m_window->getSize().y);
+
+		// Pythagorean theorem to find the distance from center to corner
+		float cornerDistance = std::sqrt((winWidth / 2.f) * (winWidth / 2.f) + (winHeight / 2.f) * (winHeight / 2.f));
+
+		// Spawn distance is the corner distance + 50 pixels of safe buffer
+		float dist = cornerDistance + 50.f;
+
+		sf::Vector2f playerPos = m_player.getPosition();
 		sf::Vector2f spawnPos = { playerPos.x + std::cos(angle) * dist, playerPos.y + std::sin(angle) * dist };
 
-		// Create the enemy
 		m_enemies.emplace_back(spawnPos, playerPos);
 	}
 
@@ -160,34 +170,38 @@ bool DynamicMain::isAngleInView(float enemyAngle, float playerAngle, float fov)
 	return std::abs(diff) <= fov;
 }
 
-void DynamicMain::render() 
+void DynamicMain::render()
 {
+	sf::View worldView(m_player.getPosition(), { static_cast<float>(m_window->getSize().x), static_cast<float>(m_window->getSize().y) });
+	m_window->setView(worldView);
+
 	m_player.render();
 
 	sf::Vector2f playerPos = m_player.getPosition();
 	float playerAngle = m_player.getRotation();
 
-	for (auto& enemy : m_enemies) 
+	for (auto& enemy : m_enemies)
 	{
 		if (!enemy.isActive()) continue;
 
-		// Recalculate angle here to decide if enemy is drawn
 		sf::Vector2f enemyPos = enemy.getPosition();
 		float dx = enemyPos.x - playerPos.x;
 		float dy = enemyPos.y - playerPos.y;
 		float enemyAngle = std::atan2(dy, dx) * RAD_TO_DEG;
 
-		// Only render enemy if its within the light cone
 		bool isVisibleInFlashlight = isAngleInView(enemyAngle, playerAngle, VIEW_ANGLE);
-		if (m_darknessFactor < 0.95f || isVisibleInFlashlight) 
+		if (m_darknessFactor < 0.95f || isVisibleInFlashlight)
 		{
 			enemy.render(m_window);
 		}
 	}
 
+	sf::View uiView(sf::FloatRect({ 0.f, 0.f }, { static_cast<float>(m_window->getSize().x), static_cast<float>(m_window->getSize().y) }));
+	m_window->setView(uiView);
+
+	// DRAW HUD
 	m_healthBar->render(m_window);
 }
-
 void DynamicMain::playAudio() 
 {
 	m_wwise.registerGameObject(m_gameAudioID, "Game Audio");
