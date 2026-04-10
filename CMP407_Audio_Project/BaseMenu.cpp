@@ -1,6 +1,6 @@
 #include "BaseMenu.h"
 
-// Notice we pass in a unique audioID so each menu registers properly
+// Pass in a unique audioID so each menu registers properly
 BaseMenu::BaseMenu(sf::Font& font, WwiseWrapper& wwise, const std::string& titleText, uint64_t audioID)
     : m_font(font), m_wwise(wwise), m_title(font, titleText, 60), m_menuAudioID(audioID)
 {
