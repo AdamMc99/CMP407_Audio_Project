@@ -10,7 +10,7 @@
     "Type": "User",
     "GUID": "{B15A0551-23EE-4A4E-A149-9FB85C6FBDC1}",
     "Language": "SFX",
-    "Hash": "{71C5B432-4247-D10E-1F89-3D840B3378A4}",
+    "Hash": "{97543D50-C5FB-86CF-E108-DE445203261C}",
     "ObjectPath": "\\SoundBanks\\Default Work Unit\\TestSoundBank",
     "ShortName": "TestSoundBank",
     "Path": "TestSoundBank.bnk",
@@ -90,18 +90,6 @@
     ],
     "Events": [
      {
-      "Id": "1501626447",
-      "Name": "BGM1_Loop",
-      "ObjectPath": "\\Events\\Default Work Unit\\BGM1_Loop",
-      "GUID": "{C689FC60-A86F-45DB-9D9D-7EA833831C16}",
-      "DurationType": "Infinite",
-      "MediaRefs": [
-       {
-        "Id": "138068062"
-       }
-      ]
-     },
-     {
       "Id": "3110531800",
       "Name": "ButtonBack",
       "ObjectPath": "\\Events\\Default Work Unit\\Buttons\\ButtonBack",
@@ -177,6 +165,18 @@
         "Id": "761844584"
        }
       ]
+     },
+     {
+      "Id": "3688495192",
+      "Name": "Play_MainMenu_BGM1",
+      "ObjectPath": "\\Events\\Default Work Unit\\Play_MainMenu_BGM1",
+      "GUID": "{C689FC60-A86F-45DB-9D9D-7EA833831C16}",
+      "DurationType": "Infinite",
+      "MediaRefs": [
+       {
+        "Id": "138068062"
+       }
+      ]
      }
     ],
     "GameParameters": [
@@ -189,6 +189,6 @@
     ]
    }
   ],
-  "FileHash": "{268DA759-3ACE-DF07-E098-4BCC5A7CE37E}"
+  "FileHash": "{E0D8453D-F7BC-9E28-5C28-64D15B59C1E2}"
  }
 }

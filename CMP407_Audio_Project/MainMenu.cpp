@@ -29,7 +29,7 @@ bool MainMenu::initAudio()
 void MainMenu::playAudio()
 {
     m_wwise.registerGameObject(m_menuBgmAudioID, "Menu BGM Audio");
-    m_wwise.postEvent("BGM1_Loop", m_menuBgmAudioID);
+    m_wwise.postEvent("Play_MainMenu_BGM1", m_menuBgmAudioID);
 }
 
 void MainMenu::stopAudio()

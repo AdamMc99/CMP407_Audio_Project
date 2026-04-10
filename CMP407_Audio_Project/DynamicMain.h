@@ -32,8 +32,8 @@ public:
 	void killAll() { m_enemies.clear(); }
 	void addHealth() { m_player.addHealth(10); }
 	void removeHealth() { m_player.addHealth(-10); }
-	void addIntensity() { m_intensity += 10; }
-	void removeIntensity() { m_intensity -= 10; }
+	void adjustIntensity(float adjustment) { m_debugIntesityModifier += adjustment; }
+	void toggleIntensity() { m_debugPauseIntensity = !m_debugPauseIntensity; }
 
 private:
 	sf::RenderWindow* m_window;
@@ -54,6 +54,9 @@ private:
 	int m_enemiesDefended = 0;
 	float m_darknessFactor = 0.f;
 	float m_intensity = 0.f;
+	float m_calculatedIntensity = 0.f;
+	float m_debugIntesityModifier = 0.f;
+	float m_debugPauseIntensity = false;
 
 	bool isAngleInView(float enemyAngle, float playerAngle, float fieldOfView);
 

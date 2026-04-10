@@ -1,3 +1,15 @@
+/*
+*  ------ PROGRAM NOTES ------
+*  - Naming Conventions
+*   > Private member variables start with "m_". Eg "m_playerShape"
+*   > Function names start with lower case
+*   > Error messages should end with location. Eg "Error message - filename.cpp"
+*   > BGM wwise registrations should be "(state) BGM Audio". Eg "Menu BGM Audio"
+* 
+*  - Game objects should be able to handle changes in window size
+* 
+*/
+
 #include <SFML/Graphics.hpp>
 #include "DynamicMain.h"
 #include "MainMenu.h"
@@ -8,7 +20,7 @@
 #include "DevTools.h"
 #include <iostream>
 
-enum class AppState {
+enum class GameState {
     MainMenu,
     Settings,
     Game,
@@ -30,7 +42,7 @@ int main()
 
     WwiseWrapper wwise;
 
-    sf::RenderWindow window(sf::VideoMode({ 1000, 1000 }), "Audio Project");
+    sf::RenderWindow window(sf::VideoMode({ 1000, 1000 }), "Dynamic Audio - Menu");
     window.setFramerateLimit(60);
 
     MainMenu menu(font, wwise);
@@ -42,11 +54,11 @@ int main()
     DevTools devTools(font, dynamicMain);
 
 
-    AppState currentState = AppState::MainMenu;
+    GameState currentState = GameState::MainMenu;
     sf::Clock clock;
     float gameSpeed = 1.0f;
 
-    while (window.isOpen() && currentState != AppState::Exit)
+    while (window.isOpen() && currentState != GameState::Exit)
     {
         float deltaTime = clock.restart().asSeconds() * gameSpeed;
         sf::View uiView(sf::FloatRect({ 0.f,0.f }, { static_cast<float>(window.getSize().x), static_cast<float>(window.getSize().y) }));
@@ -59,38 +71,38 @@ int main()
         {
             if (event->is<sf::Event::Closed>())
             {
-                currentState = AppState::Exit;
+                currentState = GameState::Exit;
             }
 
             if (const auto* keyPressed = event->getIf<sf::Event::KeyPressed>())
             {
                 if (keyPressed->scancode == sf::Keyboard::Scancode::Escape)
                 {
-                    if (currentState == AppState::Game) // If in game show pause screen
+                    if (currentState == GameState::Game) // If in game show pause screen
                     {
-                        currentState = AppState::Pause;
+                        currentState = GameState::Pause;
                         window.setMouseCursorVisible(true);
                     }
-                    else if (currentState == AppState::Pause) // If on pause screen return to game
+                    else if (currentState == GameState::Pause) // If on pause screen return to game
                     {
-                        currentState = AppState::Game;
+                        currentState = GameState::Game;
                         window.setMouseCursorVisible(!dynamicMain.isCursorHidden());
                     }
-                    else if (currentState == AppState::Settings) // If in settings return to menu
+                    else if (currentState == GameState::Settings) // If in settings return to menu
                     {
-                        currentState = AppState::MainMenu;
+                        currentState = GameState::MainMenu;
                     }
-                    else if (currentState == AppState::GameOver) // If in gameover return to menu
+                    else if (currentState == GameState::GameOver) // If in gameover return to menu
                     {
-                        currentState = AppState::MainMenu;
+                        currentState = GameState::MainMenu;
                     }
                     else {
-                        currentState = AppState::Exit;
+                        currentState = GameState::Exit;
                     }
                 }
             }
 
-            if (currentState == AppState::Game) 
+            if (currentState == GameState::Game) 
             {
                 devTools.handleInput(*event);
             }
@@ -99,7 +111,7 @@ int main()
             {
                 if (mousePressed->button == sf::Mouse::Button::Left)
                 {
-                    if (currentState == AppState::MainMenu) // ---- MAIN MENU
+                    if (currentState == GameState::MainMenu) // ---- MAIN MENU
                     {
                         MenuSelection selection = menu.checkClick(mousePos);
 
@@ -111,63 +123,63 @@ int main()
                             menu.stopAudio();
                             dynamicMain.playAudio();
                             //Change state
-                            currentState = AppState::Game;
+                            currentState = GameState::Game;
                         }
                         else if (selection == MenuSelection::Settings) // Open settings
                         { 
-                            currentState = AppState::Settings;
+                            currentState = GameState::Settings;
                         }
                         else if (selection == MenuSelection::Quit) // Quit game
                         {
-                            currentState = AppState::Exit;
+                            currentState = GameState::Exit;
                         }
                     }
-                    else if (currentState == AppState::Settings) // ---- SETTINGS
+                    else if (currentState == GameState::Settings) // ---- SETTINGS
                     {
                         MenuSelection selection = settingsMenu.checkClick(mousePos);
                         if (selection == MenuSelection::ReturnToMenu)
                         {
-                            currentState = AppState::MainMenu;
+                            currentState = GameState::MainMenu;
                         }
                     }
-                    else if (currentState == AppState::Pause) // ---- PAUSE MENU
+                    else if (currentState == GameState::Pause) // ---- PAUSE MENU
                     {
                         MenuSelection selection = pauseMenu.checkClick(mousePos);
                         if (selection == MenuSelection::Resume) // Return to game
                         {
-                            currentState = AppState::Game;
+                            currentState = GameState::Game;
                             window.setMouseCursorVisible(!dynamicMain.isCursorHidden());
                         }
                         else if (selection == MenuSelection::ReturnToMenu) // Return to main menu
                         {
                             dynamicMain.stopAudio();
                             menu.playAudio();
-                            currentState = AppState::MainMenu;
+                            currentState = GameState::MainMenu;
                         }
                         else if (selection == MenuSelection::Quit) // Quit game
                         {
-                            currentState = AppState::Exit;
+                            currentState = GameState::Exit;
                         }
                     }
-                    else if (currentState == AppState::GameOver) // ---- GAME OVER
+                    else if (currentState == GameState::GameOver) // ---- GAME OVER
                     {
                         MenuSelection selection = gameoverMenu.checkClick(mousePos);
                         if (selection == MenuSelection::Restart) 
                         {
                             dynamicMain.reset(); 
                             dynamicMain.playAudio(); 
-                            currentState = AppState::Game;
+                            currentState = GameState::Game;
                             window.setMouseCursorVisible(true);
                         }
                         else if (selection == MenuSelection::ReturnToMenu) 
                         {
                             dynamicMain.stopAudio();
                             menu.playAudio();
-                            currentState = AppState::MainMenu;
+                            currentState = GameState::MainMenu;
                         }
                         else if (selection == MenuSelection::Quit) 
                         {
-                            currentState = AppState::Exit;
+                            currentState = GameState::Exit;
                         }
                     }
                 }
@@ -177,7 +189,7 @@ int main()
         // --- UPDATE & RENDER ---
         window.clear(sf::Color(135, 205, 250)); // Default clear color
 
-        if (currentState == AppState::Settings) 
+        if (currentState == GameState::Settings) 
         {
             bool isMouseDown = sf::Mouse::isButtonPressed(sf::Mouse::Button::Left);
             settingsMenu.updateSliders(mousePos, isMouseDown, wwise);
@@ -185,18 +197,21 @@ int main()
 
         switch (currentState)
         {
-        case AppState::MainMenu:
+        case GameState::MainMenu:
+            window.setTitle("Dynamic Audio - Menu");
             menu.updateHover(mousePos); 
             menu.render(window);
             break;
 
-        case AppState::Settings:
+        case GameState::Settings:
             //window.clear(sf::Color(40, 40, 40));
+            window.setTitle("Dynamic Audio - Settings");
             settingsMenu.updateHover(mousePos);
             settingsMenu.render(window);
             break;
 
-        case AppState::Game:
+        case GameState::Game:
+            window.setTitle("Dynamic Audio - Game");
             dynamicMain.update(deltaTime);
             devTools.update(deltaTime);
             window.clear(dynamicMain.getBackgroundColour()); // Override clear color for game
@@ -205,25 +220,27 @@ int main()
 
             if (dynamicMain.isPlayerDead() && !devTools.isGodModeActive())
             {
-                currentState = AppState::GameOver;
+                currentState = GameState::GameOver;
                 window.setMouseCursorVisible(true);
                 dynamicMain.stopAudio();
             }
             break;
         
-        case AppState::Pause:
+        case GameState::Pause:
+            window.setTitle("Dynamic Audio - Paused");
             pauseMenu.updateHover(mousePos);
             window.clear(dynamicMain.getBackgroundColour());
             dynamicMain.render();       // Draw frozen game
             pauseMenu.render(window);   // Draw pause menu
             break;
 
-        case AppState::GameOver:
+        case GameState::GameOver:
+            window.setTitle("Dynamic Audio - GAMEOVER!");
             gameoverMenu.updateHover(mousePos);
             gameoverMenu.render(window);
             break;
 
-        case AppState::Exit:
+        case GameState::Exit:
             window.close();
             break;
         }

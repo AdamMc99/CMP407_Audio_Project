@@ -31,7 +31,7 @@
 						<ActiveSource Name="Loop" ID="{1AA8B5B6-3E9B-47B0-A705-0ED2C607BF1D}" Platform="Linked"/>
 					</ActiveSourceList>
 				</Sound>
-				<Sound Name="BGM1" ID="{DAE76CA1-7C93-4FB5-8201-F3575F21366B}" ShortID="1050044460">
+				<Sound Name="MainMenuBGM" ID="{DAE76CA1-7C93-4FB5-8201-F3575F21366B}" ShortID="1050044460">
 					<PropertyList>
 						<Property Name="IsLoopingEnabled" Type="bool" Value="True"/>
 					</PropertyList>

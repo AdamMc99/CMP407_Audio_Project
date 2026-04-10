@@ -40,11 +40,14 @@ void DevTools::handleInput(const sf::Event& event)
             case sf::Keyboard::Scancode::Num5: // Ctrl + 5: Remove 10 player health
                 m_game.removeHealth();
                 break;
-            case sf::Keyboard::Scancode::Num6: // Ctrl + 6: Add 10 intesnity
-                m_game.addIntensity();
+            case sf::Keyboard::Scancode::Num6: // Ctrl + 6: Remove 10 intesnity
+                m_game.adjustIntensity(-1);
                 break;
-            case sf::Keyboard::Scancode::Num7: // Ctrl + 7 Remove 10 intensity
-                m_game.removeIntensity();
+            case sf::Keyboard::Scancode::Num7: // Ctrl + 7 Add 10 intensity
+                m_game.adjustIntensity(1);
+                break;            
+            case sf::Keyboard::Scancode::Num8: // Ctrl + 8 Toggle intensity pause
+                m_game.toggleIntensity();
                 break;
             }
         }
@@ -97,6 +100,7 @@ void DevTools::render(sf::RenderWindow& window)
         info += "Kill All (Ctrl+3) \n";
         info += "Adjust health (Ctrl+4/5) \n";
         info += "Adjust intensity (Ctrl+6/7) \n";
+        info += "Toggle pause intensity (Ctrl+8) \n";
 
         m_devMenuText.setString(info);
 
