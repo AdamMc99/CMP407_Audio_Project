@@ -60,5 +60,11 @@ private:
 
 	bool isAngleInView(float enemyAngle, float playerAngle, float fieldOfView);
 
+	sf::Texture m_backgroundTexture;
+	sf::Sprite m_backgroundSprite{ m_backgroundTexture };
+	sf::RenderTexture m_darknessOverlay;
+	sf::VertexArray buildScreenTorch(sf::Vector2f center, float angleDeg, float range, float halfFOV, float darknessFactor) const;
+	void handleResize();
+
 };
 

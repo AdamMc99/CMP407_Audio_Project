@@ -8,6 +8,7 @@
 * 
 *  - Game objects should be able to handle changes in window size
 * 
+* https://opengameart.org/content/metalstone-textures background texture
 */
 
 #include <SFML/Graphics.hpp>

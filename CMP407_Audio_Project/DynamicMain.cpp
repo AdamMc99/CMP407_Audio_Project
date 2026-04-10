@@ -11,10 +11,28 @@ DynamicMain::DynamicMain(sf::RenderWindow* window, sf::Font& font, WwiseWrapper&
 	: m_window(window), m_player(window), m_font(font), m_wwise(wwise)
 {
 	m_window->setMouseCursorVisible(true);
-
 	m_healthBar = new HealthBar(100.f);
 	m_darknessFactor = 0.f;
+
+	if (!m_backgroundTexture.loadFromFile("Assets/Textures/stoneBackground.png"))
+	{
+		// fallbak here
+	}
+	m_backgroundTexture.setRepeated(true); 
+	m_backgroundTexture.setSmooth(false);
+
+	constexpr int WORLD_HALF = 4000;
+	m_backgroundSprite.setTextureRect(sf::IntRect({ -WORLD_HALF, -WORLD_HALF }, { WORLD_HALF * 2, WORLD_HALF * 2 }));
+	m_backgroundSprite.setPosition({ -WORLD_HALF, -WORLD_HALF });
+
+	auto size = m_window->getSize();
+	if (!m_darknessOverlay.resize({ size.x, size.y }))
+	{
+		// error here
+	}
 }
+
+
 
 void DynamicMain::reset() 
 {
@@ -183,36 +201,78 @@ bool DynamicMain::isAngleInView(float enemyAngle, float playerAngle, float fov)
 
 void DynamicMain::render()
 {
-	sf::View worldView(m_player.getPosition(), { static_cast<float>(m_window->getSize().x), static_cast<float>(m_window->getSize().y) });
+	handleResize();
+
+	const float winW = static_cast<float>(m_window->getSize().x);
+	const float winH = static_cast<float>(m_window->getSize().y);
+
+	sf::View worldView(m_player.getPosition(), { winW, winH });
 	m_window->setView(worldView);
+
+	m_backgroundSprite.setColor(sf::Color::White);
+	m_window->draw(m_backgroundSprite);
 
 	m_player.render();
 
 	sf::Vector2f playerPos = m_player.getPosition();
-	float playerAngle = m_player.getRotation();
+	float        playerAngle = m_player.getRotation();
 
 	for (auto& enemy : m_enemies)
 	{
 		if (!enemy.isActive()) continue;
 
-		sf::Vector2f enemyPos = enemy.getPosition();
-		float dx = enemyPos.x - playerPos.x;
-		float dy = enemyPos.y - playerPos.y;
-		float enemyAngle = std::atan2(dy, dx) * RAD_TO_DEG;
+		sf::Vector2f ep = enemy.getPosition();
+		float dx = ep.x - playerPos.x;
+		float dy = ep.y - playerPos.y;
+		float ea = std::atan2(dy, dx) * RAD_TO_DEG;
 
-		bool isVisibleInFlashlight = isAngleInView(enemyAngle, playerAngle, VIEW_ANGLE);
-		if (m_darknessFactor < 0.95f || isVisibleInFlashlight)
-		{
+		bool inTorch = isAngleInView(ea, playerAngle, VIEW_ANGLE);
+		if (m_darknessFactor < 0.95f || inTorch)
 			enemy.render(m_window);
-		}
 	}
 
-	sf::View uiView(sf::FloatRect({ 0.f, 0.f }, { static_cast<float>(m_window->getSize().x), static_cast<float>(m_window->getSize().y) }));
+	
+	sf::View uiView(sf::FloatRect({ 0.f, 0.f }, { winW, winH }));
 	m_window->setView(uiView);
 
-	// DRAW HUD
+	if (m_darknessFactor > 0.01f)
+	{
+		std::uint8_t darkAlpha = static_cast<std::uint8_t>(m_darknessFactor * 255);
+
+		m_darknessOverlay.clear(sf::Color(0, 0, 0, darkAlpha));
+
+		sf::BlendMode cutout(
+			sf::BlendMode::Factor::Zero,     // srcColor
+			sf::BlendMode::Factor::One,      // dstColor  
+			sf::BlendMode::Equation::Add,
+			sf::BlendMode::Factor::One,     // srcAlpha
+			sf::BlendMode::Factor::One,     // dstAlpha  (erase darkness alpha)
+			sf::BlendMode::Equation::ReverseSubtract
+		);
+
+		sf::Vector2f screenCentre = { winW / 2.f, winH / 2.f };
+
+		sf::VertexArray torchCone = buildScreenTorch(
+			screenCentre,
+			playerAngle,
+			m_player.getLightRange(),  
+			VIEW_ANGLE,
+			m_darknessFactor
+		);
+
+		sf::RenderStates rs;
+		rs.blendMode = cutout;
+		m_darknessOverlay.draw(torchCone, rs);
+		m_darknessOverlay.display();
+
+		sf::Sprite darkSprite(m_darknessOverlay.getTexture());
+		m_window->draw(darkSprite);
+	}
+
 	m_healthBar->render(m_window);
 }
+
+
 void DynamicMain::playAudio() 
 {
 	m_wwise.registerGameObject(m_gameAudioID, "Game BGM Audio");
@@ -224,4 +284,70 @@ void DynamicMain::stopAudio()
 {
 	m_wwise.stopAll(m_gameAudioID);
 	m_wwise.unregisterGameObject(m_gameAudioID);
+}
+
+sf::VertexArray DynamicMain::buildScreenTorch(sf::Vector2f center, float angleDeg, float range, float halfFOV, float darknessFactor) const
+{
+	sf::VertexArray cone(sf::PrimitiveType::Triangles);
+
+	// Change the values to shape the falloff curve
+	struct Ring { float radiusFraction; float alphaFraction; };
+	constexpr Ring rings[] = {
+		{ 0.00f, 1.00f },  // centre fully cuts darkness
+		{ 0.35f, 0.95f },  // still very bright
+		{ 0.60f, 0.70f },  // beginning to fade
+		{ 0.80f, 0.30f },  // dimmer
+		{ 1.00f, 0.00f },  // outer edge no cutout
+	};
+	constexpr int RING_COUNT = sizeof(rings) / sizeof(rings[0]);
+
+	std::uint8_t maxAlpha = static_cast<std::uint8_t>(255 * darknessFactor);
+
+	float startRad = (angleDeg - halfFOV) * DEG_TO_RAD;
+	float endRad = (angleDeg + halfFOV) * DEG_TO_RAD;
+	constexpr int SEGMENTS = 24;
+
+	for (int r = 0; r < RING_COUNT - 1; ++r)
+	{
+		float innerR = rings[r].radiusFraction * range;
+		float outerR = rings[r + 1].radiusFraction * range;
+
+		auto innerAlpha = static_cast<std::uint8_t>(maxAlpha * rings[r].alphaFraction);
+		auto outerAlpha = static_cast<std::uint8_t>(maxAlpha * rings[r + 1].alphaFraction);
+
+		sf::Color innerCol(0, 0, 0, innerAlpha);
+		sf::Color outerCol(0, 0, 0, outerAlpha);
+
+		for (int i = 0; i < SEGMENTS; ++i)
+		{
+			float edge0 = static_cast<float>(i) / SEGMENTS;
+			float edge1 = static_cast<float>(i + 1) / SEGMENTS;
+			float angle0 = startRad + edge0 * (endRad - startRad);
+			float angle1 = startRad + edge1 * (endRad - startRad);
+
+			sf::Vector2f inner0 = { center.x + std::cos(angle0) * innerR, center.y + std::sin(angle0) * innerR };
+			sf::Vector2f inner1 = { center.x + std::cos(angle1) * innerR, center.y + std::sin(angle1) * innerR };
+			sf::Vector2f outer0 = { center.x + std::cos(angle0) * outerR, center.y + std::sin(angle0) * outerR };
+			sf::Vector2f outer1 = { center.x + std::cos(angle1) * outerR, center.y + std::sin(angle1) * outerR };
+
+			// Two triangles forming a quad between the two rings
+			cone.append({ inner0, innerCol });
+			cone.append({ inner1, innerCol });
+			cone.append({ outer0, outerCol });
+
+			cone.append({ inner1, innerCol });
+			cone.append({ outer1, outerCol });
+			cone.append({ outer0, outerCol });
+		}
+	}
+
+	return cone;
+}
+
+void DynamicMain::handleResize()
+{
+	auto size = m_window->getSize();
+	if (size == m_darknessOverlay.getSize()) return; // no change
+
+	m_darknessOverlay.resize({ size.x, size.y });
 }
