@@ -63,6 +63,7 @@ void Player::updateFlashlightVisuals(float darknessFactor)
 
 	// Set the center point of the light to yellow
 	m_lightCone.append({ center, sf::Color(255, 255, 200, lightAlpha), {} }); // <-- This also might not work (It does)
+	//m_lightCone.append({ center, sf::Color(255, 100, 100, lightAlpha), {} }); // Red hue. Could maybe adjust colour around player when they chnage health?
 
 	// Create the arc
 	float startAngle = (m_rotation - VIEW_ANGLE) * DEG_TO_RAD;
