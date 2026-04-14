@@ -8,7 +8,14 @@
 * 
 *  - Game objects should be able to handle changes in window size
 * 
-* https://opengameart.org/content/metalstone-textures background texture
+*  - Heartbeat sound effect RTCP is commented out in DynamicMain as the BGM 
+*     and HB dont mix very well. Uncomment and mute BGM in settings to showcase.
+* 
+*  - Thanks to
+*   > https://opengameart.org/content/metalstone-textures -Background texture
+*   > https://pixabay.com/sound-effects/search/heartbeat/ -BRVHRTZ - Heartbeat SFX
+*   > https://www.cambridge-mt.com/ms3/mtk/               -Babe Grand 'Aguille Rouge' - Game BGM
+*   > Soundly - Button SFX
 */
 
 #include <SFML/Graphics.hpp>

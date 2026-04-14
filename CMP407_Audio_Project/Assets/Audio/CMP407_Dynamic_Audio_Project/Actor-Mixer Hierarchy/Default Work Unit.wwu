@@ -126,6 +126,88 @@
 						</Sound>
 					</ChildrenList>
 				</Folder>
+				<Sound Name="Heartbeat" ID="{49EDA86E-695E-4AFD-A624-5F75597B35D7}" ShortID="360408283">
+					<PropertyList>
+						<Property Name="IsLoopingEnabled" Type="bool" Value="True"/>
+					</PropertyList>
+					<ReferenceList>
+						<Reference Name="Conversion">
+							<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{669ADB48-313C-4DCA-8CA0-E32EE96D2EDF}"/>
+						</Reference>
+						<Reference Name="OutputBus">
+							<ObjectRef Name="SFX_Bus" ID="{A18EC3F6-585F-49A2-88E2-B8A754CD5591}" WorkUnitID="{7C8C8091-D1EF-4476-B98D-28E1AE9B068C}"/>
+						</Reference>
+					</ReferenceList>
+					<ChildrenList>
+						<AudioFileSource Name="heartbeat" ID="{63C1B4A2-EEC6-48DD-B541-3B827A12DEF5}">
+							<Language>SFX</Language>
+							<AudioFile>heartbeat.wav</AudioFile>
+							<MediaIDList>
+								<MediaID ID="914071071"/>
+							</MediaIDList>
+						</AudioFileSource>
+					</ChildrenList>
+					<ObjectLists>
+						<ObjectList Name="Effects">
+							<Reference>
+								<Local>
+									<EffectSlot Name="" ID="{8A7D62C8-B492-4AF0-9993-9C21A121787A}" ShortID="631767042">
+										<ReferenceList>
+											<Reference Name="Effect" PluginName="Wwise Time Stretch" CompanyID="0" PluginID="130" PluginType="3">
+												<ObjectRef Name="Heartbeat_Time_Stretch" ID="{8175C13B-A4E9-427E-B03E-AEDFAC23C11A}" WorkUnitID="{3AFA645B-EA00-4CEF-9E44-8FC59D5C2938}"/>
+											</Reference>
+										</ReferenceList>
+									</EffectSlot>
+								</Local>
+							</Reference>
+						</ObjectList>
+						<ObjectList Name="RTPC">
+							<Reference>
+								<Local>
+									<RTPC Name="" ID="{ECDB10F2-8948-42AD-A303-59D2F600B1F9}" ShortID="204151234">
+										<PropertyList>
+											<Property Name="PropertyName" Type="string" Value="Volume"/>
+										</PropertyList>
+										<ReferenceList>
+											<Reference Name="ControlInput">
+												<ObjectRef Name="Heartbeat_Intensity" ID="{BDF10405-89FF-478B-9AAB-7D3CF7DB58DF}" WorkUnitID="{17F8D7E9-6CC7-4310-B8CD-F760823A953F}"/>
+											</Reference>
+											<Reference Name="Curve">
+												<Custom>
+													<Curve Name="" ID="{37155DF0-E4E5-48C7-8155-5BEAF692E5A8}">
+														<PropertyList>
+															<Property Name="Flags" Type="int32" Value="3"/>
+														</PropertyList>
+														<PointList>
+															<Point>
+																<XPos>0</XPos>
+																<YPos>0</YPos>
+																<Flags>5</Flags>
+															</Point>
+															<Point>
+																<XPos>49.93252</XPos>
+																<YPos>-49.43756</YPos>
+																<Flags>0</Flags>
+															</Point>
+															<Point>
+																<XPos>100</XPos>
+																<YPos>-200</YPos>
+																<Flags>37</Flags>
+															</Point>
+														</PointList>
+													</Curve>
+												</Custom>
+											</Reference>
+										</ReferenceList>
+									</RTPC>
+								</Local>
+							</Reference>
+						</ObjectList>
+					</ObjectLists>
+					<ActiveSourceList>
+						<ActiveSource Name="heartbeat" ID="{63C1B4A2-EEC6-48DD-B541-3B827A12DEF5}" Platform="Linked"/>
+					</ActiveSourceList>
+				</Sound>
 			</ChildrenList>
 		</WorkUnit>
 	</AudioObjects>

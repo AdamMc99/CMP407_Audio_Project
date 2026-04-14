@@ -10,7 +10,7 @@
     "Type": "User",
     "GUID": "{701ECBBD-9C7B-4030-8CDB-749EE5D1C7B9}",
     "Language": "SFX",
-    "Hash": "{6050E646-6C3F-C428-4C95-48AAAD767857}",
+    "Hash": "{2850A36C-DEFE-84AB-3B02-B5FCD5F548F1}",
     "ObjectPath": "Init",
     "ShortName": "Init",
     "Path": "Init.bnk",
@@ -66,6 +66,12 @@
       "Name": "SFX_Volume",
       "ObjectPath": "\\Game Parameters\\Default Work Unit\\SFX_Volume",
       "GUID": "{F88DFA95-3CE2-4240-9FFA-75DA558FB227}"
+     },
+     {
+      "Id": "2585595093",
+      "Name": "Heartbeat_Intensity",
+      "ObjectPath": "\\Game Parameters\\Default Work Unit\\Heartbeat_Intensity",
+      "GUID": "{BDF10405-89FF-478B-9AAB-7D3CF7DB58DF}"
      },
      {
       "Id": "3469768597",
@@ -559,6 +565,6 @@
     ]
    }
   ],
-  "FileHash": "{819D9685-455E-8BB0-C29F-F668257DC8D4}"
+  "FileHash": "{55FFD84E-DBFF-F075-2BDA-E95FE48BEE76}"
  }
 }

@@ -204,7 +204,8 @@ void DynamicMain::update(float dt)
 
 	// Send values to audio system
 	m_wwise.setRTPCValue("Game_Intensity", m_intensity, m_gameAudioID);
-	m_wwise.setRTPCValue("Player_Health", m_player.getHealth(), m_gameAudioID);
+	m_wwise.setRTPCValue("Heartbeat_Intensity", m_player.getHealth(), m_gameAudioID);
+
 
 	// Update UI
 	m_healthBar->update(m_player.getHealth());

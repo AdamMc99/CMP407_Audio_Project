@@ -1,6 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
 <WwiseDocument Type="WorkUnit" ID="{3AFA645B-EA00-4CEF-9E44-8FC59D5C2938}" SchemaVersion="123">
 	<Effects>
-		<WorkUnit Name="Default Work Unit" ID="{3AFA645B-EA00-4CEF-9E44-8FC59D5C2938}" PersistMode="Standalone"/>
+		<WorkUnit Name="Default Work Unit" ID="{3AFA645B-EA00-4CEF-9E44-8FC59D5C2938}" PersistMode="Standalone">
+			<ChildrenList>
+				<Effect Name="Heartbeat_Time_Stretch" ID="{8175C13B-A4E9-427E-B03E-AEDFAC23C11A}" PluginName="Wwise Time Stretch" CompanyID="0" PluginID="130" PluginType="3">
+					<ObjectLists>
+						<ObjectList Name="RTPC">
+							<Reference>
+								<Local>
+									<RTPC Name="" ID="{5E275A69-73C6-4BC4-B41C-6349535C1E96}" ShortID="537060954">
+										<PropertyList>
+											<Property Name="PropertyName" Type="string" Value="TimeStretch"/>
+										</PropertyList>
+										<ReferenceList>
+											<Reference Name="ControlInput">
+												<ObjectRef Name="Heartbeat_Intensity" ID="{BDF10405-89FF-478B-9AAB-7D3CF7DB58DF}" WorkUnitID="{17F8D7E9-6CC7-4310-B8CD-F760823A953F}"/>
+											</Reference>
+											<Reference Name="Curve">
+												<Custom>
+													<Curve Name="" ID="{0F01BC9F-0254-44DE-932D-778B71620D8A}">
+														<PropertyList>
+															<Property Name="Flags" Type="int32" Value="1"/>
+														</PropertyList>
+														<PointList>
+															<Point>
+																<XPos>0</XPos>
+																<YPos>100</YPos>
+																<Flags>5</Flags>
+															</Point>
+															<Point>
+																<XPos>50</XPos>
+																<YPos>25</YPos>
+																<Flags>0</Flags>
+															</Point>
+															<Point>
+																<XPos>100</XPos>
+																<YPos>25</YPos>
+																<Flags>37</Flags>
+															</Point>
+														</PointList>
+													</Curve>
+												</Custom>
+											</Reference>
+										</ReferenceList>
+									</RTPC>
+								</Local>
+							</Reference>
+						</ObjectList>
+					</ObjectLists>
+				</Effect>
+			</ChildrenList>
+		</WorkUnit>
 	</Effects>
 </WwiseDocument>

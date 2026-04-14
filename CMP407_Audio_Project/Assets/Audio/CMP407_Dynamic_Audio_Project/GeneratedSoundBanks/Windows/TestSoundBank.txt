@@ -5,9 +5,14 @@ Event	ID	Name			Wwise Object Path	Notes
 	3035572085	ButtonHover			\Default Work Unit\Buttons\ButtonHover	
 	3110531800	ButtonBack			\Default Work Unit\Buttons\ButtonBack	
 	3688495192	Play_MainMenu_BGM1			\Default Work Unit\Play_MainMenu_BGM1	
+	3765695918	Play_Heartbeat			\Default Work Unit\Play_Heartbeat	
 
 Game Parameter	ID	Name			Wwise Object Path	Notes
+	2585595093	Heartbeat_Intensity			\Default Work Unit\Heartbeat_Intensity	
 	3469768597	Game_Intensity			\Default Work Unit\Game_Intensity	
+
+Effect plug-ins	ID	Name	Type				Notes
+	755982743	Heartbeat_Time_Stretch	Wwise Time Stretch			
 
 In Memory Audio	ID	Name	Audio source file		Wwise Object Path	Notes	Data Size
 	138068062	MainMenuBGM	D:\Visual Studio Programs\CMP407 Project\CMP407_Audio_Project\CMP407_Audio_Project\Assets\Audio\CMP407_Dynamic_Audio_Project\.cache\CA\{CAECF63B-C079-682A-805A-7D943BF8AE87}.wem		\Actor-Mixer Hierarchy\Default Work Unit\MainMenuBGM		15631896
@@ -19,4 +24,5 @@ In Memory Audio	ID	Name	Audio source file		Wwise Object Path	Notes	Data Size
 	699457010	ButtonBack	D:\Visual Studio Programs\CMP407 Project\CMP407_Audio_Project\CMP407_Audio_Project\Assets\Audio\CMP407_Dynamic_Audio_Project\.cache\67\{671F23C1-0328-C38A-EEFC-FF379224B394}.wem		\Actor-Mixer Hierarchy\Default Work Unit\Buttons\ButtonBack		51884
 	761844584	BGM_Stem3	D:\Visual Studio Programs\CMP407 Project\CMP407_Audio_Project\CMP407_Audio_Project\Assets\Audio\CMP407_Dynamic_Audio_Project\.cache\A9\{A9ACB4C5-05DA-5FEB-DEAD-1AC75D83F1C2}.wem		\Interactive Music Hierarchy\Default Work Unit\Game_BGM\Game_Music\BGM_Stem3		50916120
 	885981853	ButtonHover	D:\Visual Studio Programs\CMP407 Project\CMP407_Audio_Project\CMP407_Audio_Project\Assets\Audio\CMP407_Dynamic_Audio_Project\.cache\E3\{E36E4C7D-A355-00ED-F42F-45A14397A01D}.wem		\Actor-Mixer Hierarchy\Default Work Unit\Buttons\ButtonHover		54272
+	914071071	Heartbeat	D:\Visual Studio Programs\CMP407 Project\CMP407_Audio_Project\CMP407_Audio_Project\Assets\Audio\CMP407_Dynamic_Audio_Project\.cache\17\{176C5283-00D7-C867-C733-F361D409A398}.wem		\Actor-Mixer Hierarchy\Default Work Unit\Heartbeat		178820
 

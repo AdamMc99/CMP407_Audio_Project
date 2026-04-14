@@ -23,6 +23,11 @@
 						<Property Name="InitialValue" Type="Real64" Value="100"/>
 					</PropertyList>
 				</GameParameter>
+				<GameParameter Name="Heartbeat_Intensity" ID="{BDF10405-89FF-478B-9AAB-7D3CF7DB58DF}">
+					<PropertyList>
+						<Property Name="InitialValue" Type="Real64" Value="100"/>
+					</PropertyList>
+				</GameParameter>
 			</ChildrenList>
 		</WorkUnit>
 	</GameParameters>

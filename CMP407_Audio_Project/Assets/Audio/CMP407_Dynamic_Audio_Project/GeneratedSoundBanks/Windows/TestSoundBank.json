@@ -10,7 +10,7 @@
     "Type": "User",
     "GUID": "{B15A0551-23EE-4A4E-A149-9FB85C6FBDC1}",
     "Language": "SFX",
-    "Hash": "{97543D50-C5FB-86CF-E108-DE445203261C}",
+    "Hash": "{A686D9AF-2F8D-7C58-0793-EC04C3189A5B}",
     "ObjectPath": "\\SoundBanks\\Default Work Unit\\TestSoundBank",
     "ShortName": "TestSoundBank",
     "Path": "TestSoundBank.bnk",
@@ -86,8 +86,28 @@
       "Location": "Memory",
       "ShortName": "ButtonHover.wav",
       "CachePath": "E3/{E36E4C7D-A355-00ED-F42F-45A14397A01D}.wem"
+     },
+     {
+      "Id": "914071071",
+      "Language": "SFX",
+      "Streaming": "false",
+      "Location": "Memory",
+      "ShortName": "heartbeat.wav",
+      "CachePath": "17/{176C5283-00D7-C867-C733-F361D409A398}.wem"
      }
     ],
+    "Plugins": {
+     "ShareSets": [
+      {
+       "Id": "755982743",
+       "Name": "Heartbeat_Time_Stretch",
+       "ObjectPath": "\\Effects\\Default Work Unit\\Heartbeat_Time_Stretch",
+       "GUID": "{8175C13B-A4E9-427E-B03E-AEDFAC23C11A}",
+       "LibName": "Wwise Time Stretch",
+       "LibId": "8519683"
+      }
+     ]
+    },
     "Events": [
      {
       "Id": "3110531800",
@@ -167,6 +187,25 @@
       ]
      },
      {
+      "Id": "3765695918",
+      "Name": "Play_Heartbeat",
+      "ObjectPath": "\\Events\\Default Work Unit\\Play_Heartbeat",
+      "GUID": "{A16D8A1A-0AB1-41B8-B115-405C2590CAED}",
+      "DurationType": "Infinite",
+      "MediaRefs": [
+       {
+        "Id": "914071071"
+       }
+      ],
+      "PluginRefs": {
+       "ShareSets": [
+        {
+         "Id": "755982743"
+        }
+       ]
+      }
+     },
+     {
       "Id": "3688495192",
       "Name": "Play_MainMenu_BGM1",
       "ObjectPath": "\\Events\\Default Work Unit\\Play_MainMenu_BGM1",
@@ -181,6 +220,12 @@
     ],
     "GameParameters": [
      {
+      "Id": "2585595093",
+      "Name": "Heartbeat_Intensity",
+      "ObjectPath": "\\Game Parameters\\Default Work Unit\\Heartbeat_Intensity",
+      "GUID": "{BDF10405-89FF-478B-9AAB-7D3CF7DB58DF}"
+     },
+     {
       "Id": "3469768597",
       "Name": "Game_Intensity",
       "ObjectPath": "\\Game Parameters\\Default Work Unit\\Game_Intensity",
@@ -189,6 +234,6 @@
     ]
    }
   ],
-  "FileHash": "{E0D8453D-F7BC-9E28-5C28-64D15B59C1E2}"
+  "FileHash": "{447CE309-6271-12E9-D632-6044C197FE8B}"
  }
 }
