@@ -189,15 +189,12 @@ void DynamicMain::update(float dt)
 	// Calculate intensity (used for audio)
 	if (!m_debugPauseIntensity)
 	{
-		float enemyIntensity = (static_cast<float>(m_enemies.size()) / 15) * 100.f;
+		float enemyIntensity = (static_cast<float>(m_enemies.size()) / 40.f) * 100.f;
 		if (enemyIntensity > 100.f) enemyIntensity = 100.f;
 
 		float healthPanic = 0.f;
-
 		if (m_player.getHealth() < 50.f)
-		{
 			healthPanic = ((50.f - m_player.getHealth()) / 50.f) * 100.f;
-		}
 
 		m_calculatedIntensity = std::max(enemyIntensity, healthPanic);
 	}
@@ -205,18 +202,15 @@ void DynamicMain::update(float dt)
 	float addedIntensity = m_debugIntesityModifier * 10;
 	m_intensity = m_calculatedIntensity + addedIntensity;
 
-	// Send intensity value to audio system
+	// Send values to audio system
 	m_wwise.setRTPCValue("Game_Intensity", m_intensity, m_gameAudioID);
+	m_wwise.setRTPCValue("Player_Health", m_player.getHealth(), m_gameAudioID);
 
 	// Update UI
 	m_healthBar->update(m_player.getHealth());
 
 	// Remove inactive enemies from vector
-	m_enemies.erase(
-		std::remove_if(m_enemies.begin(), m_enemies.end(),
-			[](const Enemy& e) { return !e.isActive(); }),
-		m_enemies.end()
-	);
+	m_enemies.erase(std::remove_if(m_enemies.begin(), m_enemies.end(), [](const Enemy& e) { return !e.isActive(); }), m_enemies.end());
 }
 
 
@@ -258,9 +252,13 @@ void DynamicMain::render()
 		float dy = enemyPos.y - playerPos.y;
 		float enemyAngle = std::atan2(dy, dx) * RAD_TO_DEG;
 
-		bool inTorch = isAngleInView(enemyAngle, playerAngle, VIEW_ANGLE);
+		float distanceSqrd = (dx * dx) + (dy * dy);
+		bool inAmbientGlow = distanceSqrd <= (80.f * 80.f);
 
-		if (m_darknessFactor < 0.95f || inTorch)
+		float lightRange = m_player.getLightRange();
+		bool inTorch = isAngleInView(enemyAngle, playerAngle, VIEW_ANGLE) && distanceSqrd <= (lightRange * lightRange);
+
+		if (m_darknessFactor < 0.95f || inTorch || inAmbientGlow)
 			enemy.render(m_window);
 	}
 
@@ -285,9 +283,23 @@ void DynamicMain::render()
 		sf::Vector2f screenCentre = { winW / 2, winH / 2 };
 
 		sf::VertexArray torchCone = buildScreenTorch(screenCentre, playerAngle, m_player.getLightRange(), VIEW_ANGLE, m_darknessFactor);
+		sf::VertexArray ambientGlow(sf::PrimitiveType::TriangleFan);
+		float ambientRadius = 80.f;
+		std::uint8_t centerAlpha = static_cast<std::uint8_t>(255 * m_darknessFactor * 0.8f);
+		ambientGlow.append({ screenCentre, sf::Color(0,0,0,centerAlpha) });
+
+		for (int i = 0; i <= 30; i++) 
+		{
+			float angle = (static_cast<float>(i) / 30.f) * 2.f * PI;
+			float x = screenCentre.x + std::cos(angle) * ambientRadius;
+			float y = screenCentre.y + std::sin(angle) * ambientRadius;
+			ambientGlow.append({ {x,y}, sf::Color(0,0,0,0) }); // Fade to completely dark
+		}
+
 		sf::RenderStates renderState;
 		renderState.blendMode = cutout;
 		m_darknessOverlay.draw(torchCone, renderState);
+		m_darknessOverlay.draw(ambientGlow, renderState);
 		m_darknessOverlay.display();
 
 		sf::Sprite darkSrpite(m_darknessOverlay.getTexture());
@@ -371,6 +383,7 @@ void DynamicMain::playAudio()
 {
 	m_wwise.registerGameObject(m_gameAudioID, "Game BGM Audio");
 	m_wwise.postEvent("Play_Game_BGM", m_gameAudioID);
+	m_wwise.postEvent("Play_Heartbeat", m_gameAudioID);
 }
 
 void DynamicMain::stopAudio() 

@@ -63,9 +63,13 @@ void Button::draw(sf::RenderWindow& window) const
 // ------------- Slider ----------------
 Slider::Slider(sf::Vector2f pos, sf::Vector2f size)
 {
-	m_track.setSize(size);
 	m_track.setPosition(pos);
+	m_track.setSize(size);
 	m_track.setFillColor(sf::Color(100, 100, 100));
+
+	m_fill.setPosition(pos);
+	m_fill.setSize(size);
+	m_fill.setFillColor(sf::Color(40, 40, 40));
 
 	m_handle.setSize({ 15.f, size.y + 10.f });
 	m_handle.setOrigin({ 7.5,5.f });
@@ -90,12 +94,25 @@ float Slider::update(sf::Vector2f mousePos, bool isMouseDown)
 		m_handle.setPosition({ newX, m_handle.getPosition().y });
 
 		m_value = ((newX - m_track.getPosition().x) / m_track.getSize().x) * 100.f;
+	
+		m_fill.setSize({ newX - m_track.getPosition().x, m_track.getSize().y });
 	}
 	return m_value;
+}
+
+void Slider::setPosition(sf::Vector2f pos) 
+{
+	m_track.setPosition(pos);
+	m_fill.setPosition(pos);
+
+	float currentWidth = (m_value / 100.f) * m_track.getSize().x;
+	m_handle.setPosition({ pos.x + currentWidth, pos.y });
+	m_fill.setSize({ currentWidth, m_track.getSize().y });
 }
 
 void Slider::draw(sf::RenderWindow& window) const
 {
 	window.draw(m_track);
+	window.draw(m_fill);
 	window.draw(m_handle);
 }

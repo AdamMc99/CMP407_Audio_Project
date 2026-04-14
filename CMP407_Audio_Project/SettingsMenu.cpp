@@ -42,6 +42,17 @@ void SettingsMenu::render(sf::RenderWindow& window)
     // 1. Let BaseMenu draw the overlay, the title, and the Back button
     BaseMenu::render(window);
 
+    float centerX = static_cast<float>(window.getSize().x) / 2.f;
+
+    m_masterText.setPosition({ centerX - 300.f, 290.f });
+    m_masterSlider.setPosition({ centerX - 100.f, 300.f });
+
+    m_musicText.setPosition({ centerX - 300.f, 390.f });
+    m_musicSlider.setPosition({ centerX - 100.f, 400.f });
+
+    m_sfxText.setPosition({ centerX - 300.f, 490.f });
+    m_sfxSlider.setPosition({ centerX - 100.f, 500.f });
+
     // 2. Draw our custom sliders on top
     window.draw(m_masterText);
     m_masterSlider.draw(window);

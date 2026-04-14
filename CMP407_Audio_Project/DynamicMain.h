@@ -23,12 +23,13 @@ public:
 	void update(float dt);
 	void render();
 
-	// Access for DevTools
+	// Access functions
 	size_t getEnemyCount() const { return m_enemies.size(); }
 	int getEnemiesDefended() const { return m_enemiesDefended; }
 	float getDarknessFactor() const { return m_darknessFactor; }
 	float getCurrentSpawnRate() const { return m_currentSpawnRate; }
 	float getIntensity() const { return m_intensity; }
+	float getPlayTime() const { return m_totalPlayTime; }
 	void killAll() { m_enemies.clear(); }
 	void addHealth() { m_player.addHealth(10); }
 	void removeHealth() { m_player.addHealth(-10); }

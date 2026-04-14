@@ -34,6 +34,13 @@ void Enemy::updateVisibility(const Player& player, float darknessFactor)
     float distance = std::sqrt(dx * dx + dy * dy);
     float lightRange = player.getLightRange();
     float flashlightAlpha = 0.f;
+    float ambientAlpha = 0.f;
+
+    float ambientRadius = 80.f;
+    if (distance <= ambientRadius) 
+    {
+        ambientAlpha = (1.f - (distance / ambientRadius));
+    }
 
 
     if (distance <= lightRange) 
@@ -60,7 +67,13 @@ void Enemy::updateVisibility(const Player& player, float darknessFactor)
         float totalAlphaFactor = std::min(angleFactor, distFactor);
         totalAlphaFactor = std::max(0.0f, std::min(totalAlphaFactor, 1.0f));
 
-        flashlightAlpha = 255 * totalAlphaFactor;
+        float finalAlphaFactor = std::max(ambientAlpha, totalAlphaFactor);
+        flashlightAlpha = 255 * finalAlphaFactor;
+    }
+    else if (distance <= ambientRadius) 
+    {
+        // If not in torch range but ARE in ambient range
+        flashlightAlpha = 255 * ambientAlpha;
     }
 
     float dayLightAlpha = 255.f;

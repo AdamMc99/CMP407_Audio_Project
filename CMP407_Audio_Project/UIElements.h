@@ -26,11 +26,14 @@ public:
 
 	float update(sf::Vector2f mousePos, bool isMouseDown);
 	void draw(sf::RenderWindow& window) const;
+	void setPosition(sf::Vector2f pos);
 	float getValue() const { return m_value; };
 
 private:
 	sf::RectangleShape m_track;
 	sf::RectangleShape m_handle;
+	sf::RectangleShape m_fill;
+
 	float m_value = 100.f;
 	bool m_isDragging = false;
 };

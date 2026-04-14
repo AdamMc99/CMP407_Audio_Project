@@ -222,6 +222,7 @@ int main()
             if (dynamicMain.isPlayerDead() && !devTools.isGodModeActive())
             {
                 currentState = GameState::GameOver;
+                gameoverMenu.setSurvivalTime(dynamicMain.getPlayTime());
                 window.setMouseCursorVisible(true);
                 dynamicMain.stopAudio();
             }
