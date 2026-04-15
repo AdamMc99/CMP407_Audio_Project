@@ -28,6 +28,7 @@
 #include "DevTools.h"
 #include <iostream>
 
+// Each possible state in the game
 enum class GameState {
     MainMenu,
     Settings,
@@ -38,8 +39,14 @@ enum class GameState {
     None
 };
 
+
+/// <summary>
+/// Main entry point. Initialises the window, audio, menus, and game objects,
+/// then runs the main game loop events, updates and rendering.
+/// </summary>
 int main()
 {
+    // load the basic font used for the game
     sf::Font font;
     if (!font.openFromFile("Assets/Fonts/arial.ttf")) {
         if (!font.openFromFile("arial.ttf")) {
@@ -48,11 +55,14 @@ int main()
         }
     }
 
-    WwiseWrapper wwise;
-
+    // Create the game window
     sf::RenderWindow window(sf::VideoMode({ 1000, 1000 }), "Dynamic Audio - Menu");
     window.setFramerateLimit(60);
 
+    // Initialise the audio wrapper
+    WwiseWrapper wwise;
+
+    // Create menus and game objects
     MainMenu menu(font, wwise);
     menu.initAudio();
     DynamicMain dynamicMain(&window, font, wwise);
@@ -61,20 +71,26 @@ int main()
     GameOverMenu gameoverMenu(font, wwise);
     DevTools devTools(font, dynamicMain);
 
-
+    // Set initial game state and timer
     GameState currentState = GameState::MainMenu;
     sf::Clock clock;
     float gameSpeed = 1.0f;
 
+    // Main game loop
     while (window.isOpen() && currentState != GameState::Exit)
     {
+        // Calculate time passed since previous frame
         float deltaTime = clock.restart().asSeconds() * gameSpeed;
+
+        // Reset view to UI
         sf::View uiView(sf::FloatRect({ 0.f,0.f }, { static_cast<float>(window.getSize().x), static_cast<float>(window.getSize().y) }));
         window.setView(uiView);
 
+        // Get the current mouse position
         sf::Vector2f mousePos = window.mapPixelToCoords(sf::Mouse::getPosition(window));
 
         // --- EVENT HANDLING ---
+        // Process user input and window events
         while (const std::optional event = window.pollEvent())
         {
             if (event->is<sf::Event::Closed>())
@@ -82,8 +98,10 @@ int main()
                 currentState = GameState::Exit;
             }
 
+            // Check if a key was pressed
             if (const auto* keyPressed = event->getIf<sf::Event::KeyPressed>())
             {
+                // Escape key
                 if (keyPressed->scancode == sf::Keyboard::Scancode::Escape)
                 {
                     if (currentState == GameState::Game) // If in game show pause screen
@@ -110,20 +128,23 @@ int main()
                 }
             }
 
+            // Handle dev tool inputs during gameplay
             if (currentState == GameState::Game) 
             {
                 devTools.handleInput(*event);
             }
 
+            // Check if mouse button was clicked
             if (const auto* mousePressed = event->getIf<sf::Event::MouseButtonPressed>())
             {
                 if (mousePressed->button == sf::Mouse::Button::Left)
                 {
-                    if (currentState == GameState::MainMenu) // ---- MAIN MENU
+                    // Handle clicks on main menu
+                    if (currentState == GameState::MainMenu)
                     {
                         MenuSelection selection = menu.checkClick(mousePos);
 
-                        if (selection == MenuSelection::StartGame) // Start game
+                        if (selection == MenuSelection::StartGame)
                         {
                             // Reset game
                             dynamicMain.reset();
@@ -133,16 +154,17 @@ int main()
                             //Change state
                             currentState = GameState::Game;
                         }
-                        else if (selection == MenuSelection::Settings) // Open settings
+                        else if (selection == MenuSelection::Settings)
                         { 
                             currentState = GameState::Settings;
                         }
-                        else if (selection == MenuSelection::Quit) // Quit game
+                        else if (selection == MenuSelection::Quit)
                         {
                             currentState = GameState::Exit;
                         }
                     }
-                    else if (currentState == GameState::Settings) // ---- SETTINGS
+                    // Handle clicks on settings menu
+                    else if (currentState == GameState::Settings)
                     {
                         MenuSelection selection = settingsMenu.checkClick(mousePos);
                         if (selection == MenuSelection::ReturnToMenu)
@@ -150,26 +172,28 @@ int main()
                             currentState = GameState::MainMenu;
                         }
                     }
-                    else if (currentState == GameState::Pause) // ---- PAUSE MENU
+                    // Handle clicks on pasue menu
+                    else if (currentState == GameState::Pause)
                     {
                         MenuSelection selection = pauseMenu.checkClick(mousePos);
-                        if (selection == MenuSelection::Resume) // Return to game
+                        if (selection == MenuSelection::Resume)
                         {
                             currentState = GameState::Game;
                             window.setMouseCursorVisible(!dynamicMain.isCursorHidden());
                         }
-                        else if (selection == MenuSelection::ReturnToMenu) // Return to main menu
+                        else if (selection == MenuSelection::ReturnToMenu)
                         {
                             dynamicMain.stopAudio();
                             menu.playAudio();
                             currentState = GameState::MainMenu;
                         }
-                        else if (selection == MenuSelection::Quit) // Quit game
+                        else if (selection == MenuSelection::Quit)
                         {
                             currentState = GameState::Exit;
                         }
                     }
-                    else if (currentState == GameState::GameOver) // ---- GAME OVER
+                    // Handle clicks on game over menu
+                    else if (currentState == GameState::GameOver)
                     {
                         MenuSelection selection = gameoverMenu.checkClick(mousePos);
                         if (selection == MenuSelection::Restart) 
@@ -195,14 +219,17 @@ int main()
         }
 
         // --- UPDATE & RENDER ---
-        window.clear(sf::Color(135, 205, 250)); // Default clear color
+        // Clear window with a light blue colour
+        window.clear(sf::Color(135, 205, 250));
 
+        // Update audio sliders if settings menu is open
         if (currentState == GameState::Settings) 
         {
             bool isMouseDown = sf::Mouse::isButtonPressed(sf::Mouse::Button::Left);
             settingsMenu.updateSliders(mousePos, isMouseDown, wwise);
         }
 
+        // Handle specific logic and drawing for current game state
         switch (currentState)
         {
         case GameState::MainMenu:
@@ -226,6 +253,7 @@ int main()
             dynamicMain.render();
             devTools.render(window);
 
+            // Check if player has died
             if (dynamicMain.isPlayerDead() && !devTools.isGodModeActive())
             {
                 currentState = GameState::GameOver;
@@ -255,12 +283,13 @@ int main()
         }
 
         // --- AUDIO ENGINE ---
-        // Render audio once per frame regardless of state
+        // Process audio updates
         wwise.update();
-
+        // draw the current frame to the screen
         window.display();
     }
 
+    // Clean uo audio engine before quitting
     wwise.terminateSoundEngine();
     return 0;
 }

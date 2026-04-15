@@ -2,15 +2,20 @@
 
 // --------- BUTTON ------------
 
+/// <summary>
+/// Constructor to configure button's size, colour, text, and action trigger.
+/// </summary>
 Button::Button(const sf::Font& font, const std::string& text, sf::Vector2f pos, sf::Vector2f size, sf::Color colour, MenuSelection action) 
 	: m_btnText(font, text, 20), m_action(action)
 {
+	// Setup button shape
 	m_btnShape.setSize(size);
 	m_btnShape.setPosition(pos);
 	m_btnShape.setFillColor(colour);
 	m_btnShape.setOutlineColor(sf::Color::Black);
 	m_btnShape.setOutlineThickness(0);
 
+	// Setup button text
 	m_btnText = sf::Text(font, text, 20);
 	m_btnText.setFillColor(sf::Color::Black);
 	sf::FloatRect rect = m_btnText.getLocalBounds();
@@ -18,6 +23,11 @@ Button::Button(const sf::Font& font, const std::string& text, sf::Vector2f pos, 
 	m_btnText.setPosition({ pos.x + size.x / 2.f, pos.y + size.y / 2.f });
 }
 
+/// <summary>
+/// Check if the mouse is currently hovering over the button
+/// and highlights it.
+/// </summary>
+/// <returns>True if mouse is within button bounds.</returns>
 bool Button::updateHover(sf::Vector2f mousePos)
 {
 	bool isCurrentlyHovering = contains(mousePos);
@@ -37,23 +47,27 @@ bool Button::updateHover(sf::Vector2f mousePos)
 	return false;
 }
 
+/// <summary>
+/// Checks if given coordinate is located within the button boundary.
+/// </summary>
+/// <returns>True if coordinate is within the boundary.</returns>
 bool Button::contains(sf::Vector2f mousePos) const
 {
 	return m_btnShape.getGlobalBounds().contains(mousePos);
 }
 
+/// <summary>
+/// Draws button to the screen and ensures it stays centered horizonatally.
+/// </summary>
 void Button::draw(sf::RenderWindow& window) const
 {
-	// You can dynamically center the button's X position based on the window
 	float winWidth = static_cast<float>(window.getSize().x);
 
 	sf::RectangleShape& shape = const_cast<sf::RectangleShape&>(m_btnShape);
 	sf::Text& text = const_cast<sf::Text&>(m_btnText);
 
-	// Keep the original Y position, but center the X
+	// Adjust position to stay in the center
 	shape.setPosition({ (winWidth / 2.f) - (shape.getSize().x / 2.f), shape.getPosition().y });
-
-	// Recalculate text position to match the new shape position
 	text.setPosition({ shape.getPosition().x + (shape.getSize().x / 2.f), shape.getPosition().y + (shape.getSize().y / 2.f) });
 
 	window.draw(shape);
@@ -61,6 +75,10 @@ void Button::draw(sf::RenderWindow& window) const
 }
 
 // ------------- Slider ----------------
+
+/// <summary>
+/// Constructor to configure background track and handle of the slider.
+/// </summary>
 Slider::Slider(sf::Vector2f pos, sf::Vector2f size)
 {
 	m_track.setPosition(pos);
@@ -77,8 +95,13 @@ Slider::Slider(sf::Vector2f pos, sf::Vector2f size)
 	m_handle.setFillColor(sf::Color::White);
 }
 
+/// <summary>
+/// Adjusts the slider value based on position of the mouse during click and drag.
+/// </summary>
+/// <returns>The current value of the slider.</returns>
 float Slider::update(sf::Vector2f mousePos, bool isMouseDown)
 {
+	// Begin dragging if mouse clicks on handle
 	if (isMouseDown && m_handle.getGlobalBounds().contains(mousePos))
 	{
 		m_isDragging = true;
@@ -88,6 +111,7 @@ float Slider::update(sf::Vector2f mousePos, bool isMouseDown)
 		m_isDragging = false;
 	}
 
+	// Move handle if currently dragging
 	if (m_isDragging)
 	{
 		float newX = std::max(m_track.getPosition().x, std::min(mousePos.x, m_track.getPosition().x + m_track.getSize().x));
@@ -100,6 +124,9 @@ float Slider::update(sf::Vector2f mousePos, bool isMouseDown)
 	return m_value;
 }
 
+/// <summary>
+/// Set the position of the slider's elements.
+/// </summary>
 void Slider::setPosition(sf::Vector2f pos) 
 {
 	m_track.setPosition(pos);
@@ -110,6 +137,9 @@ void Slider::setPosition(sf::Vector2f pos)
 	m_fill.setSize({ currentWidth, m_track.getSize().y });
 }
 
+/// <summary>
+/// Draws the track, coloured fill area, and handle to the screen.
+/// </summary>
 void Slider::draw(sf::RenderWindow& window) const
 {
 	window.draw(m_track);

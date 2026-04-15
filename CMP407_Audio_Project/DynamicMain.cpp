@@ -7,8 +7,12 @@
 constexpr float PI = 3.14159265f;
 constexpr float RAD_TO_DEG = 180.f / PI;
 constexpr float DEG_TO_RAD = PI / 180.f;
+// Constants for gameplay
+constexpr int ENEMIES_TO_DEFEAT = 6;
 
-// Set up main game system
+/// <summary>
+/// Constructor to intialise main game system, setup background, and reset inital variables.
+/// </summary>
 DynamicMain::DynamicMain(sf::RenderWindow* window, sf::Font& font, WwiseWrapper& wwise)
 	: m_window(window), m_player(window), m_font(font), m_wwise(wwise)
 {
@@ -31,7 +35,7 @@ DynamicMain::DynamicMain(sf::RenderWindow* window, sf::Font& font, WwiseWrapper&
 	m_backgroundTexture.setRepeated(true);
 	m_backgroundTexture.setSmooth(false);
 
-	// Create a large background area
+	// Set background size
 	constexpr int WORLD_HALF = 4000;
 	m_backgroundSprite.setTextureRect(sf::IntRect({ -WORLD_HALF, -WORLD_HALF }, { WORLD_HALF * 2, WORLD_HALF * 2 }));
 	m_backgroundSprite.setPosition({ -WORLD_HALF, -WORLD_HALF });
@@ -40,12 +44,14 @@ DynamicMain::DynamicMain(sf::RenderWindow* window, sf::Font& font, WwiseWrapper&
 	auto size = m_window->getSize();
 	if (!m_darknessOverlay.resize({ size.x, size.y }))
 	{
-		// Handle error if needed
+		std::cerr << "ERROR: could not create darkness overlay - DynamicMain.cpp \n";
 	}
 }
 
 
-// Reset the game state
+/// <summary>
+/// Reset the game to its starting conditions for a new run.
+/// </summary>
 void DynamicMain::reset()
 {
 	// Reset gameplay values
@@ -74,8 +80,10 @@ void DynamicMain::reset()
 	m_debugPauseIntensity = false;
 }
 
-
-// Returns a colour that changes based on darknessFactor
+/// <summary>
+/// Calculates the background colour based on current darkness factor.
+/// </summary>
+/// <returns>Newly darkened background colour.</returns>
 sf::Color DynamicMain::getBackgroundColour() const
 {
 	sf::Color dayColour = sf::Color(72, 72, 56);
@@ -90,19 +98,21 @@ sf::Color DynamicMain::getBackgroundColour() const
 }
 
 
-// Main update function (called every frame)
+/// <summary>
+/// Updates player input, enemy spawning, movement, collsions and game difficulty.
+/// </summary>
 void DynamicMain::update(float dt)
 {
 	// Increase total play time
 	m_totalPlayTime += dt;
 
-	// Gradually increase difficulty by reducing spawn time
+	// Gradually increase difficulty by reducing spawn time as game continues
 	float newSpawnRate = START_SPAWN_RATE - (m_totalPlayTime * DIFFICULTY_RAMP);
 	if (newSpawnRate < MIN_SPAWN_RATE) newSpawnRate = MIN_SPAWN_RATE;
 	m_currentSpawnRate = newSpawnRate;
 
 	// Increase darkness after defending enough enemies
-	if (m_enemiesDefended >= 6 && m_darknessFactor < 1.f)
+	if (m_enemiesDefended >= ENEMIES_TO_DEFEAT && m_darknessFactor < 1.f)
 	{
 		m_darknessFactor += dt * 0.5f;
 		if (m_darknessFactor > 1.f) m_darknessFactor = 1.0f;
@@ -111,7 +121,7 @@ void DynamicMain::update(float dt)
 		m_window->setMouseCursorVisible(false);
 	}
 
-	// Update player
+	// Set the camera view
 	sf::View worldView(m_player.getPosition(), { static_cast<float>(m_window->getSize().x), static_cast<float>(m_window->getSize().y) });
 
 	// Get mouse position in world coordinates
@@ -120,34 +130,31 @@ void DynamicMain::update(float dt)
 
 	m_player.update(dt, m_darknessFactor, worldMousePos);
 
-	// Spawn enemies over time
+	// Create new enemies if spawn timer reaches target
 	m_spawnTimer += dt;
 	if (m_spawnTimer >= m_currentSpawnRate)
 	{
 		m_spawnTimer = 0.f;
 
-		// Random direction
+		// Random direction from the player
 		float angle = (rand() % 360) * DEG_TO_RAD;
 
-		// Calculate distance to screen corner
+		// Calculate spawn location just outside the screen
 		float winWidth = static_cast<float>(m_window->getSize().x);
 		float winHeight = static_cast<float>(m_window->getSize().y);
-
-		float cornerDistance = std::sqrt((winWidth / 2.f) * (winWidth / 2.f) + (winHeight / 2.f) * (winHeight / 2.f));
-
-		// Spawn outside screen
+		float cornerDistance = std::sqrt((winWidth / 2.f) * (winWidth / 2.f) + (winHeight / 2.f) * (winHeight / 2.f)); // pythagorus theory
 		float dist = cornerDistance + 50.f;
 
 		sf::Vector2f playerPos = m_player.getPosition();
 
-		// Calculate spawn position using angle
+		// Calculate final spawn position
 		sf::Vector2f spawnPos = { playerPos.x + std::cos(angle) * dist, playerPos.y + std::sin(angle) * dist };
 
 		m_enemies.emplace_back(spawnPos, playerPos);
 	}
 
 
-	// Update enemies and check collisions
+	// Enemy logic 
 	sf::Vector2f playerPos = m_player.getPosition();
 	float playerAngle = m_player.getRotation();
 
@@ -160,6 +167,7 @@ void DynamicMain::update(float dt)
 
 		sf::Vector2f enemyPos = enemy.getPosition();
 
+		// Calculate distance between enemy and player
 		float dx = enemyPos.x - playerPos.x;
 		float dy = enemyPos.y - playerPos.y;
 		float disSqr = dx * dx + dy * dy;
@@ -186,12 +194,14 @@ void DynamicMain::update(float dt)
 		}
 	}
 
-	// Calculate intensity (used for audio)
+	// Calculate game intensity for audio
 	if (!m_debugPauseIntensity)
 	{
+		// How many enemies are on screen
 		float enemyIntensity = (static_cast<float>(m_enemies.size()) / 40.f) * 100.f;
 		if (enemyIntensity > 100.f) enemyIntensity = 100.f;
 
+		// Percentage of health left (starting at 50%)
 		float healthPanic = 0.f;
 		if (m_player.getHealth() < 50.f)
 			healthPanic = ((50.f - m_player.getHealth()) / 50.f) * 100.f;
@@ -206,7 +216,6 @@ void DynamicMain::update(float dt)
 	m_wwise.setRTPCValue("Game_Intensity", m_intensity, m_gameAudioID);
 	//m_wwise.setRTPCValue("Heartbeat_Intensity", m_player.getHealth(), m_gameAudioID);
 
-
 	// Update UI
 	m_healthBar->update(m_player.getHealth());
 
@@ -215,7 +224,10 @@ void DynamicMain::update(float dt)
 }
 
 
-// Checks if an angle is within a given field of view
+/// <summary>
+/// Check if target angle falls within viewing are from the player.
+/// </summary>
+/// <returns>True if the enemy is within player view.</returns>
 bool DynamicMain::isAngleInView(float enemyAngle, float playerAngle, float fov)
 {
 	float diff = enemyAngle - playerAngle;
@@ -227,6 +239,9 @@ bool DynamicMain::isAngleInView(float enemyAngle, float playerAngle, float fov)
 	return std::abs(diff) <= fov;
 }
 
+/// <summary>
+/// Draws background, enemies, darkness overlay, player, and UI.
+/// </summary>
 void DynamicMain::render()
 {
 	handleResize();
@@ -234,6 +249,7 @@ void DynamicMain::render()
 	const float winW = static_cast<float>(m_window->getSize().x);
 	const float winH = static_cast<float>(m_window->getSize().y);
 
+	// Setup view based on player's location
 	sf::View worldView(m_player.getPosition(), { winW, winH });
 	m_window->setView(worldView);
 
@@ -244,6 +260,7 @@ void DynamicMain::render()
 
 	float playerAngle = m_player.getRotation();
 
+	// Draw enemies if they are visible
 	for (auto& enemy : m_enemies)
 	{
 		if (!enemy.isActive()) continue;
@@ -263,15 +280,18 @@ void DynamicMain::render()
 			enemy.render(m_window);
 	}
 
+	// Switch view for UI elements
 	sf::View uiView(sf::FloatRect({ 0.f, 0.f }, { winW, winH }));
 	m_window->setView(uiView);
 
+	// Draw darkness and light cuts
 	if (m_darknessFactor > 0.01f) 
 	{
 		std::uint8_t darkAlpha = static_cast<std::uint8_t>(m_darknessFactor * 255);
 
 		m_darknessOverlay.clear(sf::Color(0, 0, 0, darkAlpha));
 
+		// Define how torch light cuts the overlay
 		sf::BlendMode cutout(
 			sf::BlendMode::Factor::Zero,	// srcColour
 			sf::BlendMode::Factor::One,		// dstColour
@@ -283,6 +303,7 @@ void DynamicMain::render()
 
 		sf::Vector2f screenCentre = { winW / 2, winH / 2 };
 
+		// Generate torch and ambient light shapes
 		sf::VertexArray torchCone = buildScreenTorch(screenCentre, playerAngle, m_player.getLightRange(), VIEW_ANGLE, m_darknessFactor);
 		sf::VertexArray ambientGlow(sf::PrimitiveType::TriangleFan);
 		float ambientRadius = 80.f;
@@ -297,6 +318,7 @@ void DynamicMain::render()
 			ambientGlow.append({ {x,y}, sf::Color(0,0,0,0) }); // Fade to completely dark
 		}
 
+		// Apply light shapes to the darkness overlay
 		sf::RenderStates renderState;
 		renderState.blendMode = cutout;
 		m_darknessOverlay.draw(torchCone, renderState);
@@ -307,13 +329,18 @@ void DynamicMain::render()
 		m_window->draw(darkSrpite);
 	}
 
+	// Draw health bar
 	m_healthBar->render(m_window);
 
+	// Reset view and draw player
 	m_window->setView(worldView);
 	m_player.render();
 
 }
 
+/// <summary>
+/// Rebuilds the darkness overlay texture when the game window resizes.
+/// </summary>
 void DynamicMain::handleResize() 
 {
 	auto size = m_window->getSize();
@@ -322,11 +349,15 @@ void DynamicMain::handleResize()
 	m_darknessOverlay.resize({ size.x, size.y });
 }
 
+/// <summary>
+/// Creates the player's toch beam based on angle, range, and darkness.
+/// </summary>
+/// <returns>The torchlight cone shape.</returns>
 sf::VertexArray DynamicMain::buildScreenTorch(sf::Vector2f center, float angleDeg, float range, float halfFOV, float darknessFactor) const
 {
 	sf::VertexArray cone(sf::PrimitiveType::Triangles);
 
-	// Change the values to shape the falloff curve
+	// Create multiple rings to fade out light smoothly
 	struct Ring { float radiusFraction; float alphaFraction; };
 	constexpr Ring rings[] = {
 		{ 0.00f, 1.00f },  // centre fully cuts darkness
@@ -343,6 +374,7 @@ sf::VertexArray DynamicMain::buildScreenTorch(sf::Vector2f center, float angleDe
 	float endRad = (angleDeg + halfFOV) * DEG_TO_RAD;
 	constexpr int SEGMENTS = 24;
 
+	// Draw sections for each ring to create a light arc
 	for (int r = 0; r < RING_COUNT - 1; ++r)
 	{
 		float innerR = rings[r].radiusFraction * range;
@@ -366,7 +398,6 @@ sf::VertexArray DynamicMain::buildScreenTorch(sf::Vector2f center, float angleDe
 			sf::Vector2f outer0 = { center.x + std::cos(angle0) * outerR, center.y + std::sin(angle0) * outerR };
 			sf::Vector2f outer1 = { center.x + std::cos(angle1) * outerR, center.y + std::sin(angle1) * outerR };
 
-			// Two triangles forming a quad between the two rings
 			cone.append({ inner0, innerCol });
 			cone.append({ inner1, innerCol });
 			cone.append({ outer0, outerCol });
@@ -380,6 +411,9 @@ sf::VertexArray DynamicMain::buildScreenTorch(sf::Vector2f center, float angleDe
 	return cone;
 }
 
+/// <summary>
+/// Starts state's audio.
+/// </summary>
 void DynamicMain::playAudio() 
 {
 	m_wwise.registerGameObject(m_gameAudioID, "Game BGM Audio");
@@ -387,6 +421,9 @@ void DynamicMain::playAudio()
 	m_wwise.postEvent("Play_Heartbeat", m_gameAudioID);
 }
 
+/// <summary>
+/// Stops all state active audio and removes game object from sound engine.
+/// </summary>
 void DynamicMain::stopAudio() 
 {
 	m_wwise.stopAll();
