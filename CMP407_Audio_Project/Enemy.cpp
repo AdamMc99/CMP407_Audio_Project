@@ -1,6 +1,10 @@
 #include "Enemy.h"
 #include <cmath>
 
+/// <summary>
+/// Constructor to spawn the enemy and calculate its movement speed towards
+/// a specific location.
+/// </summary>
 Enemy::Enemy(sf::Vector2f spawnPos, sf::Vector2f targetPos) : m_active(true)
 {
 	m_enemyShape.setRadius(15.f);
@@ -8,11 +12,11 @@ Enemy::Enemy(sf::Vector2f spawnPos, sf::Vector2f targetPos) : m_active(true)
 	m_enemyShape.setFillColor(sf::Color::Red);
 	m_enemyShape.setPosition(spawnPos);
 
-	// Calculate direction towards player
+	// Calculate direction towards target
 	sf::Vector2f direction = targetPos - spawnPos;
 	float length = std::sqrt(direction.x * direction.x + direction.y * direction.y);
 
-	// Normalise and multiply by speed
+	// Apply movement speed
 	if (length != 0) 
 	{
 		m_velocity = (direction / length) * m_speed;
@@ -23,6 +27,9 @@ Enemy::Enemy(sf::Vector2f spawnPos, sf::Vector2f targetPos) : m_active(true)
 	}
 }
 
+/// <summary>
+/// Change transparency of the enemy when in and out of darkness.
+/// </summary>
 void Enemy::updateVisibility(const Player& player, float darknessFactor)
 {
     sf::Vector2f playerPos = player.getPosition();
@@ -36,20 +43,20 @@ void Enemy::updateVisibility(const Player& player, float darknessFactor)
     float flashlightAlpha = 0.f;
     float ambientAlpha = 0.f;
 
+    // Become visible when close to the player
     float ambientRadius = 80.f;
     if (distance <= ambientRadius) 
     {
         ambientAlpha = (1.f - (distance / ambientRadius));
     }
 
-
+    // Become visible when inside the torch range
     if (distance <= lightRange) 
     {
         float enemyAngleRad = std::atan2(dy, dx);
         float enemyAngleDeg = enemyAngleRad * (180 / 3.14159265);
         float playerAngleDeg = player.getRotation();
 
-        // Get the absolute difference between angles
         float angleDiff = std::abs(playerAngleDeg - enemyAngleDeg);
 
         if (angleDiff > 180.f) {
@@ -84,11 +91,17 @@ void Enemy::updateVisibility(const Player& player, float darknessFactor)
     m_enemyShape.setFillColor(colour);
 }
 
+/// <summary>
+/// Moves the enemy position based on its velocity.
+/// </summary>
 void Enemy:: update(float dt)
 {
 	m_enemyShape.move(m_velocity * dt);
 }
 
+/// <summary>
+/// Draws enemy to the screen.
+/// </summary>
 void Enemy::render(sf::RenderWindow* window) 
 {
 	window->draw(m_enemyShape);

@@ -4,6 +4,9 @@ constexpr float PI = 3.14159265f;
 constexpr float DEG_TO_RAD = PI / 180.f;
 constexpr float RAD_TO_DEG = 180.f / PI;
 
+/// <summary>
+/// Constructor to intialise the player's visuals, shield, and light shape.
+/// </summary>
 Player::Player(sf::RenderWindow* window) : m_window(window)
 {
 	// Setup player body
@@ -21,6 +24,9 @@ Player::Player(sf::RenderWindow* window) : m_window(window)
 	m_lightCone.setPrimitiveType(sf::PrimitiveType::TriangleFan);
 }
 
+/// <summary>
+/// Resets the player's variables to default values.
+/// </summary>
 void Player::reset()
 {
 	m_currentHealth = m_maxHealth;
@@ -28,18 +34,21 @@ void Player::reset()
 	m_playerShape.setRotation(sf::degrees(0));
 }
 
+/// <summary>
+/// Updates player and shield rotation and position based on mouse position.
+/// </summary>
 void Player::update(float dt, float darknessFactor, sf::Vector2f mouseWorldPos)
 {
 	sf::Vector2f playerPos = m_playerShape.getPosition();
 
-	// Calculate angle using the true world coordinates of the mouse
+	// Calculate angle towards mouse
 	float dx = mouseWorldPos.x - playerPos.x;
 	float dy = mouseWorldPos.y - playerPos.y;
 
 	float rotationRad = std::atan2(dy, dx);
 	m_rotation = rotationRad * RAD_TO_DEG;
 
-	// Position the shield around the player
+	// Position the shield around the player at a set distance
 	float shieldX = playerPos.x + std::cos(rotationRad) * SHIELD_DISTANCE;
 	float shieldY = playerPos.y + std::sin(rotationRad) * SHIELD_DISTANCE;
 
@@ -49,6 +58,10 @@ void Player::update(float dt, float darknessFactor, sf::Vector2f mouseWorldPos)
 	updateFlashlightVisuals(darknessFactor);
 }
 
+/// <summary>
+/// Builds the torch shape and calculates its colour and intensity based
+/// on health and darkness.
+/// </summary>
 void Player::updateFlashlightVisuals(float darknessFactor) 
 {
 	m_lightCone.clear();
@@ -61,7 +74,7 @@ void Player::updateFlashlightVisuals(float darknessFactor)
 	// This should fade the light in. Max alpha is 100. Current alpha is 100 * darknessFactor
 	std::uint8_t lightAlpha = static_cast<std::uint8_t>(100 * darknessFactor);
 
-	// Default colours when health is above 50%
+	// Default torch colours when health is above 50%
 	std::uint8_t green = 255;
 	std::uint8_t blue = 200;
 	// Only change to red when under 50% health
@@ -78,9 +91,9 @@ void Player::updateFlashlightVisuals(float darknessFactor)
 	sf::Color fadeColour(255, green, blue, 0);
 
 	// Set the center point of the light to yellow
-	m_lightCone.append({ center, centerColour, {} }); // <-- This also might not work (It does)
+	m_lightCone.append({ center, centerColour, {} }); // <-- This also might not work as a vertex (It does)
 
-	// Create the arc
+	// Create the light arc
 	float startAngle = (m_rotation - VIEW_ANGLE) * DEG_TO_RAD;
 	float endAngle = (m_rotation + VIEW_ANGLE) * DEG_TO_RAD;
 	int segments = 20;
@@ -98,6 +111,9 @@ void Player::updateFlashlightVisuals(float darknessFactor)
 	}
 }
 
+/// <summary>
+/// Draws the player's components to the screen.
+/// </summary>
 void Player::render() 
 {
 	m_window->draw(m_lightCone);
