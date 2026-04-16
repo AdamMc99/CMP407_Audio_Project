@@ -194,6 +194,9 @@ void DynamicMain::update(float dt)
 		}
 	}
 
+	// Implement somse sort of lowpass filter to help smooth things out.
+
+
 	// Calculate game intensity for audio
 	if (!m_debugPauseIntensity)
 	{
