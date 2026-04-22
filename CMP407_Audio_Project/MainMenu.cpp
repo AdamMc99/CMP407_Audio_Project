@@ -25,7 +25,6 @@ bool MainMenu::initAudio()
 {
     if (!m_wwise.initSoundEngine(AKTEXT("Assets/Audio/CMP407_Dynamic_Audio_Project/GeneratedSoundBanks/Windows"))) return false;
 
-    AkBankID bankID;
     if (!m_wwise.loadBank(L"TestSoundBank.bnk")) return false;
 
     // BaseMenu registered the UI Audio ID, so just start the music
@@ -40,7 +39,6 @@ void MainMenu::playAudio()
 {
     m_wwise.registerGameObject(m_menuBgmAudioID, "Menu BGM Audio");
     m_wwise.postEvent("Play_MainMenu_BGM1", m_menuBgmAudioID);
-    std::cout << "SECTION REACHED";
 }
 
 /// <summary>
