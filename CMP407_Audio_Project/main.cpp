@@ -61,10 +61,12 @@ int main()
 
     // Initialise the audio wrapper
     WwiseWrapper wwise;
+    wwise.initSoundEngine(AKTEXT("Assets/Audio/CMP407_Dynamic_Audio_Project/GeneratedSoundBanks/Windows"));
+    wwise.loadBank(L"TestSoundBank.bnk");
 
     // Create menus and game objects
     MainMenu menu(font, wwise);
-    menu.initAudio();
+    menu.playAudio();
     DynamicMain dynamicMain(&window, font, wwise);
     PauseMenu pauseMenu(font, wwise);
     SettingsMenu settingsMenu(font, wwise);

@@ -1,6 +1,7 @@
 #pragma once
 #include <SFML/Graphics.hpp>
 #include <Vector>
+#include <atomic>
 #include "Player.h"
 #include "Enemy.h"
 #include "HealthBar.h"
@@ -15,6 +16,7 @@ public:
 
 	void playAudio();
 	void stopAudio();
+	static std::atomic<bool> m_heartbeatPulseFlag;
 
 	sf::Color getBackgroundColour() const;
 	bool isCursorHidden() const { return m_darknessFactor >= 1.f; }
@@ -58,6 +60,7 @@ private:
 	float m_calculatedIntensity = 0.f;
 	float m_debugIntesityModifier = 0.f;
 	float m_debugPauseIntensity = false;
+	float m_pulseTimer = 0.f; // Controls fade for pulse
 
 	bool isAngleInView(float enemyAngle, float playerAngle, float fieldOfView);
 

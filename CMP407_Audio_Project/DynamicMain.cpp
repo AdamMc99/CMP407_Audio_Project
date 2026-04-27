@@ -3,6 +3,14 @@
 #include <algorithm>   
 #include <iostream>
 
+std::atomic<bool> DynamicMain::m_heartbeatPulseFlag{ false };
+void HeartbeatCallback(AkCallbackType type, AkCallbackInfo* callBackInfo) 
+{
+	if (type == AK_Marker)
+		// Tell main thread heartbeat just happened
+		DynamicMain::m_heartbeatPulseFlag = true;
+}
+
 // Constants for angle conversions
 constexpr float PI = 3.14159265f;
 constexpr float RAD_TO_DEG = 180.f / PI;
@@ -153,6 +161,20 @@ void DynamicMain::update(float dt)
 		m_enemies.emplace_back(spawnPos, playerPos);
 	}
 
+	// Heartbeat pulsing logic
+	// Check if thread fired flag and set to fakse
+	if (m_heartbeatPulseFlag.exchange(false)) 
+		if(m_player.getHealth() <= 50)
+			m_pulseTimer = 1.f; // Set pulse to max intensity
+
+	// Decay pulse timer
+	if (m_pulseTimer > 0.f) 
+	{
+		m_pulseTimer -= dt * 2.5f; // Adjust time to make fade faster or slower
+		if (m_pulseTimer < 0.f) m_pulseTimer = 0.f;
+	}
+
+
 
 	// Enemy logic 
 	sf::Vector2f playerPos = m_player.getPosition();
@@ -217,7 +239,7 @@ void DynamicMain::update(float dt)
 
 	// Send values to audio system
 	m_wwise.setRTPCValue("Game_Intensity", m_intensity, m_gameAudioID);
-	//m_wwise.setRTPCValue("Heartbeat_Intensity", m_player.getHealth(), m_gameAudioID);
+	m_wwise.setRTPCValue("Heartbeat_Intensity", m_player.getHealth(), m_gameAudioID);
 
 	// Update UI
 	m_healthBar->update(m_player.getHealth());
@@ -309,7 +331,7 @@ void DynamicMain::render()
 		// Generate torch and ambient light shapes
 		sf::VertexArray torchCone = buildScreenTorch(screenCentre, playerAngle, m_player.getLightRange(), VIEW_ANGLE, m_darknessFactor);
 		sf::VertexArray ambientGlow(sf::PrimitiveType::TriangleFan);
-		float ambientRadius = 80.f;
+		float ambientRadius = 80.f + (30.f * m_pulseTimer);
 		std::uint8_t centerAlpha = static_cast<std::uint8_t>(255 * m_darknessFactor * 0.8f);
 		ambientGlow.append({ screenCentre, sf::Color(0,0,0,centerAlpha) });
 
@@ -421,7 +443,7 @@ void DynamicMain::playAudio()
 {
 	m_wwise.registerGameObject(m_gameAudioID, "Game BGM Audio");
 	m_wwise.postEvent("Play_Game_BGM", m_gameAudioID);
-	m_wwise.postEvent("Play_Heartbeat", m_gameAudioID);
+	m_wwise.postEvent("Play_Heartbeat", m_gameAudioID, AK_Marker, &HeartbeatCallback, nullptr);
 }
 
 /// <summary>

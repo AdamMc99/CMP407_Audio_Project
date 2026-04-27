@@ -140,11 +140,36 @@
 					</ReferenceList>
 					<ChildrenList>
 						<AudioFileSource Name="heartbeat" ID="{63C1B4A2-EEC6-48DD-B541-3B827A12DEF5}">
+							<PropertyList>
+								<Property Name="MarkerInputMode" Type="int16" Value="2"/>
+							</PropertyList>
 							<Language>SFX</Language>
 							<AudioFile>heartbeat.wav</AudioFile>
 							<MediaIDList>
 								<MediaID ID="914071071"/>
 							</MediaIDList>
+							<ObjectLists>
+								<ObjectList Name="Markers">
+									<Reference>
+										<Local>
+											<Marker Name="" ID="{94FE7867-7EF2-48FC-BF4A-F12A7C6CBAA0}">
+												<PropertyList>
+													<Property Name="Time" Type="Real64" Value="0.0835714326856578"/>
+												</PropertyList>
+											</Marker>
+										</Local>
+									</Reference>
+									<Reference>
+										<Local>
+											<Marker Name="" ID="{5A731462-1739-4D99-9060-01DC8E844C49}">
+												<PropertyList>
+													<Property Name="Time" Type="Real64" Value="0.332222238577553"/>
+												</PropertyList>
+											</Marker>
+										</Local>
+									</Reference>
+								</ObjectList>
+							</ObjectLists>
 						</AudioFileSource>
 					</ChildrenList>
 					<ObjectLists>

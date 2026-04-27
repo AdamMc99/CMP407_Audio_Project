@@ -17,20 +17,6 @@ MainMenu::MainMenu(sf::Font& font, WwiseWrapper& wwise) : BaseMenu(font, wwise, 
     m_buttons.push_back(Button(font, "Quit Game", { 400.f, 540.f }, { 200.f, 50.f }, sf::Color(255, 100, 100), MenuSelection::Quit));
 }
 
-/// <summary>
-/// Initialise the sound engine and load the required audio files for the menu.
-/// </summary>
-/// <returns>True if successful initialisation.</returns>
-bool MainMenu::initAudio()
-{
-    if (!m_wwise.initSoundEngine(AKTEXT("Assets/Audio/CMP407_Dynamic_Audio_Project/GeneratedSoundBanks/Windows"))) return false;
-
-    if (!m_wwise.loadBank(L"TestSoundBank.bnk")) return false;
-
-    // BaseMenu registered the UI Audio ID, so just start the music
-    playAudio();
-    return true;
-}
 
 /// <summary>
 /// Starts state's audio.

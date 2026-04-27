@@ -10,7 +10,7 @@
     "Type": "User",
     "GUID": "{B15A0551-23EE-4A4E-A149-9FB85C6FBDC1}",
     "Language": "SFX",
-    "Hash": "{A686D9AF-2F8D-7C58-0793-EC04C3189A5B}",
+    "Hash": "{B398195F-936F-31E6-E6BA-49FB48B59FD3}",
     "ObjectPath": "\\SoundBanks\\Default Work Unit\\TestSoundBank",
     "ShortName": "TestSoundBank",
     "Path": "TestSoundBank.bnk",
@@ -93,7 +93,7 @@
       "Streaming": "false",
       "Location": "Memory",
       "ShortName": "heartbeat.wav",
-      "CachePath": "17/{176C5283-00D7-C867-C733-F361D409A398}.wem"
+      "CachePath": "49/{49958EE5-48A2-9C18-B413-DB5DED2D0425}.wem"
      }
     ],
     "Plugins": {
@@ -234,6 +234,6 @@
     ]
    }
   ],
-  "FileHash": "{447CE309-6271-12E9-D632-6044C197FE8B}"
+  "FileHash": "{F1143CCE-BFFC-624C-8B0B-70B403C85C0D}"
  }
 }

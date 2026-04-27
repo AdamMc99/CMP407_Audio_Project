@@ -9,6 +9,7 @@
 #include <AK/SoundEngine/Common/AkSoundEngine.h>				// Sound engine
 #include <AK/MusicEngine/Common/AkMusicEngine.h>				// Music engine
 #include <AK/SpatialAudio/Common/AkSpatialAudio.h>              // Spatial Audio
+#include <AK/SoundEngine/Common/AkCallback.h>
 
 // Include for communication between Wwise and the game -- Not needed in the release version
 #ifndef AK_OPTIMIZED
@@ -180,9 +181,9 @@ bool WwiseWrapper::loadBank(const std::wstring& bankName)
 	return true;
 }
 
-void WwiseWrapper::postEvent(const std::string& eventName, uint64_t gameObjectID) 
+void WwiseWrapper::postEvent(const std::string& eventName, uint64_t gameObjectID, AkUInt32 flags, AkCallbackFunc callback, void* cookie) 
 {
-	AK::SoundEngine::PostEvent(eventName.c_str(), gameObjectID);
+	AK::SoundEngine::PostEvent(eventName.c_str(), gameObjectID, flags, callback, cookie);
 }
 
 void WwiseWrapper::setRTPCValue(const std::string& rtcpName, float value, uint64_t gameObjectID) 

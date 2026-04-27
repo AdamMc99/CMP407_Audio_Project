@@ -31,7 +31,7 @@ public:
 	// --------- MY STUFF -------------------
 	void update();
 	bool loadBank(const std::wstring& bankName);
-	void postEvent(const std::string& eventName, uint64_t gameObjectID);
+	void postEvent(const std::string& eventName, uint64_t gameObjectID, AkUInt32 flags = 0, AkCallbackFunc callback = nullptr, void* cookie = nullptr);
 	void setRTPCValue(const std::string& rtcpName, float value, uint64_t gameObjectID);
 	void registerGameObject(uint64_t gameObjectID, const std::string& objectName);
 	void unregisterGameObject(uint64_t gameObjectID);
