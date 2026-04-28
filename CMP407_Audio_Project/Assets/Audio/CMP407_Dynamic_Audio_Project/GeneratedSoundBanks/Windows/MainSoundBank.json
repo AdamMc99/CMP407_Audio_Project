@@ -6,14 +6,14 @@
   "SoundBankVersion": "154",
   "SoundBanks": [
    {
-    "Id": "1831431028",
+    "Id": "534561221",
     "Type": "User",
     "GUID": "{B15A0551-23EE-4A4E-A149-9FB85C6FBDC1}",
     "Language": "SFX",
-    "Hash": "{B398195F-936F-31E6-E6BA-49FB48B59FD3}",
-    "ObjectPath": "\\SoundBanks\\Default Work Unit\\TestSoundBank",
-    "ShortName": "TestSoundBank",
-    "Path": "TestSoundBank.bnk",
+    "Hash": "{B3449F0F-2E2D-A73C-C1C8-C8542723B055}",
+    "ObjectPath": "\\SoundBanks\\Default Work Unit\\MainSoundBank",
+    "ShortName": "MainSoundBank",
+    "Path": "MainSoundBank.bnk",
     "Media": [
      {
       "Id": "138068062",
@@ -93,7 +93,7 @@
       "Streaming": "false",
       "Location": "Memory",
       "ShortName": "heartbeat.wav",
-      "CachePath": "49/{49958EE5-48A2-9C18-B413-DB5DED2D0425}.wem"
+      "CachePath": "00/{00B5EBD2-652C-4D7A-D238-FDF1E5BD2082}.wem"
      }
     ],
     "Plugins": {
@@ -234,6 +234,6 @@
     ]
    }
   ],
-  "FileHash": "{F1143CCE-BFFC-624C-8B0B-70B403C85C0D}"
+  "FileHash": "{DCAA61A8-DE56-71D5-2DAF-10DEC8B2D6F5}"
  }
 }

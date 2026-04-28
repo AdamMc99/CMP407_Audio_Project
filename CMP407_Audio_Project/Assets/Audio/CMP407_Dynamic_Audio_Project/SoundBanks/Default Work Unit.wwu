@@ -3,7 +3,7 @@
 	<SoundBanks>
 		<WorkUnit Name="Default Work Unit" ID="{3BCA1AFD-DD8B-4938-B3A2-8216B7ADBFF0}" PersistMode="Standalone">
 			<ChildrenList>
-				<SoundBank Name="TestSoundBank" ID="{B15A0551-23EE-4A4E-A149-9FB85C6FBDC1}">
+				<SoundBank Name="MainSoundBank" ID="{B15A0551-23EE-4A4E-A149-9FB85C6FBDC1}">
 					<ObjectInclusionList>
 						<ObjectRef Name="ButtonForward" ID="{ADA7F063-F604-41B2-869E-077B3191D97D}" WorkUnitID="{FF88542B-3F69-4B23-877F-B77A5F70818E}" Origin="Manual" Filter="7"/>
 						<ObjectRef Name="Play_Heartbeat" ID="{A16D8A1A-0AB1-41B8-B115-405C2590CAED}" WorkUnitID="{FF88542B-3F69-4B23-877F-B77A5F70818E}" Origin="Manual" Filter="7"/>

@@ -210,9 +210,16 @@
 																<Flags>5</Flags>
 															</Point>
 															<Point>
-																<XPos>49.93252</XPos>
-																<YPos>-49.43756</YPos>
+																<XPos>49.999</XPos>
+																<YPos>-6</YPos>
 																<Flags>0</Flags>
+																<SegmentShape>Log3</SegmentShape>
+															</Point>
+															<Point>
+																<XPos>50</XPos>
+																<YPos>-200</YPos>
+																<Flags>0</Flags>
+																<SegmentShape>Exp3</SegmentShape>
 															</Point>
 															<Point>
 																<XPos>100</XPos>
