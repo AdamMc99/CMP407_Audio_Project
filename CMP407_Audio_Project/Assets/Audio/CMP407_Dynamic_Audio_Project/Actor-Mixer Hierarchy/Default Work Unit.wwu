@@ -211,7 +211,7 @@
 															</Point>
 															<Point>
 																<XPos>49.999</XPos>
-																<YPos>-6</YPos>
+																<YPos>-4</YPos>
 																<Flags>0</Flags>
 																<SegmentShape>Log3</SegmentShape>
 															</Point>
@@ -224,6 +224,46 @@
 															<Point>
 																<XPos>100</XPos>
 																<YPos>-200</YPos>
+																<Flags>37</Flags>
+															</Point>
+														</PointList>
+													</Curve>
+												</Custom>
+											</Reference>
+										</ReferenceList>
+									</RTPC>
+								</Local>
+							</Reference>
+							<Reference>
+								<Local>
+									<RTPC Name="" ID="{C4BEEED7-EE4F-45F4-90C7-3C219D7AB432}" ShortID="626849698">
+										<PropertyList>
+											<Property Name="PropertyName" Type="string" Value="Pitch"/>
+										</PropertyList>
+										<ReferenceList>
+											<Reference Name="ControlInput">
+												<ObjectRef Name="Heartbeat_Intensity" ID="{BDF10405-89FF-478B-9AAB-7D3CF7DB58DF}" WorkUnitID="{17F8D7E9-6CC7-4310-B8CD-F760823A953F}"/>
+											</Reference>
+											<Reference Name="Curve">
+												<Custom>
+													<Curve Name="" ID="{0765D5D4-78AC-4E94-8080-D6480E27105B}">
+														<PropertyList>
+															<Property Name="Flags" Type="int32" Value="65537"/>
+														</PropertyList>
+														<PointList>
+															<Point>
+																<XPos>0</XPos>
+																<YPos>1220</YPos>
+																<Flags>5</Flags>
+															</Point>
+															<Point>
+																<XPos>50</XPos>
+																<YPos>-1038</YPos>
+																<Flags>0</Flags>
+															</Point>
+															<Point>
+																<XPos>100</XPos>
+																<YPos>-4800</YPos>
 																<Flags>37</Flags>
 															</Point>
 														</PointList>
